@@ -8,6 +8,7 @@ import Posts from "./components/Posts/Posts";
 import CreatePost from "./components/CreatePost/CreatePost";
 import PostDetails from "./components/Posts/PostDetails/PostDetails";
 
+// Do not forget to add route for posts/:id when api start working
 
 import "../src/App.css";
 
@@ -23,7 +24,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/create" element={<CreatePost />} />
-        <Route path="/posts/:id" element={<PostDetails />} />
+        <Route path="/singlePost" element={<PostDetails />} />
       </Routes>
 
     </main>
