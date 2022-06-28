@@ -2,14 +2,64 @@ using AutoMapper;
 using ForumApi.Data;
 using ForumApi.Data.Seeding;
 using ForumApi.Dtos.Post;
+using ForumApi.Dtos.User;
 using ForumApi.Models;
 using ForumApi.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 // Add services to the container.
+
+builder.Services.AddAuthentication(opt =>
+{
+    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(opt =>
+{
+    opt.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateActor = true,
+        ValidateAudience = true,
+        ValidateIssuerSigningKey = true,
+        ValidateLifetime = true,
+        ValidIssuer = configuration["Jwt:Issuer"],
+        ValidAudience = configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
+
+
+    };
+    opt.Events = new JwtBearerEvents
+    {
+        OnChallenge = async context =>
+        {
+            context.HandleResponse();
+
+
+            context.Response.StatusCode = 401;
+            context.Response.Headers.Append("UnAuthorized", "User");
+            context.Response.ContentType = "application/json";
+
+            var errorResponse = new
+            {
+                Message = "You are not authorized !",
+                StatusCode = context.Response.StatusCode,
+            };
+
+            await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
+        },
+    };
+    
+});
+
+builder.Services.AddAuthorization();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -27,15 +77,14 @@ builder.Services.AddDefaultIdentity<ForumUser>(options =>
 }).AddRoles<ForumRole>().AddEntityFrameworkStores<ForumDbContext>();
 
 builder.Services.AddTransient<IPostService, PostService>();
+builder.Services.AddTransient<IUsersService, UsersService>();
+
 
 var app = builder.Build();
 
 app.UseHttpsRedirection();
-
-//using var serviceScopeMigration = ((IApplicationBuilder)app).ApplicationServices.CreateScope();
-//using var dbContextMigration = serviceScopeMigration.ServiceProvider.GetRequiredService<ForumDbContext>();
-
-//dbContextMigration.Database.Migrate();
+app.UseAuthentication();
+app.UseAuthorization();
 
 using var serviceScopeSeeder = ((IApplicationBuilder)app).ApplicationServices.CreateScope();
 using var dbContextSeeder = serviceScopeSeeder.ServiceProvider.GetRequiredService<ForumDbContext>();
@@ -67,7 +116,9 @@ app.MapGet("api/posts", async (IMapper mapper, IPostService postService) =>
     return Results.Ok(postDto);
 });
 
-app.MapDelete("api/posts/{id}", async (string id, IMapper mapper, IPostService postService) =>
+app.MapDelete("api/posts/{id}",
+    [Authorize]
+async (string id, IMapper mapper, IPostService postService) =>
 {
     var post = await postService.GetByIdAsync(id);
 
@@ -81,7 +132,9 @@ app.MapDelete("api/posts/{id}", async (string id, IMapper mapper, IPostService p
     return Results.NoContent();
 });
 
-app.MapPost("api/posts", async (IMapper mapper, IPostService postService, CreatePostModel dto) =>
+app.MapPost("api/posts",
+    [Authorize]
+async (IMapper mapper, IPostService postService, CreatePostModel dto) =>
 {
 
     var post = await postService.
@@ -93,7 +146,9 @@ app.MapPost("api/posts", async (IMapper mapper, IPostService postService, Create
 
 });
 
-app.MapPut("/api/posts", async (string id, IPostService postService, EditPostModel dto) =>
+app.MapPut("/api/posts",
+    [Authorize]
+async (string id, IPostService postService, EditPostModel dto) =>
 {
     var post = await postService.GetByIdAsync(id);
 
@@ -106,6 +161,30 @@ app.MapPut("/api/posts", async (string id, IPostService postService, EditPostMod
 
     return Results.NoContent();
 
+});
+
+app.MapPost("/api/login",
+    [AllowAnonymous]
+async (IUsersService usersService, LoginRequestModel model) =>
+{
+    //Fluen Validation for model state
+
+    var resultModel = await usersService.LoginAsync(model);
+
+
+    return Results.Ok(resultModel);
+});
+
+app.MapPost(
+    "/api/register",
+    [AllowAnonymous]
+async (IUsersService usersService, RegisterRequestModel model) =>
+{
+    // Fluent Validation for model state
+
+    await usersService.RegisterAsync(model);
+
+    return Results.StatusCode(201);
 });
 
 app.Run();
