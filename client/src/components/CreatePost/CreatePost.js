@@ -8,9 +8,7 @@ const controls = [
 ];
 
 const CreatePost = () => {
-
     const [value, onChange] = useState('');
-
 
     return (
         <div className="container">

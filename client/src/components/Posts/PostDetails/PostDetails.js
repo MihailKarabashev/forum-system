@@ -1,6 +1,17 @@
+import { useState } from 'react';
+import { RichTextEditor } from '@mantine/rte';
+
 import CommentCard from "../../Comments/CommentCard/CommentCard";
 
+const controls = [
+  ['bold', 'italic', 'underline', 'link', 'image'],
+  ['unorderedList', 'h1', 'h2', 'h3'],
+  ['alignLeft', 'alignCenter', 'alignRight'],
+];
+
 const PostDetails = () => {
+  const [value, onChange] = useState('');
+
   return (
     <>
       <div className="container">
@@ -85,7 +96,16 @@ const PostDetails = () => {
           <form className="pt-editor form-default">
             <h6 className="pt-title">Post Your Reply</h6>
             <div className="form-group">
-              <textarea name="message" className="form-control" rows="5" placeholder="Lets get started"></textarea>
+              <RichTextEditor value={value} onChange={onChange} controls={controls}
+                onImageUpload={() => console.log('Function here')}
+                styles={{
+                  root: { background: '#E2E7EA' },
+                  toolbar: { background: '#E2E7EA' },
+                }}
+                style={
+                  { paddingTop: 10, paddingBottom: 100 }
+                }
+              />
             </div>
             <div className="pt-row">
               <div className="col-auto">
