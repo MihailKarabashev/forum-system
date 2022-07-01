@@ -146,6 +146,7 @@ async (string id, IMapper mapper, IPostService postService) =>
     return Results.NoContent();
 });
 
+//change author id to be not static
 app.MapPost("api/posts",
     [Authorize]
 async (IMapper mapper, IPostService postService, CreatePostModel dto) =>

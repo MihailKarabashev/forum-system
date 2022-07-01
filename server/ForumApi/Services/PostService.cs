@@ -57,6 +57,9 @@ namespace ForumApi.Services
         public async Task<IEnumerable<Post>> GetAllAsync()
         {
             return await this.db.Posts.AsNoTracking()
+                                     .Include(x=> x.Category)
+                                     .Include(x=> x.Author)
+                                     .Include(x=> x.Replies)
                                      .OrderByDescending(x => x.Replies.Count())
                                      .ThenBy(x => x.CreatedOn)
                                      .Where(x => !x.IsDeleted)
@@ -65,9 +68,12 @@ namespace ForumApi.Services
 
         public async Task<Post> GetByIdAsync(string id)
         {
-            return await this.db.Posts.AsNoTracking().
-                           Where(x => x.Id == id && !x.IsDeleted).
-                           FirstOrDefaultAsync();
+            return await this.db.Posts.AsNoTracking()
+                           .Include(x => x.Category)
+                           .Include(x => x.Author)
+                           .Include(x => x.Replies)
+                           .Where(x => x.Id == id && !x.IsDeleted)
+                           .FirstOrDefaultAsync();
         }
     }
 }

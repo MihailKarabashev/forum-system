@@ -10,6 +10,12 @@
 
         public string AuthorId { get; set; }
 
+        public string CategoryName { get; set; }
+
         public int CategoryId { get; set; }
+
+        public int RepliesCount { get; set; }
+
+        public string CreatedOn { get; set; }
     }
 }
