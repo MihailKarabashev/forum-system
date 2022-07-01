@@ -17,6 +17,18 @@ var configuration = builder.Configuration;
 
 // Add services to the container.
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(opt =>
+    {
+        opt.
+            WithOrigins("http://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddAuthentication(opt =>
 {
     opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -83,6 +95,8 @@ builder.Services.AddTransient<IUsersService, UsersService>();
 var app = builder.Build();
 
 app.UseHttpsRedirection();
+app.UseCors();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
