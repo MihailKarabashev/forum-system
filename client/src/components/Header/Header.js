@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Header = () => {
   return (
     <header id="tt-header">
@@ -5,7 +7,7 @@ const Header = () => {
         <div className="row tt-row no-gutters">
           <div className="col-auto">
             <div className="tt-logo">
-              <a href="index-2.html"><img src="images/logo.png" alt="" /></a>
+              <Link to="/"><img src="images/logo.png" alt="" /></Link>
             </div>
             <div className="tt-desktop-menu">
               <nav>
@@ -16,14 +18,13 @@ const Header = () => {
                   <li>
                     <a href="page-single-user.html"><span>Pages</span></a>
                     <ul>
-                      <li><a href="index-2.html">Home</a></li>
-                      <li><a href="page-single-topic.html">Single Topic</a></li>
+                      <li><Link to="/">Home</Link></li>
                       <li><a href="page-create-topic.html">Create Topic</a></li>
                       <li><a href="page-single_settings.html">Single User Settings</a></li>
                       <li><a href="page-signup.html">Sign up</a></li>
                       <li><a href="page-login.html">Log in</a></li>
                       <li><a href="page-categories.html">Categories</a></li>
-                      <li><a href="page-tabs.html">About</a></li>
+                      <li><Link to="page-tabs.html">About</Link></li>
                       <li><a href="_demo_modal-advancedSearch.html">Advanced Search</a></li>
                       <li><a href="error404.html">Error 404</a></li>
                     </ul>
@@ -56,8 +57,8 @@ const Header = () => {
           </div>
           <div className="col-auto ml-auto">
             <div className="tt-account-btn">
-              <a href="page-login.html" className="btn btn-primary">Log in</a>
-              <a href="page-signup.html" className="btn btn-secondary">Sign up</a>
+              <Link to="/" className="btn btn-primary">Log in</Link>
+              <Link to="/" className="btn btn-secondary">Sign up</Link>
             </div>
           </div>
         </div>

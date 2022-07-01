@@ -1,5 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { RichTextEditor } from '@mantine/rte';
+
+import * as postService from "../../../services/postServices";
 
 import CommentCard from "../../Comments/CommentCard/CommentCard";
 
@@ -11,6 +14,16 @@ const controls = [
 
 const PostDetails = () => {
   const [value, onChange] = useState('');
+  const [post, setPost] = useState({});
+  const { postId } = useParams();
+
+  useEffect(() => {
+    postService.getPostById(postId)
+      .then(data => {
+        setPost(data);
+      });
+
+  }, []);
 
   return (
     <>
@@ -24,61 +37,39 @@ const PostDetails = () => {
                     <i className="tt-icon"><svg><use xlinkHref="#icon-ava-d"></use></svg></i>
                   </div>
                   <div className="tt-avatar-title">
-                    <a href="#">dylan89</a>
+                    <Link to="#">AUTHOR NAME</Link>
                   </div>
-                  <a href="#" className="tt-info-time">
-                    <i className="tt-icon"><svg><use xlinkHref="#icon-time"></use></svg></i>6 Jan,2019
-                  </a>
+                  <Link to="#" className="tt-info-time">
+                    <i className="tt-icon"><svg><use xlinkHref="#icon-time"></use></svg></i>{post.createdOn}
+                  </Link>
                 </div>
                 <h3 className="tt-item-title">
-                  <a href="#">Web Hosting Packages for ThemeForest WordPress</a>
+                  <Link to="#">{post.title}</Link>
                 </h3>
                 <div className="tt-item-tag">
                   <ul className="tt-list-badge">
-                    <li><a href="#"><span className="tt-color03 tt-badge">exchange</span></a></li>
-                    <li><a href="#"><span className="tt-badge">themeforest</span></a></li>
-                    <li><a href="#"><span className="tt-badge">elements</span></a></li>
+                    <li><span className="tt-color03 tt-badge">exchange</span></li>
+                    <li><span className="tt-badge">themeforest</span></li>
+                    <li><span className="tt-badge">elements</span></li>
                   </ul>
                 </div>
               </div>
               <div className="tt-item-description">
-                <h6 className="tt-title">Get ready for Movember!</h6>
+                <h6 className="tt-title">BOLD TITLE IF POSSIBLE</h6>
                 <p>
-                  It’s time to channel your inner Magnum P.I., Ron Swanson or Hercule Poroit! It’s the time that all guys (or gals) love and all our
-                  partners hate It’s Movember!
-                </p>
-                <p>
-                  Throughout November we will be inviting all community members to help raise awareness and funds for the lives of men affected
-                  by cancer and mental health problems via the Movember Foundation 10.
-                </p>
-                <h6 className="tt-title">How Does it Work?</h6>
-                <p>
-                  Authors and customers with facial hair unite! Simply grow, groom, and share your facial hair during November! Even females can enter if they desire (be creative, ladies!). Be inspired by checking out last year’s highlights 28.
+                  {post.description}
                 </p>
               </div>
               <div className="tt-item-info info-bottom">
-                <a href="#" className="tt-icon-btn">
+                <Link to="#" className="tt-icon-btn">
                   <i className="tt-icon"><svg><use xlinkHref="#icon-like"></use></svg></i>
                   <span className="tt-text">671</span>
-                </a>
-                <a href="#" className="tt-icon-btn">
+                </Link>
+                <Link to="#" className="tt-icon-btn">
                   <i className="tt-icon"><svg><use xlinkHref="#icon-dislike"></use></svg></i>
                   <span className="tt-text">39</span>
-                </a>
-                <a href="#" className="tt-icon-btn">
-                  <i className="tt-icon"><svg><use xlinkHref="#icon-favorite"></use></svg></i>
-                  <span className="tt-text">12</span>
-                </a>
+                </Link>
                 <div className="col-separator"></div>
-                <a href="#" className="tt-icon-btn tt-hover-02 tt-small-indent">
-                  <i className="tt-icon"><svg><use xlinkHref="#icon-share"></use></svg></i>
-                </a>
-                <a href="#" className="tt-icon-btn tt-hover-02 tt-small-indent">
-                  <i className="tt-icon"><svg><use xlinkHref="#icon-flag"></use></svg></i>
-                </a>
-                <a href="#" className="tt-icon-btn tt-hover-02 tt-small-indent">
-                  <i className="tt-icon"><svg><use xlinkHref="#icon-reply"></use></svg></i>
-                </a>
               </div>
             </div>
           </div>

@@ -13,7 +13,7 @@ const PostCard = ({
                 </svg>
             </div>
             <div className="tt-col-description">
-                <h6 className="tt-title"><Link to="page-single-topic.html">
+                <h6 className="tt-title"><Link to={`/posts/details/${post.id}`}>
                     <svg className="tt-icon">
                         <use xlinkHref="#icon-pinned"></use>
                     </svg>
