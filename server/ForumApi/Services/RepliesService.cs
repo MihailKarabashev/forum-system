@@ -54,12 +54,17 @@ namespace ForumApi.Services
 
         public async Task<IEnumerable<Reply>> GetAllByPostIdAsync(string postId)
         {
-            return await this.db.Replies
+            var replies =  await this.db.Replies
                 .AsNoTracking()
                 .Where(r => r.PostId == postId && !r.IsDeleted)
                 .Include(a => a.Author)
+                .Include(x=> x.Parent)
+                .ThenInclude(x=> x.Author)
                 .OrderByDescending(r => r.CreatedOn)
                 .ToListAsync();
+
+
+            return this.GetCleanReplies(replies);
         }
 
         public async Task<Reply> GetByIdAsync(int id)
@@ -67,6 +72,7 @@ namespace ForumApi.Services
             return await this.db.Replies
                 .AsNoTracking()
                 .Include(a => a.Author)
+                .Include(x=> x.Parent)
                 .Where(r => r.Id == id && !r.IsDeleted)
                 .FirstOrDefaultAsync();
         }
@@ -85,6 +91,16 @@ namespace ForumApi.Services
 
             await this.db.SaveChangesAsync();
             await this.DeleteNestedRepliesAsync(nestedReply.Id);
+        }
+
+        private IEnumerable<Reply> GetCleanReplies(IEnumerable<Reply> replies)
+        {
+            var repliesWithParents = replies.Where(x => x.ParentId != null).ToList();
+
+            var cleanReplies = replies
+                .Where(x => repliesWithParents.Any(y => x.Id != y.ParentId)).ToList();
+
+            return cleanReplies;
         }
     }
 }

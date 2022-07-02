@@ -134,6 +134,7 @@ app.MapGet("api/posts/{id}", async (string id,
     var postDto = mapper.Map<ReadPostModel>(post);
 
     var replies = await repliesService.GetAllByPostIdAsync(id);
+
     var tags = await tagsService.GetAllByPostIdAsync(id);
     var reaction = await postReactionService.GetCountByPostIdAsync(post.Id);
 
@@ -144,7 +145,11 @@ app.MapGet("api/posts/{id}", async (string id,
     return Results.Ok(postDto);
 });
 
-app.MapGet("api/posts", async (IMapper mapper, IPostService postService, ITagsService tagsService) =>
+app.MapGet("api/posts",
+    async (IMapper mapper,
+    IPostService postService,
+    ITagsService tagsService,
+    IPostReactionsService postReactionService) =>
 {
     var posts = await postService.GetAllAsync();
     var postDtos = mapper.Map<IEnumerable<ReadPostModel>>(posts);
@@ -153,7 +158,10 @@ app.MapGet("api/posts", async (IMapper mapper, IPostService postService, ITagsSe
     foreach (var postDto in postDtos)
     {
         var postTag = await tagsService.GetAllByPostIdAsync(postDto.Id);
+        var postReaction = await postReactionService.GetCountByPostIdAsync(postDto.Id);
+
         postDto.Tags = mapper.Map<IEnumerable<ReadTagModel>>(postTag);
+        postDto.Reaction = postReaction;
     }
 
     return Results.Ok(postDtos);

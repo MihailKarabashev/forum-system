@@ -27,5 +27,6 @@ namespace ForumApi.Dtos.Post
         public IEnumerable<ReadTagModel> Tags { get; set; }
 
         public ReadReactionsCountModel Reaction { get; set; }
+
     }
 }

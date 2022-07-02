@@ -55,13 +55,14 @@ namespace ForumApi.Services
         }
 
         //Add PAGINATION
+        //Take outside of include takes the posts number
         public async Task<IEnumerable<Post>> GetAllAsync()
         {
             return await this.db.Posts.AsNoTracking()
                                      .Include(x=> x.Category)
                                      .Include(x=> x.Author)
-                                     .Include(x=> x.Tags)
-                                     .Take(3)
+                                     .Include(x=> x.Replies)
+                                     .Include(x => x.Tags.Take(2))
                                      .OrderByDescending(x => x.CreatedOn)
                                      .Where(x => !x.IsDeleted)
                                      .ToListAsync();

@@ -30,7 +30,7 @@ const PostCard = ({
                 </div>
             </div>
             <div className="tt-col-category"><span className="tt-color01 tt-badge">{post.categoryName}</span></div>
-            <div className="tt-col-value hide-mobile">985</div>
+            <div className="tt-col-value hide-mobile">{post.reaction.likes}</div>
             <div className="tt-col-value tt-color-select hide-mobile">{post.repliesCount}</div>
             <div className="tt-col-value hide-mobile">15.1k</div>
             <div className="tt-col-value hide-mobile">{post.createdOn}</div>

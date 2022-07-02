@@ -26,13 +26,17 @@ namespace ForumApi.Profiles.Post
 
 
             this.CreateMap<Reply, ReadReplyDto>()
+                .ForMember(x=> x.ParentAuthorUserName , y=> y.MapFrom(src => src.Parent.Author.UserName))
+                .ForMember(x=> x.ParentDescription, y=> y.MapFrom(src => src.Parent.Description))
                 .ForMember(
-                      x=> x.AuthorUserName,
-                      y=> y.MapFrom(src => src.Author.UserName))
+                      x => x.AuthorUserName,
+                      y => y.MapFrom(src => src.Author.UserName))
                 .ForMember(
                       x => x.CreatedOn,
                       y => y.MapFrom(src => src.CreatedOn.ToString("yyyy/mm/dd", CultureInfo.GetCultureInfo("en-US"))));
+
             this.CreateMap<CreateReplyDto, Reply>();
+                
 
 
             this.CreateMap<Tag, ReadTagModel>();

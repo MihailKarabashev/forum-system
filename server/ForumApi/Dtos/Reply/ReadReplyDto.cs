@@ -6,6 +6,10 @@
 
         public string Description { get; set; }
 
+        public string ParentAuthorUserName { get; set; }
+
+        public string ParentDescription { get; set; }
+
         public int? ParentId { get; set; }
 
         public string PostId { get; set; }
@@ -15,5 +19,6 @@
         public string CreatedOn { get; set; }
 
         public string AuthorUserName { get; set; }
+        
     }
 }

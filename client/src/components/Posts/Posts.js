@@ -27,10 +27,6 @@ const Posts = () => {
           <div className="tt-col-value hide-mobile">Views</div>
           <div className="tt-col-value">Created On</div>
         </div>
-        <div className="tt-topic-alert tt-alert-default" role="alert">
-          <a href="#" target="_blank">4 new posts</a> are added recently, click here to load them.
-        </div>
-
         {
           posts.map(post => <PostCard key={post.id} post={post} />)
         }
