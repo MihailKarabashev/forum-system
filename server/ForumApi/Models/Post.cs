@@ -27,8 +27,12 @@ namespace ForumApi.Models
 
         public Category Category { get; set; }
 
+
         public ICollection<Reply> Replies = new HashSet<Reply>();
 
+        public ICollection<Tag> Tags { get; set; } = new HashSet<Tag>();
+
+        public ICollection<PostReaction> PostReactions { get; set; } = new HashSet<PostReaction>();
 
     }
 }

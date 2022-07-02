@@ -21,6 +21,9 @@ namespace ForumApi.Models
 
         public ICollection<Post> Posts { get; set; } = new HashSet<Post>();
         public ICollection<Reply> Replies { get; set; } = new HashSet<Reply>();
+        public ICollection<PostReaction> PostReactions { get; set; } = new HashSet<PostReaction>();
+        public ICollection<ReplyReaction> ReplyReactions { get; set; } = new HashSet<ReplyReaction>();
+
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
               = new HashSet<IdentityUserRole<string>>();

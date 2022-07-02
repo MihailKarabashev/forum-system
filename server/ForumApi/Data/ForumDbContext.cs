@@ -17,6 +17,14 @@ namespace ForumApi.Data
 
         public DbSet<Reply> Replies { get; set; }
 
+        public DbSet<Tag> Tags { get; set; }
+
+        public DbSet<ForumUser> ForumUser { get; set; }
+
+        public DbSet<PostReaction> PostReactions { get; set; }
+
+        public DbSet<ReplyReaction> ReplyReactions { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

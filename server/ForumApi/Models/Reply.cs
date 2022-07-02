@@ -29,5 +29,7 @@ namespace ForumApi.Models
 
         public DateTime? DeletedOn { get; set; }
 
+        public ICollection<ReplyReaction> ReplyReactions { get; set; } = new HashSet<ReplyReaction>();
+
     }
 }

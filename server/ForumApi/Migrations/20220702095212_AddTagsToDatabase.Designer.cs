@@ -4,6 +4,7 @@ using ForumApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ForumApi.Migrations
 {
     [DbContext(typeof(ForumDbContext))]
-    partial class ForumDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220702095212_AddTagsToDatabase")]
+    partial class AddTagsToDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -209,39 +211,6 @@ namespace ForumApi.Migrations
                     b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("ForumApi.Models.PostReaction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("AuthorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PostId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("ReactionType")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AuthorId");
-
-                    b.HasIndex("PostId");
-
-                    b.ToTable("PostReactions");
-                });
-
             modelBuilder.Entity("ForumApi.Models.Reply", b =>
                 {
                     b.Property<int>("Id")
@@ -288,39 +257,6 @@ namespace ForumApi.Migrations
                     b.HasIndex("PostId");
 
                     b.ToTable("Replies");
-                });
-
-            modelBuilder.Entity("ForumApi.Models.ReplyReaction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("AuthorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ReactionType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ReplyId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AuthorId");
-
-                    b.HasIndex("ReplyId");
-
-                    b.ToTable("ReplyReactions");
                 });
 
             modelBuilder.Entity("ForumApi.Models.Tag", b =>
@@ -499,24 +435,6 @@ namespace ForumApi.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("ForumApi.Models.PostReaction", b =>
-                {
-                    b.HasOne("ForumApi.Models.ForumUser", "Author")
-                        .WithMany("PostReactions")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ForumApi.Models.Post", "Post")
-                        .WithMany("PostReactions")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Author");
-
-                    b.Navigation("Post");
-                });
-
             modelBuilder.Entity("ForumApi.Models.Reply", b =>
                 {
                     b.HasOne("ForumApi.Models.ForumUser", "Author")
@@ -540,25 +458,6 @@ namespace ForumApi.Migrations
                     b.Navigation("Parent");
 
                     b.Navigation("Post");
-                });
-
-            modelBuilder.Entity("ForumApi.Models.ReplyReaction", b =>
-                {
-                    b.HasOne("ForumApi.Models.ForumUser", "Author")
-                        .WithMany("ReplyReactions")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ForumApi.Models.Reply", "Reply")
-                        .WithMany("ReplyReactions")
-                        .HasForeignKey("ReplyId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Author");
-
-                    b.Navigation("Reply");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -634,27 +533,16 @@ namespace ForumApi.Migrations
 
             modelBuilder.Entity("ForumApi.Models.ForumUser", b =>
                 {
-                    b.Navigation("PostReactions");
-
                     b.Navigation("Posts");
 
                     b.Navigation("Replies");
-
-                    b.Navigation("ReplyReactions");
 
                     b.Navigation("Roles");
                 });
 
             modelBuilder.Entity("ForumApi.Models.Post", b =>
                 {
-                    b.Navigation("PostReactions");
-
                     b.Navigation("Replies");
-                });
-
-            modelBuilder.Entity("ForumApi.Models.Reply", b =>
-                {
-                    b.Navigation("ReplyReactions");
                 });
 #pragma warning restore 612, 618
         }
