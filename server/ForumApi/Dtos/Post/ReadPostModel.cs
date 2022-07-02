@@ -1,4 +1,6 @@
-﻿namespace ForumApi.Dtos.Post
+﻿using ForumApi.Dtos.Reply;
+
+namespace ForumApi.Dtos.Post
 {
     public class ReadPostModel
     {
@@ -17,5 +19,7 @@
         public int RepliesCount { get; set; }
 
         public string CreatedOn { get; set; }
+
+        public IEnumerable<ReadReplyDto> Replies { get; set; }
     }
 }

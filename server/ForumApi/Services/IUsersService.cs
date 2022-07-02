@@ -10,5 +10,7 @@ namespace ForumApi.Services
         Task<string> GenerateJwtToken(ForumUser user);
 
         Task<LoginResponseModel> LoginAsync(LoginRequestModel model);
+
+        string GetCurrentLoggedInUserId();
     }
 }

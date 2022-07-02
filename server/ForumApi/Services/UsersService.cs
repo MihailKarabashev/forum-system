@@ -15,16 +15,19 @@ namespace ForumApi.Services
         private readonly ForumDbContext db;
         private readonly UserManager<ForumUser> userManager;
         private readonly IConfiguration configuration;
+        private readonly IHttpContextAccessor httpContextAccesor;
 
         public UsersService(
             ForumDbContext db,
             UserManager<ForumUser> userManager,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IHttpContextAccessor httpContextAccesor)
         {
             this.db = db;
             this.userManager = userManager;
             this.configuration = configuration;
-    }
+            this.httpContextAccesor = httpContextAccesor;
+        }
 
         public async Task<string> GenerateJwtToken(ForumUser user)
         {
@@ -58,6 +61,11 @@ namespace ForumApi.Services
 
             return encryptedToken;
 
+        }
+
+        public string GetCurrentLoggedInUserId()
+        {
+            return this.httpContextAccesor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
 
         public async Task<LoginResponseModel> LoginAsync(LoginRequestModel model)

@@ -1,4 +1,6 @@
-const CommentCard = () => {
+const CommentCard = ({
+  reply
+}) => {
 
   // Check all comments and make hybrid from all based on created comment
   return (
@@ -11,16 +13,15 @@ const CommentCard = () => {
                 <i className="tt-icon"><svg><use xlinkHref="#icon-ava-t"></use></svg></i>
               </div>
               <div className="tt-avatar-title">
-                <a href="#">tesla02</a>
+                <a href="#">{reply.authorUserName}</a>
               </div>
               <a href="#" className="tt-info-time">
-                <i className="tt-icon"><svg><use xlinkHref="#icon-time"></use></svg></i>6 Jan,2019
+                <i className="tt-icon"><svg><use xlinkHref="#icon-time"></use></svg></i>{reply.createdOn}
               </a>
             </div>
           </div>
           <div className="tt-item-description">
-            Finally!<br />
-            Are there any special recommendations for design or an updated guide that includes new preview sizes, including retina displays?
+            {reply.description}
           </div>
           <div className="tt-item-info info-bottom">
             <a href="#" className="tt-icon-btn">
@@ -30,20 +31,6 @@ const CommentCard = () => {
             <a href="#" className="tt-icon-btn">
               <i className="tt-icon"><svg><use xlinkHref="#icon-dislike"></use></svg></i>
               <span className="tt-text">39</span>
-            </a>
-            <a href="#" className="tt-icon-btn">
-              <i className="tt-icon"><svg><use xlinkHref="#icon-favorite"></use></svg></i>
-              <span className="tt-text">12</span>
-            </a>
-            <div className="col-separator"></div>
-            <a href="#" className="tt-icon-btn tt-hover-02 tt-small-indent">
-              <i className="tt-icon"><svg><use xlinkHref="#icon-share"></use></svg></i>
-            </a>
-            <a href="#" className="tt-icon-btn tt-hover-02 tt-small-indent">
-              <i className="tt-icon"><svg><use xlinkHref="#icon-flag"></use></svg></i>
-            </a>
-            <a href="#" className="tt-icon-btn tt-hover-02 tt-small-indent">
-              <i className="tt-icon"><svg><use xlinkHref="#icon-reply"></use></svg></i>
             </a>
           </div>
         </div>

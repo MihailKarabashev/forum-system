@@ -2,6 +2,7 @@ using AutoMapper;
 using ForumApi.Data;
 using ForumApi.Data.Seeding;
 using ForumApi.Dtos.Post;
+using ForumApi.Dtos.Reply;
 using ForumApi.Dtos.User;
 using ForumApi.Models;
 using ForumApi.Services;
@@ -68,7 +69,7 @@ builder.Services.AddAuthentication(opt =>
             await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
         },
     };
-    
+
 });
 
 builder.Services.AddAuthorization();
@@ -90,6 +91,8 @@ builder.Services.AddDefaultIdentity<ForumUser>(options =>
 
 builder.Services.AddTransient<IPostService, PostService>();
 builder.Services.AddTransient<IUsersService, UsersService>();
+builder.Services.AddTransient<IRepliesService, RepliesService>();
+
 
 
 var app = builder.Build();
@@ -109,7 +112,10 @@ new ForumDbContextSeeder()
     .GetResult();
 
 
-app.MapGet("api/posts/{id}", async (string id, IMapper mapper, IPostService postService) =>
+app.MapGet("api/posts/{id}", async (string id,
+    IMapper mapper,
+    IPostService postService,
+    IRepliesService repliesService) =>
 {
     var post = await postService.GetByIdAsync(id);
 
@@ -118,6 +124,10 @@ app.MapGet("api/posts/{id}", async (string id, IMapper mapper, IPostService post
         return Results.NotFound();
     }
     var postDto = mapper.Map<ReadPostModel>(post);
+
+    var replies = await repliesService.GetAllByPostIdAsync(id);
+
+    postDto.Replies = mapper.Map<IEnumerable<ReadReplyDto>>(replies);
 
     return Results.Ok(postDto);
 });
@@ -146,14 +156,15 @@ async (string id, IMapper mapper, IPostService postService) =>
     return Results.NoContent();
 });
 
-//change author id to be not static
+
 app.MapPost("api/posts",
     [Authorize]
-async (IMapper mapper, IPostService postService, CreatePostModel dto) =>
+async (IMapper mapper, IPostService postService, IUsersService userService, CreatePostModel dto) =>
 {
+    var authorId = userService.GetCurrentLoggedInUserId();
 
     var post = await postService.
-                      CreateAsync(dto.Title, dto.Description, "9d12223f-57d3-4ca5-aae6-6c569b0ac1e8", dto.CategoryId);
+                      CreateAsync(dto.Title, dto.Description, authorId, dto.CategoryId);
 
     var postDto = mapper.Map<ReadPostModel>(post);
 
@@ -201,5 +212,50 @@ async (IUsersService usersService, RegisterRequestModel model) =>
 
     return Results.StatusCode(201);
 });
+
+
+// Replies
+//check roles (administarator)
+
+app.MapPost("/api/replies",
+    [Authorize]
+async (IMapper mapper,
+    IRepliesService repliesService,
+    IUsersService usersService,
+    CreateReplyDto replyInput) =>
+{
+    var authorId = usersService.GetCurrentLoggedInUserId();
+
+    var reply = await repliesService.CreateAsync(replyInput.Description, null, replyInput.PostId, authorId);
+
+    var replyDto = mapper.Map<ReadReplyDto>(reply);
+
+    return Results.Created($"/api/posts/{replyDto.PostId}", replyDto);
+});
+
+app.MapDelete("/api/replies/{id}",
+    [Authorize]
+async (int replyId,
+    IRepliesService repliesService,
+    IUsersService usersService) =>
+{
+    var reply = await repliesService.GetByIdAsync(replyId);
+
+    if (reply == null)
+    {
+        return Results.NotFound();
+    }
+
+    //check wheather current logged in user is admin usersService.GetCurrentLoggedInUserId() == admin
+    if (reply.AuthorId != usersService.GetCurrentLoggedInUserId())
+    {
+        return Results.Unauthorized();
+    }
+
+    await repliesService.DeleteAsync(replyId);
+
+    return Results.NoContent();
+});
+
 
 app.Run();

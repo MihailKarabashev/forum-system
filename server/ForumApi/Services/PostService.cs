@@ -54,6 +54,7 @@ namespace ForumApi.Services
             await this.db.SaveChangesAsync();
         }
 
+        //find way to get only 6 replies or add pagination
         public async Task<IEnumerable<Post>> GetAllAsync()
         {
             return await this.db.Posts.AsNoTracking()
