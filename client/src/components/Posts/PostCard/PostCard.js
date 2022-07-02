@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Tags from "../../Tags/Tags";
 
 const PostCard = ({
     post
@@ -13,22 +14,18 @@ const PostCard = ({
                 </svg>
             </div>
             <div className="tt-col-description">
-                <h6 className="tt-title"><Link to={`/posts/details/${post.id}`}>
-                    <svg className="tt-icon">
-                        <use xlinkHref="#icon-pinned"></use>
-                    </svg>
-                    {post.title}
-                </Link></h6>
+                <h6 className="tt-title">
+                    <Link to={`/posts/details/${post.id}`}>
+                        <svg className="tt-icon">
+                            <use xlinkHref="#icon-pinned"></use>
+                        </svg>
+                        {post.title}
+                    </Link>
+                </h6>
+
                 <div className="row align-items-center no-gutters">
                     <div className="col-11">
-                        <ul className="tt-list-badge">
-                            <li className="show-mobile"><Link to="#"><span className="tt-color01 tt-badge">politics</span></Link></li>
-                            <li><Link to="#"><span className="tt-badge">contests</span></Link></li>
-                            <li><Link to="#"><span className="tt-badge">authors</span></Link></li>
-                        </ul>
-                    </div>
-                    <div className="col-1 ml-auto show-mobile">
-                        <div className="tt-value">1h</div>
+                        <Tags tags={post.tags} />
                     </div>
                 </div>
             </div>

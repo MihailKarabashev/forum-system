@@ -5,6 +5,7 @@ import { RichTextEditor } from '@mantine/rte';
 import * as postService from "../../../services/postServices";
 
 import CommentCard from "../../Comments/CommentCard/CommentCard";
+import Tags from '../../Tags/Tags';
 
 const controls = [
   ['bold', 'italic', 'underline', 'link', 'image'],
@@ -46,18 +47,12 @@ const PostDetails = () => {
                 <Link to="#">{post.title}</Link>
               </h3>
               <div className="tt-item-tag">
-                <ul className="tt-list-badge">
-                  <li><span className="tt-color03 tt-badge">exchange</span></li>
-                  <li><span className="tt-badge">themeforest</span></li>
-                  <li><span className="tt-badge">elements</span></li>
-                </ul>
+                {post.tags && <Tags tags={post.tags} />}
               </div>
             </div>
             <div className="tt-item-description">
               <h6 className="tt-title">BOLD TITLE IF POSSIBLE</h6>
-              <p>
-                {post.description}
-              </p>
+              <p> {post.description}</p>
             </div>
             <div className="tt-item-info info-bottom">
               <Link to="#" className="tt-icon-btn">

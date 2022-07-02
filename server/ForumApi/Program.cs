@@ -6,6 +6,7 @@ using ForumApi.Dtos.Reply;
 using ForumApi.Dtos.Tag;
 using ForumApi.Dtos.User;
 using ForumApi.Models;
+using ForumApi.Models.Enums;
 using ForumApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -94,6 +95,8 @@ builder.Services.AddTransient<IPostService, PostService>();
 builder.Services.AddTransient<IUsersService, UsersService>();
 builder.Services.AddTransient<IRepliesService, RepliesService>();
 builder.Services.AddTransient<ITagsService, TagsService>();
+builder.Services.AddTransient<IPostReactionsService, PostReactionsService>();
+
 
 
 
@@ -119,7 +122,8 @@ app.MapGet("api/posts/{id}", async (string id,
     IMapper mapper,
     IPostService postService,
     ITagsService tagsService,
-    IRepliesService repliesService) =>
+    IRepliesService repliesService,
+    IPostReactionsService postReactionService) =>
 {
     var post = await postService.GetByIdAsync(id);
 
@@ -131,9 +135,11 @@ app.MapGet("api/posts/{id}", async (string id,
 
     var replies = await repliesService.GetAllByPostIdAsync(id);
     var tags = await tagsService.GetAllByPostIdAsync(id);
+    var reaction = await postReactionService.GetCountByPostIdAsync(post.Id);
 
     postDto.Replies = mapper.Map<IEnumerable<ReadReplyDto>>(replies);
     postDto.Tags = mapper.Map<IEnumerable<ReadTagModel>>(tags);
+    postDto.Reaction = reaction;
 
     return Results.Ok(postDto);
 });
@@ -270,5 +276,43 @@ async (int replyId,
     return Results.NoContent();
 });
 
+
+
+//Post Reactions
+//Add Authorization attribute
+app.MapPost("/api/posts/reaction/like/{postId}", 
+    [Authorize]
+    async (IUsersService usersService, IPostReactionsService reactionsService, string postId) =>
+{
+    var userId = usersService.GetCurrentLoggedInUserId();
+    
+    if (userId == null)
+    {
+        return Results.Unauthorized();
+    }
+
+
+    var reaction = await reactionsService.ReactAsync(ReactionType.Like, postId, userId);
+
+    return Results.Created($"/api/posts/{postId}", reaction);
+});
+
+
+app.MapPost("/api/posts/reaction/dislike/{postId}",
+    [Authorize]
+    async (IUsersService usersService, IPostReactionsService reactionsService, string postId) =>
+    {
+        var userId = usersService.GetCurrentLoggedInUserId();
+
+        if (userId == null)
+        {
+            return Results.Unauthorized();
+        }
+
+
+        var reaction = await reactionsService.ReactAsync(ReactionType.DisLike, postId, userId);
+
+        return Results.Created($"/api/posts/{postId}", reaction);
+    });
 
 app.Run();

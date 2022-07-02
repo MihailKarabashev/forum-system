@@ -1,4 +1,5 @@
-﻿using ForumApi.Dtos.Reply;
+﻿using ForumApi.Dtos.Reaction;
+using ForumApi.Dtos.Reply;
 using ForumApi.Dtos.Tag;
 
 namespace ForumApi.Dtos.Post
@@ -24,5 +25,7 @@ namespace ForumApi.Dtos.Post
         public IEnumerable<ReadReplyDto> Replies { get; set; }
 
         public IEnumerable<ReadTagModel> Tags { get; set; }
+
+        public ReadReactionsCountModel Reaction { get; set; }
     }
 }
