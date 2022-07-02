@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ForumApi.Dtos.Post;
 using ForumApi.Dtos.Reply;
+using ForumApi.Dtos.Tag;
 using ForumApi.Models;
 using System.Globalization;
 
@@ -33,7 +34,8 @@ namespace ForumApi.Profiles.Post
                       y => y.MapFrom(src => src.CreatedOn.ToString("yyyy/mm/dd", CultureInfo.GetCultureInfo("en-US"))));
             this.CreateMap<CreateReplyDto, Reply>();
 
-          
+
+            this.CreateMap<Tag, ReadTagModel>();
         }
     }
 }

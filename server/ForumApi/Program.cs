@@ -3,6 +3,7 @@ using ForumApi.Data;
 using ForumApi.Data.Seeding;
 using ForumApi.Dtos.Post;
 using ForumApi.Dtos.Reply;
+using ForumApi.Dtos.Tag;
 using ForumApi.Dtos.User;
 using ForumApi.Models;
 using ForumApi.Services;
@@ -92,6 +93,8 @@ builder.Services.AddDefaultIdentity<ForumUser>(options =>
 builder.Services.AddTransient<IPostService, PostService>();
 builder.Services.AddTransient<IUsersService, UsersService>();
 builder.Services.AddTransient<IRepliesService, RepliesService>();
+builder.Services.AddTransient<ITagsService, TagsService>();
+
 
 
 
@@ -115,6 +118,7 @@ new ForumDbContextSeeder()
 app.MapGet("api/posts/{id}", async (string id,
     IMapper mapper,
     IPostService postService,
+    ITagsService tagsService,
     IRepliesService repliesService) =>
 {
     var post = await postService.GetByIdAsync(id);
@@ -126,18 +130,27 @@ app.MapGet("api/posts/{id}", async (string id,
     var postDto = mapper.Map<ReadPostModel>(post);
 
     var replies = await repliesService.GetAllByPostIdAsync(id);
+    var tags = await tagsService.GetAllByPostIdAsync(id);
 
     postDto.Replies = mapper.Map<IEnumerable<ReadReplyDto>>(replies);
+    postDto.Tags = mapper.Map<IEnumerable<ReadTagModel>>(tags);
 
     return Results.Ok(postDto);
 });
 
-app.MapGet("api/posts", async (IMapper mapper, IPostService postService) =>
+app.MapGet("api/posts", async (IMapper mapper, IPostService postService, ITagsService tagsService) =>
 {
     var posts = await postService.GetAllAsync();
-    var postDto = mapper.Map<IEnumerable<ReadPostModel>>(posts);
+    var postDtos = mapper.Map<IEnumerable<ReadPostModel>>(posts);
 
-    return Results.Ok(postDto);
+
+    foreach (var postDto in postDtos)
+    {
+        var postTag = await tagsService.GetAllByPostIdAsync(postDto.Id);
+        postDto.Tags = mapper.Map<IEnumerable<ReadTagModel>>(postTag);
+    }
+
+    return Results.Ok(postDtos);
 });
 
 app.MapDelete("api/posts/{id}",

@@ -54,15 +54,15 @@ namespace ForumApi.Services
             await this.db.SaveChangesAsync();
         }
 
-        //find way to get only 6 replies or add pagination
+        //Add PAGINATION
         public async Task<IEnumerable<Post>> GetAllAsync()
         {
             return await this.db.Posts.AsNoTracking()
                                      .Include(x=> x.Category)
                                      .Include(x=> x.Author)
-                                     .Include(x=> x.Replies)
-                                     .OrderByDescending(x => x.Replies.Count())
-                                     .ThenBy(x => x.CreatedOn)
+                                     .Include(x=> x.Tags)
+                                     .Take(3)
+                                     .OrderByDescending(x => x.CreatedOn)
                                      .Where(x => !x.IsDeleted)
                                      .ToListAsync();
         }

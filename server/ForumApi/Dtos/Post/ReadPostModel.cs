@@ -1,4 +1,5 @@
 ﻿using ForumApi.Dtos.Reply;
+using ForumApi.Dtos.Tag;
 
 namespace ForumApi.Dtos.Post
 {
@@ -21,5 +22,7 @@ namespace ForumApi.Dtos.Post
         public string CreatedOn { get; set; }
 
         public IEnumerable<ReadReplyDto> Replies { get; set; }
+
+        public IEnumerable<ReadTagModel> Tags { get; set; }
     }
 }
