@@ -1,12 +1,69 @@
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { useAuthContext } from '../../contexts/AuthContext';
 
-import AuthContext from "../../contexts/AuthContext";
+import { useNavigate, Link } from "react-router-dom";
+import * as authService from '../../services/authService';
+
+const initialValues = {
+  username: '',
+  password: ''
+}
 
 const Login = () => {
-
-  const { login } = useContext(AuthContext);
+  const [formValues, setFormValues] = useState(initialValues);
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
+  const { login } = useAuthContext();
   const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  }
+
+  const validate = (values) => {
+    const errors = {};
+    const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+
+    if (!values.username) {
+      errors.username = "Username is required!";
+    }
+    if (!values.password) {
+      errors.password = "Password is required!";
+    }
+
+    return errors;
+  }
+
+
+
+
+  const onLoginHandler = (e) => {
+    e.preventDefault();
+
+    setFormErrors(validate(formValues));
+    setIsSubmit(true);
+
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      let formData = new FormData(e.currentTarget);
+
+      let email = formData.get('email');
+      let password = formData.get('password');
+
+      authService
+        .login(email, password)
+        .then(authData => {
+          login(authData);
+          //notification please
+          navigate('/');
+        })
+        .catch(err => {
+          // show notification and do nothing
+          console.log(err);
+        });
+    }
+  };
+
   return (
     <div className="container">
       <div className="tt-loginpages-wrapper">
@@ -20,15 +77,25 @@ const Login = () => {
               Log into your account to unlock true power of community.
             </div>
           </a>
-          <form className="form-default">
+          <form className="form-default" method="POST" onSubmit={onLoginHandler}>
             <div className="form-group">
               <label htmlFor="loginUserName">Username</label>
-              <input type="text" name="name" className="form-control" id="loginUserName" placeholder="azyrusmax" />
+              <input type="text" name="username"
+                className="form-control" id="loginUserName"
+                placeholder="username" value={formValues.username}
+                onChange={handleChange}
+              />
             </div>
+            <p style={{ color: 'red' }}>{formErrors.username}</p>
             <div className="form-group">
               <label htmlFor="loginUserPassword">Password</label>
-              <input type="password" name="name" className="form-control" id="loginUserPassword" placeholder="************" />
+              <input type="password" name="password"
+                className="form-control" id="loginUserPassword"
+                placeholder="************" value={formValues.password}
+                onChange={handleChange}
+              />
             </div>
+            <p style={{ color: 'red' }}>{formErrors.password}</p>
             <div className="row">
               <div className="col">
                 <div className="form-group">
@@ -47,7 +114,7 @@ const Login = () => {
               </div>
             </div>
             <div className="form-group">
-              <a href="#" className="btn btn-secondary btn-block">Log in</a>
+              <button type="submit" className="btn btn-secondary btn-block">Log in</button>
             </div>
             <p>Or login with social network</p>
             <div className="row">

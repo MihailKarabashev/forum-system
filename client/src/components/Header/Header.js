@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import { useAuthContext } from '../../contexts/AuthContext';
 
 const Header = () => {
+
+  const { email } = useAuthContext();
+
   return (
     <header id="tt-header">
       <div className="container">
@@ -21,8 +25,8 @@ const Header = () => {
                       <li><Link to="/">Home</Link></li>
                       <li><a href="page-create-topic.html">Create Topic</a></li>
                       <li><a href="page-single_settings.html">Single User Settings</a></li>
-                      <li><a href="page-signup.html">Sign up</a></li>
-                      <li><a href="page-login.html">Log in</a></li>
+                      <li><Link to="/register">Sign up</Link></li>
+                      <li><Link to="/login">Log in</Link></li>
                       <li><a href="page-categories.html">Categories</a></li>
                       <li><Link to="page-tabs.html">About</Link></li>
                       <li><a href="_demo_modal-advancedSearch.html">Advanced Search</a></li>
@@ -56,10 +60,14 @@ const Header = () => {
             </div>
           </div>
           <div className="col-auto ml-auto">
-            <div className="tt-account-btn">
-              <Link to="/" className="btn btn-primary">Log in</Link>
-              <Link to="/" className="btn btn-secondary">Sign up</Link>
-            </div>
+            {
+              email
+                ? ''
+                : <div className="tt-account-btn">
+                  <Link to="/login" className="btn btn-primary">Log in</Link>
+                  <Link to="/register" className="btn btn-secondary">Sign up</Link>
+                </div>
+            }
           </div>
         </div>
       </div>

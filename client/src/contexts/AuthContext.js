@@ -1,6 +1,41 @@
-import React from "react";
+import { createContext, useContext } from "react";
 
-const AuthContext = React.createContext({});
+import useLocalStorage from "../hooks/useLocalStorage";
+
+const initialUserData = {
+    token: '',
+    email: '',
+}
+
+const AuthContext = createContext();
 
 
-export default AuthContext;
+export const AuthProvider = ({ children }) => {
+    const [user, setUser] = useLocalStorage(initialUserData);
+
+    const login = (userData) => {
+        setUser(userData);
+    }
+
+    const logout = () => {
+        setUser(initialUserData);
+    }
+
+    const register = (userData) => {
+        setUser(userData);
+    }
+
+
+    return (
+        <AuthContext.Provider value={{ user, login, register, logout }}>
+            {children}
+        </AuthContext.Provider>
+    )
+}
+
+
+export const useAuthContext = () => {
+    const authState = useContext(AuthContext);
+
+    return authState;
+}

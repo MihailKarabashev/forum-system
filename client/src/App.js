@@ -1,8 +1,6 @@
-import useLocalStorage from './hooks/useLocalStorage';
-
 import { Routes, Route } from "react-router-dom";
 
-import AuthContext from './contexts/AuthContext';
+import { AuthProvider } from './contexts/AuthContext';
 
 import Header from "./components/Header/Header";
 import Login from "./components/Login/Login";
@@ -15,27 +13,13 @@ import PostDetails from "./components/Posts/PostDetails/PostDetails";
 
 import "../src/App.css";
 
-const initialUserData = {
-  token: '',
-  email: '',
-}
+
 
 function App() {
-  const [user, setUser] = useLocalStorage(initialUserData);
-
-  const login = (userData) => {
-    setUser(userData);
-  }
-  const logout = () => {
-    setUser(initialUserData);
-  }
-  const register = (userData) => {
-    setUser(userData);
-  }
 
   return (
     <main id="tt-pageContent">
-      <AuthContext.Provider value={{ user, login, register, logout }}>
+      <AuthProvider>
 
         <Header />
 
@@ -49,7 +33,7 @@ function App() {
           <Route path="/posts/details/:postId" element={<PostDetails />} />
         </Routes>
 
-      </AuthContext.Provider>
+      </AuthProvider>
 
     </main>
   );
