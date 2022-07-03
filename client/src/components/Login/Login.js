@@ -1,4 +1,12 @@
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
+import AuthContext from "../../contexts/AuthContext";
+
 const Login = () => {
+
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
   return (
     <div className="container">
       <div className="tt-loginpages-wrapper">

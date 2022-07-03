@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { RichTextEditor } from '@mantine/rte';
 
 import * as postService from "../../../services/postServices";
 
-import CommentCard from "../../Comments/CommentCard/CommentCard";
 import Tags from '../../Tags/Tags';
+import CommentCard from "../../Comments/CommentCard/CommentCard";
+import CreatePostReply from '../PostReplies/CreatePostReply';
+
 
 const controls = [
   ['bold', 'italic', 'underline', 'link', 'image'],
@@ -21,10 +22,13 @@ const PostDetails = () => {
   useEffect(() => {
     postService.getPostById(postId)
       .then(data => {
-        console.log(Array.isArray(data.replies));
         setPost(data);
       });
   }, []);
+
+  const onTextEditorChange = (val) => {
+    onChange(val);
+  }
 
   return (
     <div className="container">
@@ -71,46 +75,18 @@ const PostDetails = () => {
         {
           post.replies && post.replies.map(reply => <CommentCard key={reply.id} reply={reply} />)
         }
-
-
       </div>
+
       <div className="tt-wrapper-inner">
         <h4 className="tt-title-separator"><span>You’ve reached the end of replies</span></h4>
       </div>
 
-      {/* Add library like TimyMC to escape html when writting */}
-      <div className="tt-wrapper-inner">
-        <form className="pt-editor form-default">
-          <h6 className="pt-title">Post Your Reply</h6>
-          <div className="form-group">
-            <RichTextEditor value={value} onChange={onChange} controls={controls}
-              onImageUpload={() => console.log('Function here')}
-              styles={{
-                root: { background: '#E2E7EA' },
-                toolbar: { background: '#E2E7EA' },
-              }}
-              style={
-                { paddingTop: 10, paddingBottom: 100 }
-              }
-            />
-          </div>
-          <div className="pt-row">
-            <div className="col-auto">
-              <div className="checkbox-group">
-                <input type="checkbox" id="checkBox21" name="checkbox" />
-                <label htmlFor="checkBox21">
-                  <span className="check"></span>
-                  <span className="box"></span>
-                  <span className="tt-text">Subscribe to this topic.</span>
-                </label>
-              </div>
-            </div>
-            <div className="col-auto">
-              <a href="#" className="btn btn-secondary btn-width-lg">Reply</a>
-            </div>
-          </div>
-        </form>
-      </div>
+      <CreatePostReply
+        onChange={onTextEditorChange}
+        controls={controls}
+        value={value}
+      />
+
     </div>
 
 
