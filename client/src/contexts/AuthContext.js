@@ -11,7 +11,7 @@ const AuthContext = createContext();
 
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useLocalStorage(initialUserData);
+    const [user, setUser] = useLocalStorage('user', initialUserData);
 
     const login = (userData) => {
         setUser(userData);

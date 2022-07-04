@@ -3,7 +3,38 @@ import { useAuthContext } from '../../contexts/AuthContext';
 
 const Header = () => {
 
-  const { email } = useAuthContext();
+  const { user } = useAuthContext();
+
+  const guestNavigation = () => {
+    return (
+      <div className="col-auto ml-auto">
+        <div className="tt-account-btn">
+          <Link to="/login" className="btn btn-primary">Log in</Link>
+          <Link to="/register" className="btn btn-secondary">Sign up</Link>
+        </div>
+      </div>
+    );
+  }
+
+  const userNavigation = () => {
+    return (
+      <div className="col-auto ml-auto">
+        <div className="tt-user-info d-flex justify-content-center">
+          <Link to="#" className="tt-btn-icon">
+            <i className="tt-icon"><svg><use xlinkHref="#icon-notification"></use></svg></i>
+          </Link>
+          <div className="tt-avatar-icon tt-size-md">
+            <i className="tt-icon"><svg><use xlinkHref="#icon-ava-a"></use></svg></i>
+          </div>
+          <div className="custom-select-01">
+            <select>
+              <option value="Default Sorting">azyrusmax</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <header id="tt-header">
@@ -59,16 +90,13 @@ const Header = () => {
               </form>
             </div>
           </div>
-          <div className="col-auto ml-auto">
-            {
-              email
-                ? ''
-                : <div className="tt-account-btn">
-                  <Link to="/login" className="btn btn-primary">Log in</Link>
-                  <Link to="/register" className="btn btn-secondary">Sign up</Link>
-                </div>
-            }
-          </div>
+
+          {
+            user.email
+              ? userNavigation
+              : guestNavigation
+          }
+
         </div>
       </div>
     </header>
