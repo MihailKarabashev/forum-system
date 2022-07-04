@@ -47,6 +47,7 @@ const Login = () => {
               />
             </div>
             <p style={{ color: 'red' }}>{errors.email}</p>
+
             <div className="form-group">
               <label htmlFor="loginUserPassword">Password</label>
               <input type="password" name="password"
@@ -56,6 +57,7 @@ const Login = () => {
               />
             </div>
             <p style={{ color: 'red' }}>{errors.password}</p>
+
             <div className="row">
               <div className="col">
                 <div className="form-group">
@@ -70,7 +72,7 @@ const Login = () => {
                 </div>
               </div>
               <div className="col ml-auto text-right">
-                <a href="#" className="tt-underline">Forgot Password</a>
+                <Link to="#" className="tt-underline">Forgot Password</Link>
               </div>
             </div>
             <div className="form-group">
@@ -80,33 +82,34 @@ const Login = () => {
             <div className="row">
               <div className="col">
                 <div className="form-group">
-                  <a href="#" className="btn btn-color01 btn-secondary btn-block">
+                  <Link to="#" className="btn btn-color01 btn-secondary btn-block">
                     <i>
                       <svg className="icon">
                         <use xlinkHref="#facebook-f-brands"></use>
                       </svg>
                     </i>
                     Facebook
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="col">
                 <div className="form-group">
-                  <a href="#" className="btn btn-color02 btn-block">
+                  <Link to="#" className="btn btn-color02 btn-block">
                     <i>
                       <svg className="icon">
                         <use xlinkHref="#twitter-brands"></use>
                       </svg>
                     </i>
                     Twitter
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
-            <p>Don’t have an account? <a href="#" className="tt-underline">Signup here</a></p>
+            <p>Don’t have an account? <Link to="/register" className="tt-underline">Signup here</Link></p>
             <div className="tt-notes">
               By Logging in, signing in or continuing, I agree to
-              Forum19’s <a href="#" className="tt-underline">Terms of Use</a> and <a href="#" className="tt-underline">Privacy Policy.</a>
+              Forum19’s  <Link to="#" className="tt-underline">Terms of Use</Link>
+              and <Link to="#" className="tt-underline">Privacy Policy.</Link>
             </div>
           </form>
         </div>

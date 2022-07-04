@@ -10,6 +10,7 @@ namespace ForumApi.Data.Seeding
             var roleManager = serviceProvider.GetRequiredService<RoleManager<ForumRole>>();
 
             await SeedRoleAsync(roleManager, "Admin");
+            // await SeedRoleASync(rolemanager", "User")
         }
 
         private static async Task SeedRoleAsync(RoleManager<ForumRole> roleManager, string roleName)

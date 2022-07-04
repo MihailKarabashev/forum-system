@@ -68,7 +68,7 @@ namespace ForumApi.Services
             return this.httpContextAccesor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
 
-        public async Task<LoginResponseModel> LoginAsync(LoginRequestModel model)
+        public async Task<AuthResponseModel> LoginAsync(LoginRequestModel model)
         {
             var user = await this.userManager.FindByEmailAsync(model.Email);
 
@@ -86,18 +86,22 @@ namespace ForumApi.Services
 
             var generateToken = await this.GenerateJwtToken(user);
 
+            var userRole =  await userManager.GetRolesAsync(user);
+
             this.db.Users.Update(user);
 
             await this.db.SaveChangesAsync();
 
-            return new LoginResponseModel
+            return new AuthResponseModel
             {
+                Username = user.UserName,
                 Token = generateToken,
                 Email = model.Email,
+                RoleName = userRole[0]
             };
         }
 
-        public async Task RegisterAsync(RegisterRequestModel model)
+        public async Task<AuthResponseModel> RegisterAsync(RegisterRequestModel model)
         {
             var user = new ForumUser()
             {
@@ -113,6 +117,18 @@ namespace ForumApi.Services
             {
                 throw new Exception("Register => Something happened bro.");
             }
+
+            await userManager.AddToRoleAsync(user, "User");
+
+            var generateToken = await this.GenerateJwtToken(user);
+
+            return new AuthResponseModel
+            {
+                Username = model.Username,
+                Email = model.Email,
+                Token = generateToken,
+                RoleName = "User"
+            };
         }
     }
 }

@@ -4,6 +4,7 @@ import { useAuthContext } from '../../contexts/AuthContext';
 const Header = () => {
 
   const { user } = useAuthContext();
+  console.log(user);
 
   const guestNavigation =
     (
@@ -27,12 +28,27 @@ const Header = () => {
           </div>
           <div className="custom-select-01">
             <select>
-              <option value="Default Sorting">azyrusmax</option>
+              <option value="Default Sorting">yourUserName</option>
             </select>
           </div>
         </div>
       </div>
     )
+
+  const userNavLinks = (
+    <>
+      <li><Link to="page-create-topic.html">Create Topic</Link></li>
+      <li><Link to="page-single_settings.html">Single User Settings</Link></li>
+    </>
+  );
+
+  const guestNavLinks = (
+    <>
+      <li><Link to="/register">Sign up</Link></li>
+      <li><Link to="/login">Log in</Link></li>
+    </>
+  )
+
 
   return (
     <header id="tt-header">
@@ -45,21 +61,20 @@ const Header = () => {
             <div className="tt-desktop-menu">
               <nav>
                 <ul>
-                  <li><a href="page-categories.html"><span>Categories</span></a></li>
-                  <li><a href="page-tabs.html"><span>Trending</span></a></li>
-                  <li><a href="page-create-topic.html"><span>New</span></a></li>
+                  <li><Link to="page-categories.html"><span>Categories</span></Link></li>
+                  <li><Link to="page-tabs.html"><span>Trending</span></Link></li>
+                  <li><Link to="page-tabs.html"><span>About</span></Link></li>
                   <li>
-                    <a href="page-single-user.html"><span>Pages</span></a>
+                    <Link to="page-single-user.html"><span>Pages</span></Link>
                     <ul>
                       <li><Link to="/">Home</Link></li>
-                      <li><a href="page-create-topic.html">Create Topic</a></li>
-                      <li><a href="page-single_settings.html">Single User Settings</a></li>
-                      <li><Link to="/register">Sign up</Link></li>
-                      <li><Link to="/login">Log in</Link></li>
-                      <li><a href="page-categories.html">Categories</a></li>
-                      <li><Link to="page-tabs.html">About</Link></li>
-                      <li><a href="_demo_modal-advancedSearch.html">Advanced Search</a></li>
-                      <li><a href="error404.html">Error 404</a></li>
+                      {user.email
+                        ? userNavLinks
+                        : guestNavLinks
+                      }
+                      <li><Link to="page-categories.html">Categories</Link></li>
+                      <li><Link to="_demo_modal-advancedSearch.html">Advanced Search</Link></li>
+                      <li><Link to="error404.html">Error 404</Link></li>
                     </ul>
                   </li>
                 </ul>
@@ -88,13 +103,11 @@ const Header = () => {
               </form>
             </div>
           </div>
-
           {
             user.email
               ? userNavigation
               : guestNavigation
           }
-
         </div>
       </div>
     </header>

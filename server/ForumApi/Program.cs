@@ -235,9 +235,9 @@ async (IUsersService usersService, RegisterRequestModel model) =>
 {
     // Fluent Validation for model state
 
-    await usersService.RegisterAsync(model);
+    var resultModel = await usersService.RegisterAsync(model);
 
-    return Results.StatusCode(201);
+    return Results.Ok(resultModel);
 });
 
 

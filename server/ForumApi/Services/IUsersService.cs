@@ -5,11 +5,11 @@ namespace ForumApi.Services
 {
     public interface IUsersService
     {
-        Task RegisterAsync(RegisterRequestModel model);
+        Task<AuthResponseModel> RegisterAsync(RegisterRequestModel model);
 
         Task<string> GenerateJwtToken(ForumUser user);
 
-        Task<LoginResponseModel> LoginAsync(LoginRequestModel model);
+        Task<AuthResponseModel> LoginAsync(LoginRequestModel model);
 
         string GetCurrentLoggedInUserId();
     }

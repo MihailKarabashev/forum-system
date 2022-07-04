@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 const initialValues = {
+    username: '',
     email: '',
     password: ''
 }
@@ -20,7 +21,6 @@ const useForm = (callback) => {
                     })
                 } else {
                     let { username, ...newObj } = errors;
-                    console.log(newObj);
                     setErrors(newObj);
 
                 }
