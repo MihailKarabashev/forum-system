@@ -5,19 +5,18 @@ const Header = () => {
 
   const { user } = useAuthContext();
 
-  const guestNavigation = () => {
-    return (
+  const guestNavigation =
+    (
       <div className="col-auto ml-auto">
         <div className="tt-account-btn">
           <Link to="/login" className="btn btn-primary">Log in</Link>
           <Link to="/register" className="btn btn-secondary">Sign up</Link>
         </div>
       </div>
-    );
-  }
+    )
 
-  const userNavigation = () => {
-    return (
+  const userNavigation =
+    (
       <div className="col-auto ml-auto">
         <div className="tt-user-info d-flex justify-content-center">
           <Link to="#" className="tt-btn-icon">
@@ -34,7 +33,6 @@ const Header = () => {
         </div>
       </div>
     )
-  }
 
   return (
     <header id="tt-header">
