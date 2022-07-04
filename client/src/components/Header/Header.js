@@ -2,9 +2,7 @@ import { Link } from "react-router-dom";
 import { useAuthContext } from '../../contexts/AuthContext';
 
 const Header = () => {
-
   const { user } = useAuthContext();
-  console.log(user);
 
   const guestNavigation =
     (
@@ -24,11 +22,11 @@ const Header = () => {
             <i className="tt-icon"><svg><use xlinkHref="#icon-notification"></use></svg></i>
           </Link>
           <div className="tt-avatar-icon tt-size-md">
-            <i className="tt-icon"><svg><use xlinkHref="#icon-ava-a"></use></svg></i>
+            <i className="tt-icon"><svg><use xlinkHref={`#icon-ava-${user.username[0]}`}></use></svg></i>
           </div>
           <div className="custom-select-01">
             <select>
-              <option value="Default Sorting">yourUserName</option>
+              <option value="Default Sorting">{user.username}</option>
             </select>
           </div>
         </div>

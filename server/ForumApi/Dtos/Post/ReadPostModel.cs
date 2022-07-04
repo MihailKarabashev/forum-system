@@ -14,6 +14,8 @@ namespace ForumApi.Dtos.Post
 
         public string AuthorId { get; set; }
 
+        public string AuthorUserName { get; set; }
+
         public string CategoryName { get; set; }
 
         public int CategoryId { get; set; }

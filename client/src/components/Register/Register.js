@@ -13,7 +13,7 @@ const Register = () => {
     authService
       .register(values.username, values.email, values.password)
       .then(authData => {
-        console.log(authData);
+        //navigation success
         register(authData);
         navigate('/');
       })

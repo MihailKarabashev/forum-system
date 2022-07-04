@@ -1,16 +1,16 @@
 import { Link } from "react-router-dom";
 import Tags from "../../Tags/Tags";
 
+
 const PostCard = ({
     post
 }) => {
-
     console.log(post);
     return (
         <div className="tt-item tt-itemselect">
             <div className="tt-col-avatar">
                 <svg className="tt-icon">
-                    <use xlinkHref="#icon-ava-k"></use>
+                    <use xlinkHref={`#icon-ava-${post.authorUserName[0].toLowerCase()}`}></use>
                 </svg>
             </div>
             <div className="tt-col-description">

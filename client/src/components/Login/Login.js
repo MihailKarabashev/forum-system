@@ -58,23 +58,6 @@ const Login = () => {
             </div>
             <p style={{ color: 'red' }}>{errors.password}</p>
 
-            <div className="row">
-              <div className="col">
-                <div className="form-group">
-                  <div className="checkbox-group">
-                    <input type="checkbox" id="settingsCheckBox01" name="checkbox" />
-                    <label htmlFor="settingsCheckBox01">
-                      <span className="check"></span>
-                      <span className="box"></span>
-                      <span className="tt-text">Remember me</span>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div className="col ml-auto text-right">
-                <Link to="#" className="tt-underline">Forgot Password</Link>
-              </div>
-            </div>
             <div className="form-group">
               <button type="submit" className="btn btn-secondary btn-block">Log in</button>
             </div>
