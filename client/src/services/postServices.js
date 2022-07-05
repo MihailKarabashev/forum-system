@@ -16,7 +16,7 @@ export const createPost = (data) => {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
-            'Authorization': `Beared ${getToken()}`
+            'Authorization': `Bearer ${getToken()}`
         },
         body: JSON.stringify(data)
     }).then(res => res.json());

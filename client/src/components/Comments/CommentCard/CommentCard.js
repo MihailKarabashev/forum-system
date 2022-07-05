@@ -2,12 +2,14 @@ import CommentReply from "../CommentReply";
 import { generateSvgIcon } from "../../utils/getProfilePicture";
 
 const CommentCard = ({
-  reply
+  reply,
+  isReplyCreated
 }) => {
 
-  // Add to reply property , authorUserName in Backend
   return (
     <>
+
+      {/* <div className={isReplyCreated ? "tt-item tt-wrapper-success" : "tt-item"}> */}
       <div className="tt-item">
         <div className="tt-single-topic">
           <div className="tt-item-header pt-noborder">

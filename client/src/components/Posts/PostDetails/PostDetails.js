@@ -5,6 +5,7 @@ import { useAuthContext } from '../../../contexts/AuthContext';
 
 import * as postService from "../../../services/postServices";
 import * as replyService from "../../../services/replyService";
+import * as reactionService from "../../../services/reactionService";
 import { generateSvgIcon } from '../../utils/getProfilePicture';
 
 import Tags from '../../Tags/Tags';
@@ -15,9 +16,10 @@ import CommentCard from "../../Comments/CommentCard/CommentCard";
 
 const PostDetails = () => {
   const [post, setPost] = useState({});
-  const [tags, setTags] = useState([]);
-  const [reactions, setReactions] = useState([]);
+  const [tags, setPostTags] = useState([]);
   const [replies, setPostReplies] = useState([]);
+  const [reactions, setPostReactions] = useState({});
+  const [isReplyCreated, setIsReplyCreated] = useState(false);
 
   const { postId } = useParams();
   const { user } = useAuthContext();
@@ -26,13 +28,13 @@ const PostDetails = () => {
     postService.getPostById(postId)
       .then(data => {
         setPost(data);
+        setPostTags(post.tags);
         setPostReplies(data.replies)
-        setTags(post.tags);
-        setReactions(post.reaction);
+        setPostReactions(post.reaction);
       });
   }, []);
 
-
+  console.log('render');
   const onSubmitFormHandler = (e) => {
     e.preventDefault();
 
@@ -45,6 +47,10 @@ const PostDetails = () => {
           ...oldPostReplies,
           createdReply
         ]);
+        setIsReplyCreated(true);
+        setTimeout(() => {
+          setIsReplyCreated(false);
+        }, 5000);
       })
       .catch(err => {
         console.log(err);
@@ -53,11 +59,23 @@ const PostDetails = () => {
     e.target.reset();
   }
 
+  const onLikeClickHandler = (e) => {
+    e.preventDefault();
+
+    reactionService.likePost(postId)
+      .then(reactions => {
+        setPostReactions(reactions);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
 
   return (
     <div className="container">
       <div className="tt-single-topic-list">
-        <div className="tt-item">
+        <div className="tt-item" >
           <div className="tt-single-topic">
             <div className="tt-item-header">
               <div className="tt-item-info info-top">
@@ -83,7 +101,7 @@ const PostDetails = () => {
               <p> {post.description}</p>
             </div>
             <div className="tt-item-info info-bottom">
-              <Link to="#" className="tt-icon-btn">
+              <Link to="#" onClick={onLikeClickHandler} className="tt-icon-btn">
                 <i className="tt-icon"><svg><use xlinkHref="#icon-like"></use></svg></i>
                 {
                   reactions && <span className="tt-text">{reactions.likes}</span>
@@ -101,7 +119,13 @@ const PostDetails = () => {
         </div>
 
         {
-          replies && replies.map(reply => <CommentCard key={reply.id} reply={reply} />)
+          replies &&
+          replies.map(reply =>
+            <CommentCard
+              key={reply.id}
+              reply={reply}
+              isReplyCreated={isReplyCreated}
+            />)
         }
       </div>
 
