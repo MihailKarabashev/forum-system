@@ -1,14 +1,4 @@
-import { useState } from 'react';
-import { RichTextEditor } from '@mantine/rte';
-
-const controls = [
-    ['bold', 'italic', 'underline', 'link', 'image'],
-    ['unorderedList', 'h1', 'h2', 'h3'],
-    ['alignLeft', 'alignCenter', 'alignRight'],
-];
-
 const CreatePost = () => {
-    const [value, onChange] = useState('');
 
     return (
         <div className="container">
@@ -27,20 +17,10 @@ const CreatePost = () => {
                     </div>
                     <div className="pt-editor">
                         <h6 className="pt-title">Topic Body</h6>
-
                         <div className="form-group">
-                            {/* implemet image upload  */}
-                            <RichTextEditor value={value} onChange={onChange} controls={controls}
-                                onImageUpload={() => console.log('Function here')}
-                                styles={{
-                                    root: { background: '#E2E7EA' },
-                                    toolbar: { background: '#E2E7EA' },
-                                }}
-                                style={
-                                    { paddingTop: 10, paddingBottom: 100 }
-                                }
-                            />
+                            <textarea name="message" className="form-control" rows="5" placeholder="Lets get started"></textarea>
                         </div>
+
                         <div className="row">
                             <div className="col-md-4">
                                 <div className="form-group">

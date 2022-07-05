@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const CommentReply = ({
     reply
 }) => {
@@ -8,7 +10,7 @@ const CommentReply = ({
                     <div className="topic-inner-avatar">
                         <i className="tt-icon"><svg><use xlinkHref="#icon-ava-s"></use></svg></i>
                     </div>
-                    <div className="topic-inner-title"><a href="#">{reply.parentAuthorUserName}</a></div>
+                    <div className="topic-inner-title"><Link to="#">{reply.parentAuthorUserName}</Link></div>
                 </div>
                 <div className="topic-inner-description">
                     {reply.parentDescription}

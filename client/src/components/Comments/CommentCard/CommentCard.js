@@ -12,7 +12,7 @@ const CommentCard = ({
           <div className="tt-item-header pt-noborder">
             <div className="tt-item-info info-top">
               <div className="tt-avatar-icon">
-                <i className="tt-icon"><svg><use xlinkHref="#icon-ava-t"></use></svg></i>
+                <i className="tt-icon"><svg><use xlinkHref={`#icon-ava-${reply.authorUserName[0]}`}></use></svg></i>
               </div>
               <div className="tt-avatar-title">
                 <a href="#">{reply.authorUserName}</a>

@@ -1,21 +1,15 @@
-import { RichTextEditor } from '@mantine/rte';
-
 const CreatePostReply = ({
-    onTextEditorChange,
-    controls,
-    value
+    onSubmitFormHandler,
 }) => {
+
     return (
         <div className="tt-wrapper-inner">
-            <form className="pt-editor form-default">
+            <form className="pt-editor form-default" onSubmit={onSubmitFormHandler}>
                 <h6 className="pt-title">Post Your Reply</h6>
                 <div className="form-group">
-                    <RichTextEditor
-                        value={value} onChange={onTextEditorChange} controls={controls}
-                        onImageUpload={() => console.log('Function here')}
-                        styles={{ root: { background: '#E2E7EA' }, toolbar: { background: '#E2E7EA' }, }}
-                        style={{ paddingTop: 10, paddingBottom: 100 }}
-                    />
+                    <div className="form-group">
+                        <textarea name="message" className="form-control" rows="5" placeholder="Lets get started"></textarea>
+                    </div>
                 </div>
                 <div className="pt-row">
                     <div className="col-auto">
@@ -29,7 +23,7 @@ const CreatePostReply = ({
                         </div>
                     </div>
                     <div className="col-auto">
-                        <a href="#" className="btn btn-secondary btn-width-lg">Reply</a>
+                        <button type="submit" className="btn btn-secondary btn-width-lg">Reply</button>
                     </div>
                 </div>
             </form>

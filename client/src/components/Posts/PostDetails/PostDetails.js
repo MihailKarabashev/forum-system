@@ -1,23 +1,21 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
+import { useAuthContext } from '../../../contexts/AuthContext';
+
 import * as postService from "../../../services/postServices";
+import { generateSvgIcon } from '../../utils/getProfilePicture';
 
 import Tags from '../../Tags/Tags';
-import CommentCard from "../../Comments/CommentCard/CommentCard";
+import LoginAction from '../../Login/LoginAction';
 import CreatePostReply from '../PostReplies/CreatePostReply';
+import CommentCard from "../../Comments/CommentCard/CommentCard";
 
-
-const controls = [
-  ['bold', 'italic', 'underline', 'link', 'image'],
-  ['unorderedList', 'h1', 'h2', 'h3'],
-  ['alignLeft', 'alignCenter', 'alignRight'],
-];
 
 const PostDetails = () => {
-  const [value, onChange] = useState('');
   const [post, setPost] = useState({});
   const { postId } = useParams();
+  const { user } = useAuthContext();
 
   useEffect(() => {
     postService.getPostById(postId)
@@ -26,9 +24,11 @@ const PostDetails = () => {
       });
   }, []);
 
-  const onTextEditorChange = (val) => {
-    onChange(val);
+
+  const onSubmitFormHandler = (e) => {
+    e.preventDefault();
   }
+
 
   return (
     <div className="container">
@@ -38,10 +38,10 @@ const PostDetails = () => {
             <div className="tt-item-header">
               <div className="tt-item-info info-top">
                 <div className="tt-avatar-icon">
-                  <i className="tt-icon"><svg><use xlinkHref="#icon-ava-d"></use></svg></i>
+                  <i className="tt-icon"><svg><use xlinkHref={`#icon-ava-${generateSvgIcon(post.authorUserName)}`}></use></svg></i>
                 </div>
                 <div className="tt-avatar-title">
-                  <Link to="#">AUTHOR NAME</Link>
+                  <Link to="#">{post.authorUserName}</Link>
                 </div>
                 <Link to="#" className="tt-info-time">
                   <i className="tt-icon"><svg><use xlinkHref="#icon-time"></use></svg></i>{post.createdOn}
@@ -61,11 +61,15 @@ const PostDetails = () => {
             <div className="tt-item-info info-bottom">
               <Link to="#" className="tt-icon-btn">
                 <i className="tt-icon"><svg><use xlinkHref="#icon-like"></use></svg></i>
-                <span className="tt-text">671</span>
+                {
+                  post.reaction && <span className="tt-text">{post.reaction.likes}</span>
+                }
               </Link>
               <Link to="#" className="tt-icon-btn">
                 <i className="tt-icon"><svg><use xlinkHref="#icon-dislike"></use></svg></i>
-                <span className="tt-text">39</span>
+                {
+                  post.reaction && <span className="tt-text">{post.reaction.dislikes}</span>
+                }
               </Link>
               <div className="col-separator"></div>
             </div>
@@ -81,12 +85,13 @@ const PostDetails = () => {
         <h4 className="tt-title-separator"><span>You’ve reached the end of replies</span></h4>
       </div>
 
-      <CreatePostReply
-        onChange={onTextEditorChange}
-        controls={controls}
-        value={value}
-      />
-
+      {
+        user.email
+          ? <CreatePostReply
+            onSubmitFormHandler={onSubmitFormHandler}
+          />
+          : <LoginAction />
+      }
     </div>
 
 
