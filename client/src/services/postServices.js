@@ -1,3 +1,4 @@
+import { getToken } from "./authService";
 export const baseUrl = 'https://localhost:7229/api';
 
 export const getPosts = () => {
@@ -11,11 +12,11 @@ export const getPostById = (id) => {
 }
 
 export const createPost = (data) => {
-    fetch(`${baseUrl}/posts`, {
+    return fetch(`${baseUrl}/posts`, {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
-            //authorization header
+            'Authorization': `Beared ${getToken()}`
         },
         body: JSON.stringify(data)
     }).then(res => res.json());

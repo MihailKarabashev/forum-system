@@ -19,7 +19,5 @@
         public string AuthorUserName { get; set; }
 
         public string CreatedOn { get; set; }
-
-        
     }
 }

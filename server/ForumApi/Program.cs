@@ -188,10 +188,10 @@ app.MapPost("api/posts",
     [Authorize]
 async (IMapper mapper, IPostService postService, IUsersService userService, CreatePostModel dto) =>
 {
-    var authorId = userService.GetCurrentLoggedInUserId();
+    var author = await userService.GetCurrentLoggedInUser();
 
     var post = await postService.
-                      CreateAsync(dto.Title, dto.Description, authorId, dto.CategoryId);
+                      CreateAsync(dto.Title, dto.Description, author.Id, dto.CategoryId);
 
     var postDto = mapper.Map<ReadPostModel>(post);
 
@@ -251,11 +251,13 @@ async (IMapper mapper,
     IUsersService usersService,
     CreateReplyDto replyInput) =>
 {
-    var authorId = usersService.GetCurrentLoggedInUserId();
+    var author =await usersService.GetCurrentLoggedInUser();
 
-    var reply = await repliesService.CreateAsync(replyInput.Description, null, replyInput.PostId, authorId);
+    var reply = await repliesService.CreateAsync(replyInput.Description, null, replyInput.PostId, author.Id);
 
     var replyDto = mapper.Map<ReadReplyDto>(reply);
+    replyDto.AuthorUserName = author.UserName;
+
 
     return Results.Created($"/api/posts/{replyDto.PostId}", replyDto);
 });
@@ -274,7 +276,8 @@ async (int replyId,
     }
 
     //check wheather current logged in user is admin usersService.GetCurrentLoggedInUserId() == admin
-    if (reply.AuthorId != usersService.GetCurrentLoggedInUserId())
+    var user = await usersService.GetCurrentLoggedInUser();
+    if (reply.AuthorId != user.Id)
     {
         return Results.Unauthorized();
     }
@@ -292,15 +295,15 @@ app.MapPost("/api/posts/reaction/like/{postId}",
     [Authorize]
     async (IUsersService usersService, IPostReactionsService reactionsService, string postId) =>
 {
-    var userId = usersService.GetCurrentLoggedInUserId();
+    var user = await usersService.GetCurrentLoggedInUser();
     
-    if (userId == null)
+    if (user.Id == null)
     {
         return Results.Unauthorized();
     }
 
 
-    var reaction = await reactionsService.ReactAsync(ReactionType.Like, postId, userId);
+    var reaction = await reactionsService.ReactAsync(ReactionType.Like, postId, user.Id);
 
     return Results.Created($"/api/posts/{postId}", reaction);
 });
@@ -310,15 +313,15 @@ app.MapPost("/api/posts/reaction/dislike/{postId}",
     [Authorize]
     async (IUsersService usersService, IPostReactionsService reactionsService, string postId) =>
     {
-        var userId = usersService.GetCurrentLoggedInUserId();
+        var user = await usersService.GetCurrentLoggedInUser();
 
-        if (userId == null)
+        if (user.Id == null)
         {
             return Results.Unauthorized();
         }
 
 
-        var reaction = await reactionsService.ReactAsync(ReactionType.DisLike, postId, userId);
+        var reaction = await reactionsService.ReactAsync(ReactionType.DisLike, postId, user.Id);
 
         return Results.Created($"/api/posts/{postId}", reaction);
     });

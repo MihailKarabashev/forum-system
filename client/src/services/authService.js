@@ -1,5 +1,6 @@
 const baseUrl = 'https://localhost:7229/api';
 
+
 export const login = async (email, password) => {
     let result = await fetch(`${baseUrl}/login`, {
         method: 'POST',
@@ -31,19 +32,19 @@ export const register = (username, email, password) => {
 }
 
 
-
-
-function getToken() {
+export function getToken() {
     try {
         let userItem = localStorage.getItem('user');
 
         if (!userItem) {
+            console.log('error');
             throw { message: 'You must be authenticated', statusCode: 403 };
         }
 
+        console.log('no error');
         let user = JSON.parse(userItem);
 
-        return user.accessToken;
+        return user.token;
     } catch (err) {
         console.log(err);
     }

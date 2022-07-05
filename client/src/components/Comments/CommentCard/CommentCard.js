@@ -1,10 +1,11 @@
 import CommentReply from "../CommentReply";
+import { generateSvgIcon } from "../../utils/getProfilePicture";
 
 const CommentCard = ({
   reply
 }) => {
 
-  // Check all comments and make hybrid from all based on created comment
+  // Add to reply property , authorUserName in Backend
   return (
     <>
       <div className="tt-item">
@@ -12,7 +13,7 @@ const CommentCard = ({
           <div className="tt-item-header pt-noborder">
             <div className="tt-item-info info-top">
               <div className="tt-avatar-icon">
-                <i className="tt-icon"><svg><use xlinkHref={`#icon-ava-${reply.authorUserName[0]}`}></use></svg></i>
+                <i className="tt-icon"><svg><use xlinkHref={`#icon-ava-${generateSvgIcon(reply.authorUserName)}`}></use></svg></i>
               </div>
               <div className="tt-avatar-title">
                 <a href="#">{reply.authorUserName}</a>

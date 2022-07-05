@@ -1,5 +1,5 @@
 const CreatePost = () => {
-
+    //ADD EVENT HANDLER
     return (
         <div className="container">
             <div className="tt-wrapper-inner">

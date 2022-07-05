@@ -4,7 +4,7 @@ const CreatePostReply = ({
 
     return (
         <div className="tt-wrapper-inner">
-            <form className="pt-editor form-default" onSubmit={onSubmitFormHandler}>
+            <form className="pt-editor form-default" onSubmit={(e) => onSubmitFormHandler(e)}>
                 <h6 className="pt-title">Post Your Reply</h6>
                 <div className="form-group">
                     <div className="form-group">

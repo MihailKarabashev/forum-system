@@ -4,6 +4,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useAuthContext } from '../../../contexts/AuthContext';
 
 import * as postService from "../../../services/postServices";
+import * as replyService from "../../../services/replyService";
 import { generateSvgIcon } from '../../utils/getProfilePicture';
 
 import Tags from '../../Tags/Tags';
@@ -14,6 +15,10 @@ import CommentCard from "../../Comments/CommentCard/CommentCard";
 
 const PostDetails = () => {
   const [post, setPost] = useState({});
+  const [tags, setTags] = useState([]);
+  const [reactions, setReactions] = useState([]);
+  const [replies, setPostReplies] = useState([]);
+
   const { postId } = useParams();
   const { user } = useAuthContext();
 
@@ -21,12 +26,31 @@ const PostDetails = () => {
     postService.getPostById(postId)
       .then(data => {
         setPost(data);
+        setPostReplies(data.replies)
+        setTags(post.tags);
+        setReactions(post.reaction);
       });
   }, []);
 
 
   const onSubmitFormHandler = (e) => {
     e.preventDefault();
+
+    let formData = new FormData(e.currentTarget);
+
+    let description = formData.get('message');
+    replyService.createPostReply(postId, description)
+      .then(createdReply => {
+        setPostReplies(oldPostReplies => [
+          ...oldPostReplies,
+          createdReply
+        ]);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+
+    e.target.reset();
   }
 
 
@@ -51,7 +75,7 @@ const PostDetails = () => {
                 <Link to="#">{post.title}</Link>
               </h3>
               <div className="tt-item-tag">
-                {post.tags && <Tags tags={post.tags} />}
+                {tags && <Tags tags={tags} />}
               </div>
             </div>
             <div className="tt-item-description">
@@ -62,13 +86,13 @@ const PostDetails = () => {
               <Link to="#" className="tt-icon-btn">
                 <i className="tt-icon"><svg><use xlinkHref="#icon-like"></use></svg></i>
                 {
-                  post.reaction && <span className="tt-text">{post.reaction.likes}</span>
+                  reactions && <span className="tt-text">{reactions.likes}</span>
                 }
               </Link>
               <Link to="#" className="tt-icon-btn">
                 <i className="tt-icon"><svg><use xlinkHref="#icon-dislike"></use></svg></i>
                 {
-                  post.reaction && <span className="tt-text">{post.reaction.dislikes}</span>
+                  reactions && <span className="tt-text">{reactions.dislikes}</span>
                 }
               </Link>
               <div className="col-separator"></div>
@@ -77,7 +101,7 @@ const PostDetails = () => {
         </div>
 
         {
-          post.replies && post.replies.map(reply => <CommentCard key={reply.id} reply={reply} />)
+          replies && replies.map(reply => <CommentCard key={reply.id} reply={reply} />)
         }
       </div>
 

@@ -58,9 +58,9 @@ namespace ForumApi.Services
                 .AsNoTracking()
                 .Where(r => r.PostId == postId && !r.IsDeleted)
                 .Include(a => a.Author)
-                .Include(x=> x.Parent)
-                .ThenInclude(x=> x.Author)
-                .OrderByDescending(r => r.CreatedOn)
+                .Include(x => x.Parent)
+                .ThenInclude(x => x.Author)
+                .OrderBy(r => r.CreatedOn)
                 .ToListAsync();
 
 

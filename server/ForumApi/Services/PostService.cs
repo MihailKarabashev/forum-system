@@ -63,7 +63,7 @@ namespace ForumApi.Services
                                      .Include(x=> x.Author)
                                      .Include(x=> x.Replies)
                                      .Include(x => x.Tags.Take(2))
-                                     .OrderByDescending(x => x.CreatedOn)
+                                     .OrderBy(x => x.CreatedOn)
                                      .Where(x => !x.IsDeleted)
                                      .ToListAsync();
         }

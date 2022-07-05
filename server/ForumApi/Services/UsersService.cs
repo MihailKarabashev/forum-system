@@ -63,9 +63,9 @@ namespace ForumApi.Services
 
         }
 
-        public string GetCurrentLoggedInUserId()
+        public async Task<ForumUser> GetCurrentLoggedInUser()
         {
-            return this.httpContextAccesor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return await userManager.GetUserAsync(this.httpContextAccesor.HttpContext.User);
         }
 
         public async Task<AuthResponseModel> LoginAsync(LoginRequestModel model)
@@ -86,7 +86,7 @@ namespace ForumApi.Services
 
             var generateToken = await this.GenerateJwtToken(user);
 
-            var userRole =  await userManager.GetRolesAsync(user);
+            var userRole = await userManager.GetRolesAsync(user);
 
             this.db.Users.Update(user);
 

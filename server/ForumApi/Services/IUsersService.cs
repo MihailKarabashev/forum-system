@@ -11,6 +11,6 @@ namespace ForumApi.Services
 
         Task<AuthResponseModel> LoginAsync(LoginRequestModel model);
 
-        string GetCurrentLoggedInUserId();
+        Task<ForumUser> GetCurrentLoggedInUser();
     }
 }
