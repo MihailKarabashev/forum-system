@@ -2,7 +2,7 @@
 
 namespace ForumApi.Models
 {
-    public class ReplyReaction
+    public class ReplyReaction : IReactionData
     {
         public int Id { get; set; }
 
@@ -19,5 +19,9 @@ namespace ForumApi.Models
         public DateTime CreatedOn { get; set; }
 
         public DateTime? ModifiedOn { get; set; }
+
+        public bool IsLiked { get; set; }
+
+        public bool IsDisliked { get; set; }
     }
 }
