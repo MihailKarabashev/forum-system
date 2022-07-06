@@ -16,10 +16,11 @@ import CommentCard from "../../Comments/CommentCard/CommentCard";
 
 const PostDetails = () => {
   const [post, setPost] = useState({});
-  const [tags, setPostTags] = useState([]);
   const [replies, setPostReplies] = useState([]);
   const [reactions, setPostReactions] = useState({});
   const [isReplyCreated, setIsReplyCreated] = useState(false);
+  const [isLikeClicked, setIsLikeClicked] = useState(false);
+  const [isDislikeClicked, setIsDislikeClicked] = useState(false);
 
   const { postId } = useParams();
   const { user } = useAuthContext();
@@ -28,13 +29,11 @@ const PostDetails = () => {
     postService.getPostById(postId)
       .then(data => {
         setPost(data);
-        setPostTags(post.tags);
-        setPostReplies(data.replies)
-        setPostReactions(post.reaction);
+        setPostReactions(data.reaction);
+        setPostReplies(data.replies);
       });
   }, []);
 
-  console.log('render');
   const onSubmitFormHandler = (e) => {
     e.preventDefault();
 
@@ -59,12 +58,28 @@ const PostDetails = () => {
     e.target.reset();
   }
 
-  const onLikeClickHandler = (e) => {
+  const onLikeSubmitHandler = (e) => {
     e.preventDefault();
 
-    reactionService.likePost(postId)
+    reactionService.createLike(postId)
       .then(reactions => {
         setPostReactions(reactions);
+        setIsLikeClicked(true);
+        setIsDislikeClicked(false);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
+  const onDislikeSubmitHandler = (e) => {
+    e.preventDefault();
+
+    reactionService.createDislike(postId)
+      .then(reactions => {
+        setPostReactions(reactions);
+        setIsLikeClicked(false);
+        setIsDislikeClicked(true);
       })
       .catch(err => {
         console.log(err);
@@ -93,7 +108,7 @@ const PostDetails = () => {
                 <Link to="#">{post.title}</Link>
               </h3>
               <div className="tt-item-tag">
-                {tags && <Tags tags={tags} />}
+                {post.tags && <Tags tags={post.tags} />}
               </div>
             </div>
             <div className="tt-item-description">
@@ -101,14 +116,14 @@ const PostDetails = () => {
               <p> {post.description}</p>
             </div>
             <div className="tt-item-info info-bottom">
-              <Link to="#" onClick={onLikeClickHandler} className="tt-icon-btn">
-                <i className="tt-icon"><svg><use xlinkHref="#icon-like"></use></svg></i>
+              <Link to="#" onClick={onLikeSubmitHandler} className="tt-icon-btn">
+                <i className="tt-icon" style={isLikeClicked ? { fill: 'red' } : {}}><svg><use xlinkHref="#icon-like"></use></svg></i>
                 {
                   reactions && <span className="tt-text">{reactions.likes}</span>
                 }
               </Link>
-              <Link to="#" className="tt-icon-btn">
-                <i className="tt-icon"><svg><use xlinkHref="#icon-dislike"></use></svg></i>
+              <Link to="#" onClick={onDislikeSubmitHandler} className="tt-icon-btn">
+                <i className="tt-icon"><svg style={isDislikeClicked ? { fill: 'red' } : {}}><use xlinkHref="#icon-dislike"></use></svg></i>
                 {
                   reactions && <span className="tt-text">{reactions.dislikes}</span>
                 }
@@ -117,7 +132,6 @@ const PostDetails = () => {
             </div>
           </div>
         </div>
-
         {
           replies &&
           replies.map(
@@ -135,7 +149,6 @@ const PostDetails = () => {
       <div className="tt-wrapper-inner">
         <h4 className="tt-title-separator"><span>You’ve reached the end of replies</span></h4>
       </div>
-
       {
         user.email
           ? <CreatePostReply
@@ -144,8 +157,6 @@ const PostDetails = () => {
           : <LoginAction />
       }
     </div>
-
-
   )
 };
 

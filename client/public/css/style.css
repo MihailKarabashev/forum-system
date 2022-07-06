@@ -8,6 +8,10 @@
  * Forked from Normalize.css, licensed MIT (https://github.com/necolas/normalize.css/blob/master/LICENSE.md)
  */
 
+.custom {
+	fill: blue;
+}
+
 .mfp-bg {
 	top: 0;
 	left: 0;
@@ -6332,6 +6336,14 @@ hr {
 .tt-icon-btn .tt-icon {
 	position: relative;
 	top: -2px
+}
+
+.tt-icon-btn .tt-icon svg {
+	width: 23px;
+	height: 18px;
+	fill: #666f74;
+	-webkit-transition: fill .2s linear;
+	transition: fill .2s linear
 }
 
 .tt-icon-btn .tt-icon svg {

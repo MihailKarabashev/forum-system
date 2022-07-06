@@ -54,7 +54,7 @@ namespace ForumApi.Services
 
         public async Task<IEnumerable<Reply>> GetAllByPostIdAsync(string postId)
         {
-            var replies =  await this.db.Replies
+            return  await this.db.Replies
                 .AsNoTracking()
                 .Where(r => r.PostId == postId && !r.IsDeleted)
                 .Include(a => a.Author)
@@ -64,7 +64,7 @@ namespace ForumApi.Services
                 .ToListAsync();
 
 
-            return this.GetCleanReplies(replies);
+            //return this.GetCleanReplies(replies);
         }
 
         public async Task<Reply> GetByIdAsync(int id)
