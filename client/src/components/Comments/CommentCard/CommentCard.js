@@ -3,14 +3,16 @@ import { generateSvgIcon } from "../../utils/getProfilePicture";
 
 const CommentCard = ({
   reply,
-  isReplyCreated
+  isReplyCreated,
+  array,
+  index
 }) => {
 
   return (
     <>
 
       {/* <div className={isReplyCreated ? "tt-item tt-wrapper-success" : "tt-item"}> */}
-      <div className="tt-item">
+      <div className={(array.length - 1 === index && isReplyCreated) ? "tt-item tt-wrapper-success" : "tt-item"}>
         <div className="tt-single-topic">
           <div className="tt-item-header pt-noborder">
             <div className="tt-item-info info-top">

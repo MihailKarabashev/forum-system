@@ -50,7 +50,7 @@ const PostDetails = () => {
         setIsReplyCreated(true);
         setTimeout(() => {
           setIsReplyCreated(false);
-        }, 5000);
+        }, 3000);
       })
       .catch(err => {
         console.log(err);
@@ -120,12 +120,15 @@ const PostDetails = () => {
 
         {
           replies &&
-          replies.map(reply =>
-            <CommentCard
-              key={reply.id}
-              reply={reply}
-              isReplyCreated={isReplyCreated}
-            />)
+          replies.map(
+            (reply, index, array) =>
+              <CommentCard
+                key={reply.id}
+                reply={reply}
+                isReplyCreated={isReplyCreated}
+                array={array}
+                index={index}
+              />)
         }
       </div>
 
