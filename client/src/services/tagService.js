@@ -1,7 +1,7 @@
 export const baseUrl = 'https://localhost:7229/api';
 
-
-export const getAllTags = () => {
-    return fetch(`${baseUrl}/tags`)
-        .then(res => res.json());
+export const getAllTags = async () => {
+    var res = await fetch(`${baseUrl}/tags`);
+    let data = await res.json();
+    return data;
 }

@@ -1,9 +1,27 @@
 import { useState, useEffect } from "react";
+import * as categoriesService from '../../services/categoryService';
+import * as tagsService from '../../services/tagService';
 
 const CreatePost = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [tags, setTags] = useState([]);
 
+    const [categoriesList, setCategoriesList] = useState([]);
+    const [seletedCategory, setSelectedCategory] = useState(null);
+
+    useEffect(() => {
+        (async () => {
+            const [categoriesData, tagsData] = await Promise.all([
+                categoriesService.getAllCategories(),
+                tagsService.getAllTags()
+            ]);
+
+            setCategoriesList(categoriesData);
+            setTags(tagsData);
+        })();
+
+    }, []);
 
     return (
         <div className="container">
@@ -31,9 +49,17 @@ const CreatePost = () => {
                                 <div className="form-group">
                                     <label htmlFor="inputTopicTitle">Category</label>
                                     <select className="form-control">
-                                        <option value="Select">Select</option>
-                                        <option value="Value 01">Value 01</option>
-                                        <option value="Value 02">Value 02</option>
+                                        {(categoriesList && seletedCategory) && seletedCategory !== null ? categoriesList[seletedCategory].name : 'Select'}
+                                        {/* <option value="Select">Select</option> */}
+                                        {/* {
+                                            categoriesList && categoriesList.map(category => (
+                                                <option
+                                                    onClick={setSelectedCategory(category.id)}
+                                                    key={category.id}
+                                                    value={category.name}>
+                                                </option>
+                                            ))
+                                        } */}
                                     </select>
                                 </div>
                             </div>
