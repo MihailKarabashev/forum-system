@@ -19,8 +19,6 @@ const PostDetails = () => {
   const [replies, setPostReplies] = useState([]);
   const [reactions, setPostReactions] = useState({});
   const [isReplyCreated, setIsReplyCreated] = useState(false);
-  const [isLikeClicked, setIsLikeClicked] = useState(false);
-  const [isDislikeClicked, setIsDislikeClicked] = useState(false);
 
   const { postId } = useParams();
   const { user } = useAuthContext();
@@ -64,8 +62,6 @@ const PostDetails = () => {
     reactionService.createLike(postId)
       .then(reactions => {
         setPostReactions(reactions);
-        setIsLikeClicked(true);
-        setIsDislikeClicked(false);
       })
       .catch(err => {
         console.log(err);
@@ -78,12 +74,23 @@ const PostDetails = () => {
     reactionService.createDislike(postId)
       .then(reactions => {
         setPostReactions(reactions);
-        setIsLikeClicked(false);
-        setIsDislikeClicked(true);
       })
       .catch(err => {
         console.log(err);
       })
+  }
+
+  const styleReaction = () => {
+    let style = {};
+
+    if (reactions.isLiked && !reactions.isDisliked) {
+      style = { fill: 'red' };
+    }
+    if (reactions.isDisliked && !reactions.isLiked) {
+      style = { fill: 'blue' };
+    }
+
+    return Object.keys(style).length === 0 ? {} : style;
   }
 
 
@@ -117,13 +124,13 @@ const PostDetails = () => {
             </div>
             <div className="tt-item-info info-bottom">
               <Link to="#" onClick={onLikeSubmitHandler} className="tt-icon-btn">
-                <i className="tt-icon" style={isLikeClicked ? { fill: 'red' } : {}}><svg><use xlinkHref="#icon-like"></use></svg></i>
+                <i className="tt-icon" ><svg><use xlinkHref="#icon-like"></use></svg></i>
                 {
                   reactions && <span className="tt-text">{reactions.likes}</span>
                 }
               </Link>
               <Link to="#" onClick={onDislikeSubmitHandler} className="tt-icon-btn">
-                <i className="tt-icon"><svg style={isDislikeClicked ? { fill: 'red' } : {}}><use xlinkHref="#icon-dislike"></use></svg></i>
+                <i className="tt-icon"><svg style={styleReaction()}><use xlinkHref="#icon-dislike"></use></svg></i>
                 {
                   reactions && <span className="tt-text">{reactions.dislikes}</span>
                 }

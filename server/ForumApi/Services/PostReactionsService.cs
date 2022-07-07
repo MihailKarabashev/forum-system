@@ -29,7 +29,7 @@ namespace ForumApi.Services
                     ReactionType = reactionType,
                     PostId = postId,
                     AuthorId = authorId,
-                    CreatedOn = DateTime.UtcNow
+                    CreatedOn = DateTime.UtcNow,
                 };
 
                 await this.db.PostReactions.AddAsync(postReaction);
@@ -40,11 +40,21 @@ namespace ForumApi.Services
                 postReaction.ReactionType = postReaction.ReactionType == reactionType
                    ? ReactionType.Neutral
                    : reactionType;
+
             }
+
+            var reaction = ((int)postReaction.ReactionType);
+
+            this.SetReactionHelpers(reaction, postReaction);
 
             await this.db.SaveChangesAsync();
 
-            return await this.GetCountByPostIdAsync(postId);
+            var reactionModel =  await this.GetCountByPostIdAsync(postId);
+
+            reactionModel.IsLiked = postReaction.IsLiked;
+            reactionModel.IsDisliked = postReaction.IsDisliked;
+
+            return reactionModel;
         }
 
         public async Task<ReadReactionsCountModel> GetCountByPostIdAsync(string postId)
@@ -63,6 +73,26 @@ namespace ForumApi.Services
                    .Where(x => x.PostId == postId && !x.Post.IsDeleted)
                    .CountAsync(x => x.ReactionType == type);
         }
+
+        private void SetReactionHelpers(int reaction, PostReaction postReaction)
+        {
+            if (reaction == 1)
+            {
+                postReaction.IsLiked = true;
+                postReaction.IsDisliked = false;
+            }
+            if (reaction == 2)
+            {
+                postReaction.IsDisliked = true;
+                postReaction.IsLiked = false;
+            }
+            if (reaction == 0)
+            {
+                postReaction.IsDisliked = false;
+                postReaction.IsLiked = false;
+            }
+        }
+
     }
 
 }

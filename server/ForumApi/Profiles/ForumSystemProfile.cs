@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ForumApi.Dtos.Post;
+using ForumApi.Dtos.Reaction;
 using ForumApi.Dtos.Reply;
 using ForumApi.Dtos.Tag;
 using ForumApi.Models;

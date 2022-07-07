@@ -125,24 +125,24 @@ app.MapGet("api/posts/{id}", async (string id,
     IRepliesService repliesService,
     IPostReactionsService postReactionService) =>
 {
-    var post = await postService.GetByIdAsync(id);
+var post = await postService.GetByIdAsync(id);
 
-    if (post == null)
-    {
-        return Results.NotFound();
-    }
-    var postDto = mapper.Map<ReadPostModel>(post);
+if (post == null)
+{
+    return Results.NotFound();
+}
+var postDto = mapper.Map<ReadPostModel>(post);
 
-    var replies = await repliesService.GetAllByPostIdAsync(id);
+var replies = await repliesService.GetAllByPostIdAsync(id);
 
-    var tags = await tagsService.GetAllByPostIdAsync(id);
-    var reaction = await postReactionService.GetCountByPostIdAsync(post.Id);
+var tags = await tagsService.GetAllByPostIdAsync(id);
+var reaction = await postReactionService.GetCountByPostIdAsync(post.Id);
 
-    postDto.Replies = mapper.Map<IEnumerable<ReadReplyDto>>(replies);
-    postDto.Tags = mapper.Map<IEnumerable<ReadTagModel>>(tags);
-    postDto.Reaction = reaction;
+postDto.Replies = mapper.Map<IEnumerable<ReadReplyDto>>(replies);
+postDto.Tags = mapper.Map<IEnumerable<ReadTagModel>>(tags);
+postDto.Reaction = reaction;
 
-    return Results.Ok(postDto);
+ return Results.Ok(postDto);
 });
 
 app.MapGet("api/posts",
@@ -286,7 +286,6 @@ async (int replyId,
 
     return Results.NoContent();
 });
-
 
 
 //Post Reactions
