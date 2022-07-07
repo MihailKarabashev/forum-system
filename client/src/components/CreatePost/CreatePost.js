@@ -1,5 +1,10 @@
+import { useState, useEffect } from "react";
+
 const CreatePost = () => {
-    //ADD EVENT HANDLER
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+
+
     return (
         <div className="container">
             <div className="tt-wrapper-inner">
@@ -47,6 +52,10 @@ const CreatePost = () => {
                     </div>
                 </form>
             </div>
+
+
+
+
             <div className="tt-topic-list tt-offset-top-30">
                 <div className="tt-list-search">
                     <div className="tt-title">Suggested Topics</div>

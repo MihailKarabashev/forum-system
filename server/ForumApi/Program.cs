@@ -1,6 +1,7 @@
 using AutoMapper;
 using ForumApi.Data;
 using ForumApi.Data.Seeding;
+using ForumApi.Dtos.Category;
 using ForumApi.Dtos.Post;
 using ForumApi.Dtos.Reply;
 using ForumApi.Dtos.Tag;
@@ -95,6 +96,7 @@ builder.Services.AddTransient<IPostService, PostService>();
 builder.Services.AddTransient<IUsersService, UsersService>();
 builder.Services.AddTransient<IRepliesService, RepliesService>();
 builder.Services.AddTransient<ITagsService, TagsService>();
+builder.Services.AddTransient<ICategoriesService, CategoriesService>();
 builder.Services.AddTransient<IPostReactionsService, PostReactionsService>();
 
 
@@ -324,5 +326,24 @@ app.MapPost("/api/posts/reaction/dislike/{postId}",
 
         return Results.Created($"/api/posts/{postId}", reaction);
     });
+
+//TAGS
+app.MapGet("/api/tags", async ( ITagsService tagsService, IMapper mapper) =>
+{
+    var tags = await tagsService.GetAllTagsAsync();
+
+    var tagDtos = mapper.Map<IEnumerable<ReadTagModel>>(tags);
+
+    return Results.Ok(tagDtos);
+});
+
+//Categories
+app.MapGet("/api/categories", async (ICategoriesService categoriesService, IMapper mapper) =>
+{
+    var categories = await categoriesService.GetAllAsync();
+
+    var categoryDtos = mapper.Map<IEnumerable<ReadCategoryModel>>(categories);
+    return Results.Ok(categoryDtos);
+});
 
 app.Run();

@@ -41,12 +41,19 @@ namespace ForumApi.Services
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<Tag>> GetAllTagsAsync()
+        {
+            return await this.db.Tags
+            .AsNoTracking()
+            .ToListAsync();
+        }
+
         public async Task<Tag> GetByIdAsync(int id)
         {
-           return await this.db.Tags
-                .AsNoTracking()
-                .Where(t => t.Id == id && !t.IsDeleted)
-                .FirstOrDefaultAsync();
+            return await this.db.Tags
+                 .AsNoTracking()
+                 .Where(t => t.Id == id && !t.IsDeleted)
+                 .FirstOrDefaultAsync();
         }
     }
 }

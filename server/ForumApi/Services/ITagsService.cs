@@ -11,5 +11,7 @@ namespace ForumApi.Services
         Task<Tag> GetByIdAsync(int id);
 
         Task<IEnumerable<Tag>> GetAllByPostIdAsync(string postId);
+
+        Task<IEnumerable<Tag>> GetAllTagsAsync();
     }
 }

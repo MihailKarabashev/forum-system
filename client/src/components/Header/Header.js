@@ -35,7 +35,7 @@ const Header = () => {
 
   const userNavLinks = (
     <>
-      <li><Link to="page-create-topic.html">Create Topic</Link></li>
+      <li><Link to="/posts/create">Create Topic</Link></li>
       <li><Link to="page-single_settings.html">Single User Settings</Link></li>
     </>
   );

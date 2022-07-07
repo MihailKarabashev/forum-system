@@ -29,7 +29,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/logout" element={<Logout />} />
-          <Route path="/create" element={<CreatePost />} />
+          <Route path="/posts/create" element={<CreatePost />} />
           <Route path="/posts/details/:postId" element={<PostDetails />} />
         </Routes>
 

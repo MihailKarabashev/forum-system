@@ -80,20 +80,6 @@ const PostDetails = () => {
       })
   }
 
-  const styleReaction = () => {
-    let style = {};
-
-    if (reactions.isLiked && !reactions.isDisliked) {
-      style = { fill: 'red' };
-    }
-    if (reactions.isDisliked && !reactions.isLiked) {
-      style = { fill: 'blue' };
-    }
-
-    return Object.keys(style).length === 0 ? {} : style;
-  }
-
-
   return (
     <div className="container">
       <div className="tt-single-topic-list">
@@ -124,13 +110,13 @@ const PostDetails = () => {
             </div>
             <div className="tt-item-info info-bottom">
               <Link to="#" onClick={onLikeSubmitHandler} className="tt-icon-btn">
-                <i className="tt-icon" ><svg><use xlinkHref="#icon-like"></use></svg></i>
+                <i className="tt-icon" ><svg style={reactions.isLiked ? { fill: 'red' } : {}}><use xlinkHref="#icon-like"></use></svg></i>
                 {
                   reactions && <span className="tt-text">{reactions.likes}</span>
                 }
               </Link>
               <Link to="#" onClick={onDislikeSubmitHandler} className="tt-icon-btn">
-                <i className="tt-icon"><svg style={styleReaction()}><use xlinkHref="#icon-dislike"></use></svg></i>
+                <i className="tt-icon"><svg style={reactions.isDisliked ? { fill: 'blue' } : {}} ><use xlinkHref="#icon-dislike"></use></svg></i>
                 {
                   reactions && <span className="tt-text">{reactions.dislikes}</span>
                 }
