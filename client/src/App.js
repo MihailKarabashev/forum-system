@@ -10,6 +10,7 @@ import NotFound from "./components/NotFound/NotFound";
 import Posts from "./components/Posts/Posts";
 import CreatePost from "./components/CreatePost/CreatePost";
 import PostDetails from "./components/Posts/PostDetails/PostDetails";
+import Categories from "./components/Categories/Categories";
 
 import "../src/App.css";
 
@@ -26,6 +27,7 @@ function App() {
         <Routes>
           <Route path="*" element={<NotFound />} />
           <Route path="/" element={<Posts />} />
+          <Route path="/categories" element={<Categories />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/logout" element={<Logout />} />

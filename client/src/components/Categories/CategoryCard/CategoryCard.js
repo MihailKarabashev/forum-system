@@ -8,7 +8,13 @@ const CategoryCard = ({
             <div className="tt-item">
                 <div className="tt-item-header">
                     <ul className="tt-list-badge">
-                        <li><Link to="#"><span className="tt-color01 tt-badge">{category.name}</span></Link></li>
+                        <li>
+                            <Link to="#">
+                                <span className={category.id > 5 ? "tt-color01 tt-badge" : `tt-color0${category.id} tt-badge`}>
+                                    {category.name}
+                                </span>
+                            </Link>
+                        </li>
                     </ul>
                     <h6 className="tt-title"><a href="page-categories-single.html">Threads - {category.threads}</a></h6>
                 </div>
@@ -27,7 +33,7 @@ const CategoryCard = ({
                         </ul>
                     </div>
                     <Link to="#" className="tt-btn-icon">
-                        <i className="tt-icon"><svg><use xlink:href="#icon-favorite"></use></svg></i>
+                        <i className="tt-icon"><svg><use xlinkHref="#icon-favorite"></use></svg></i>
                     </Link>
                 </div>
             </div>
@@ -35,4 +41,4 @@ const CategoryCard = ({
     )
 }
 
-export default CategoryCard
+export default CategoryCard;

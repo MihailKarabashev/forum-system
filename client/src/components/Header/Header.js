@@ -59,7 +59,7 @@ const Header = () => {
             <div className="tt-desktop-menu">
               <nav>
                 <ul>
-                  <li><Link to="page-categories.html"><span>Categories</span></Link></li>
+                  <li><Link to="/categories"><span>Categories</span></Link></li>
                   <li><Link to="page-tabs.html"><span>Trending</span></Link></li>
                   <li><Link to="page-tabs.html"><span>About</span></Link></li>
                   <li>
