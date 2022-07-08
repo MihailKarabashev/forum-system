@@ -22,7 +22,9 @@ namespace ForumApi.Dtos.Post
 
         public int RepliesCount { get; set; }
 
-        public string CreatedOn { get; set; }
+        public string Activity { get; set; }
+
+        public int Views { get; set; }
 
         public IEnumerable<ReadReplyDto> Replies { get; set; }
 

@@ -22,10 +22,7 @@ namespace ForumApi.Profiles.Post
                       y => y.MapFrom(src => src.Category.Name))
                 .ForMember(
                       x=> x.Tags,
-                      y=> y.MapFrom(src=>  src.Tags))
-                .ForMember(
-                      x => x.CreatedOn,
-                      y => y.MapFrom(src => src.CreatedOn.ToString("yyyy/mm/dd",CultureInfo.GetCultureInfo("en-US"))));
+                      y=> y.MapFrom(src=>  src.Tags));
             this.CreateMap<CreatePostModel,ForumApi.Models.Post>();
             this.CreateMap<EditPostModel,ForumApi.Models.Post>();
 

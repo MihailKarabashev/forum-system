@@ -11,6 +11,8 @@ namespace ForumApi.Models
 
         public string Description { get; set; }
 
+        public int Views { get; set; }
+
         public string AuthorId { get; set; }
 
         public ForumUser Author { get; set; }

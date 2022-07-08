@@ -25,7 +25,7 @@ const Posts = () => {
           <div className="tt-col-value hide-mobile">Likes</div>
           <div className="tt-col-value hide-mobile">Replies</div>
           <div className="tt-col-value hide-mobile">Views</div>
-          <div className="tt-col-value">Created On</div>
+          <div className="tt-col-value">Activity</div>
         </div>
         {
           posts.map(post => <PostCard key={post.id} post={post} />)

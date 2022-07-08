@@ -16,5 +16,8 @@ namespace ForumApi.Services
         // create pagination, sorting , filtering
         Task<IEnumerable<Post>> GetAllAsync();
 
+        Task<string> GetLatestActivityByIdAsync(string id);
+
+         Task ViewAsync(string id);
     }
 }

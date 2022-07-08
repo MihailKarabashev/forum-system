@@ -133,6 +133,9 @@ if (post == null)
 {
     return Results.NotFound();
 }
+
+ await postService.ViewAsync(id);
+
 var postDto = mapper.Map<ReadPostModel>(post);
 
 var replies = await repliesService.GetAllByPostIdAsync(id);
@@ -164,6 +167,7 @@ app.MapGet("api/posts",
 
         postDto.Tags = mapper.Map<IEnumerable<ReadTagModel>>(postTag);
         postDto.Reaction = postReaction;
+        postDto.Activity = await postService.GetLatestActivityByIdAsync(postDto.Id);
     }
 
     return Results.Ok(postDtos);
