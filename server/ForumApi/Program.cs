@@ -342,8 +342,9 @@ app.MapGet("/api/categories", async (ICategoriesService categoriesService, IMapp
 {
     var categories = await categoriesService.GetAllAsync();
 
-    var categoryDtos = mapper.Map<IEnumerable<ReadCategoryModel>>(categories);
-    return Results.Ok(categoryDtos);
+    //var categoryDtos = mapper.Map<IEnumerable<ReadCategoryModel>>(categories);
+    
+    return Results.Ok(categories);
 });
 
 app.Run();
