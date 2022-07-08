@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 import * as categoriesService from '../../services/categoryService';
@@ -11,6 +12,8 @@ import makeAnimated from 'react-select/animated'
 const animatedComponent = makeAnimated();
 
 const CreatePost = () => {
+    const navigate = useNavigate();
+
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
 
@@ -48,6 +51,20 @@ const CreatePost = () => {
     const onFormSubmit = (e) => {
         e.preventDefault();
 
+        const newPost = {
+            title,
+            description,
+            categoryId: category.value,
+            tags: tags.map(x => Number(x.value))
+        }
+
+        postsService.createPost(newPost)
+            .then(data => {
+                navigate(`/posts/details/${data.id}`, { state: { postId: data.id } });
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     return (
@@ -119,68 +136,6 @@ const CreatePost = () => {
                         </div>
                     </div>
                 </form>
-            </div>
-
-
-
-
-            <div className="tt-topic-list tt-offset-top-30">
-                <div className="tt-list-search">
-                    <div className="tt-title">Suggested Topics</div>
-
-                    <div className="tt-search">
-                        <form className="search-wrapper">
-                            <div className="search-form">
-                                <input type="text" className="tt-search__input" placeholder="Search for topics" />
-                                <button className="tt-search__btn" type="submit">
-                                    <svg className="tt-icon">
-                                        <use xlinkHref="#icon-search"></use>
-                                    </svg>
-                                </button>
-                                <button className="tt-search__close">
-                                    <svg className="tt-icon">
-                                        <use xlinkHref="#icon-cancel"></use>
-                                    </svg>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div className="tt-list-header tt-border-bottom">
-                    <div className="tt-col-topic">Topic</div>
-                    <div className="tt-col-category">Category</div>
-                    <div className="tt-col-value hide-mobile">Likes</div>
-                    <div className="tt-col-value hide-mobile">Replies</div>
-                    <div className="tt-col-value hide-mobile">Views</div>
-                    <div className="tt-col-value">Activity</div>
-                </div>
-                <div className="tt-item">
-                    <div className="tt-col-avatar">
-                        <svg className="tt-icon">
-                            <use xlinkHref="#icon-ava-n"></use>
-                        </svg>
-                    </div>
-                    <div className="tt-col-description">
-                        <h6 className="tt-title"><a href="#">
-                            Does Envato act against the authors of Envato markets?
-                        </a></h6>
-                        <div className="row align-items-center no-gutters hide-desktope">
-                            <div className="col-auto">
-                                <ul className="tt-list-badge">
-                                    <li className="show-mobile"><a href="#"><span className="tt-color05 tt-badge">music</span></a></li>
-                                </ul>
-                            </div>
-                            <div className="col-auto ml-auto show-mobile">
-                                <div className="tt-value">1d</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="tt-col-category"><span className="tt-color05 tt-badge">music</span></div>
-                    <div className="tt-col-value hide-mobile">358</div>
-                    <div className="tt-col-value tt-color-select hide-mobile">68</div>
-                    <div className="tt-col-value hide-mobile">8.3k</div>
-                    <div className="tt-col-value hide-mobile">1d</div>
-                </div>
             </div>
         </div>
     );
