@@ -21,6 +21,9 @@ namespace ForumApi.Profiles.Post
                       x => x.CategoryName,
                       y => y.MapFrom(src => src.Category.Name))
                 .ForMember(
+                      x=> x.Tags,
+                      y=> y.MapFrom(src=>  src.Tags))
+                .ForMember(
                       x => x.CreatedOn,
                       y => y.MapFrom(src => src.CreatedOn.ToString("yyyy/mm/dd",CultureInfo.GetCultureInfo("en-US"))));
             this.CreateMap<CreatePostModel,ForumApi.Models.Post>();
@@ -36,10 +39,12 @@ namespace ForumApi.Profiles.Post
                       y => y.MapFrom(src => src.CreatedOn.ToString("yyyy/mm/dd", CultureInfo.GetCultureInfo("en-US"))));
 
             this.CreateMap<CreateReplyDto, Reply>();
-                
 
 
+
+            this.CreateMap<PostTag, ReadTagModel>();
             this.CreateMap<Tag, ReadTagModel>();
+          
             this.CreateMap<Category, ReadCategoryModel>();
         }
     }

@@ -14,6 +14,6 @@
 
         public DateTime? DeletedOn { get; set; }
 
-        public ICollection<Post> Posts { get; set; } = new HashSet<Post>();
+        public ICollection<PostTag> Posts { get; set; } = new HashSet<PostTag>();
     }
 }

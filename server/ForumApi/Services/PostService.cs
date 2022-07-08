@@ -24,11 +24,12 @@ namespace ForumApi.Services
                 CreatedOn = DateTime.UtcNow
             };
 
-            foreach (var tag in tags)
+            foreach (var tagId in tags)
             {
-                post.Tags.Add(new Tag()
+                post.Tags.Add(new PostTag()
                 {
-                    Id = tag
+                    TagId = tagId,
+                    PostId = post.Id,
                 });
             }
 

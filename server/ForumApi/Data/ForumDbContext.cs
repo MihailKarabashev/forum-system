@@ -25,6 +25,9 @@ namespace ForumApi.Data
 
         public DbSet<ReplyReaction> ReplyReactions { get; set; }
 
+        public DbSet<PostTag> PostsTags { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

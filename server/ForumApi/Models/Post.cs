@@ -30,7 +30,7 @@ namespace ForumApi.Models
 
         public ICollection<Reply> Replies = new HashSet<Reply>();
 
-        public ICollection<Tag> Tags { get; set; } = new HashSet<Tag>();
+        public ICollection<PostTag> Tags { get; set; } = new HashSet<PostTag>();
 
         public ICollection<PostReaction> PostReactions { get; set; } = new HashSet<PostReaction>();
 

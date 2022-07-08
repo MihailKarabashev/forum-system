@@ -35,10 +35,12 @@ namespace ForumApi.Services
 
         public async Task<IEnumerable<Tag>> GetAllByPostIdAsync(string postId)
         {
-            return await this.db.Tags
-                .AsNoTracking()
-                .Where(x => x.Posts.Any(y => y.Id == postId && !y.IsDeleted))
-                .ToListAsync();
+            return await this.db.PostsTags
+                 .AsNoTracking()
+                 .Where(pt => pt.PostId == postId && !pt.Post.IsDeleted)
+                 .Select(pt => pt.Tag)
+                 .Where(t => !t.IsDeleted)
+                 .ToListAsync();
         }
 
         public async Task<IEnumerable<Tag>> GetAllTagsAsync()

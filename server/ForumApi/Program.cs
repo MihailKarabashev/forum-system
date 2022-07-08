@@ -193,7 +193,7 @@ async (IMapper mapper, IPostService postService, IUsersService userService, Crea
     var author = await userService.GetCurrentLoggedInUser();
 
     var post = await postService.
-                      CreateAsync(dto.Title, dto.Description, author.Id, dto.CategoryId,new [] {1});
+                      CreateAsync(dto.Title, dto.Description, author.Id, dto.CategoryId, dto.Tags);
 
     var postDto = mapper.Map<ReadPostModel>(post);
 
