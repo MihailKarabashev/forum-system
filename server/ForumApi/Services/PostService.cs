@@ -13,7 +13,7 @@ namespace ForumApi.Services
             this.db = db;
         }
 
-        public async Task<Post> CreateAsync(string title, string description, string authorId, int categoryId)
+        public async Task<Post> CreateAsync(string title, string description, string authorId, int categoryId, IEnumerable<int> tags)
         {
             var post = new Post
             {
@@ -23,6 +23,14 @@ namespace ForumApi.Services
                 CategoryId = categoryId,
                 CreatedOn = DateTime.UtcNow
             };
+
+            foreach (var tag in tags)
+            {
+                post.Tags.Add(new Tag()
+                {
+                    Id = tag
+                });
+            }
 
 
             await this.db.Posts.AddAsync(post);

@@ -1,10 +1,11 @@
 ﻿using ForumApi.Models;
+using System.Collections.Generic;
 
 namespace ForumApi.Services
 {
     public interface IPostService
     {
-        Task<Post> CreateAsync(string title, string description, string authorId, int categoryId);
+        Task<Post> CreateAsync(string title, string description, string authorId, int categoryId, IEnumerable<int> tags);
 
         Task EditAsync(string id, string title, string description, int categoryId);
 
