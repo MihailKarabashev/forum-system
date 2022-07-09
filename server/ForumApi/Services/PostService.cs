@@ -79,7 +79,7 @@ namespace ForumApi.Services
 
         public async Task<Post> GetByIdAsync(string id)
         {
-            return await this.db.Posts.AsNoTracking()
+            return await this.db.Posts
                            .Include(x => x.Category)
                            .Include(x => x.Author)
                            .Include(x => x.Replies)
@@ -110,14 +110,15 @@ namespace ForumApi.Services
             return postLatestActivity;
         }
 
-        public async Task ViewAsync(string id)
+        public async Task<int> ViewAsync(string id)
         {
             var post = await this.GetByIdAsync(id);
 
             post.Views++;
 
-            this.db.Posts.Update(post);
             await this.db.SaveChangesAsync();
+
+            return post.Views;
         }
 
         private string CalculateLatestActivity(DateTime currentTime, DateTime latestPostTime)

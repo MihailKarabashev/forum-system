@@ -18,6 +18,6 @@ namespace ForumApi.Services
 
         Task<string> GetLatestActivityByIdAsync(string id);
 
-         Task ViewAsync(string id);
+         Task<int> ViewAsync(string id);
     }
 }

@@ -127,34 +127,38 @@ app.MapGet("api/posts/{id}", async (string id,
     IRepliesService repliesService,
     IPostReactionsService postReactionService) =>
 {
-var post = await postService.GetByIdAsync(id);
+    var post = await postService.GetByIdAsync(id);
 
-if (post == null)
-{
-    return Results.NotFound();
-}
+    if (post == null)
+    {
+        return Results.NotFound();
+    }
 
- await postService.ViewAsync(id);
+    var postDto = mapper.Map<ReadPostModel>(post);
 
-var postDto = mapper.Map<ReadPostModel>(post);
 
-var replies = await repliesService.GetAllByPostIdAsync(id);
+    var view = await postService.ViewAsync(id);
+    var replies = await repliesService.GetAllByPostIdAsync(id);
 
-var tags = await tagsService.GetAllByPostIdAsync(id);
-var reaction = await postReactionService.GetCountByPostIdAsync(post.Id);
+    var tags = await tagsService.GetAllByPostIdAsync(id);
+    var reaction = await postReactionService.GetCountByPostIdAsync(post.Id);
 
-postDto.Replies = mapper.Map<IEnumerable<ReadReplyDto>>(replies);
-postDto.Tags = mapper.Map<IEnumerable<ReadTagModel>>(tags);
-postDto.Reaction = reaction;
+    postDto.Replies = mapper.Map<IEnumerable<ReadReplyDto>>(replies);
+    postDto.Tags = mapper.Map<IEnumerable<ReadTagModel>>(tags);
+    postDto.Reaction = reaction;
+    postDto.Views = view;
 
- return Results.Ok(postDto);
+    return Results.Ok(postDto);
 });
 
 app.MapGet("api/posts",
-    async (IMapper mapper,
+    async (
+    IMapper mapper,
     IPostService postService,
     ITagsService tagsService,
-    IPostReactionsService postReactionService) =>
+    IPostReactionsService postReactionService
+    ) 
+    =>
 {
     var posts = await postService.GetAllAsync();
     var postDtos = mapper.Map<IEnumerable<ReadPostModel>>(posts);
@@ -257,7 +261,7 @@ async (IMapper mapper,
     IUsersService usersService,
     CreateReplyDto replyInput) =>
 {
-    var author =await usersService.GetCurrentLoggedInUser();
+    var author = await usersService.GetCurrentLoggedInUser();
 
     var reply = await repliesService.CreateAsync(replyInput.Description, null, replyInput.PostId, author.Id);
 
@@ -296,12 +300,12 @@ async (int replyId,
 
 //Post Reactions
 //Add Authorization attribute
-app.MapPost("/api/posts/reaction/like/{postId}", 
+app.MapPost("/api/posts/reaction/like/{postId}",
     [Authorize]
-    async (IUsersService usersService, IPostReactionsService reactionsService, string postId) =>
+async (IUsersService usersService, IPostReactionsService reactionsService, string postId) =>
 {
     var user = await usersService.GetCurrentLoggedInUser();
-    
+
     if (user.Id == null)
     {
         return Results.Unauthorized();
@@ -316,7 +320,7 @@ app.MapPost("/api/posts/reaction/like/{postId}",
 
 app.MapPost("/api/posts/reaction/dislike/{postId}",
     [Authorize]
-    async (IUsersService usersService, IPostReactionsService reactionsService, string postId) =>
+async (IUsersService usersService, IPostReactionsService reactionsService, string postId) =>
     {
         var user = await usersService.GetCurrentLoggedInUser();
 
@@ -332,7 +336,7 @@ app.MapPost("/api/posts/reaction/dislike/{postId}",
     });
 
 //TAGS
-app.MapGet("/api/tags", async ( ITagsService tagsService, IMapper mapper) =>
+app.MapGet("/api/tags", async (ITagsService tagsService, IMapper mapper) =>
 {
     var tags = await tagsService.GetAllTagsAsync();
 
@@ -347,7 +351,7 @@ app.MapGet("/api/categories", async (ICategoriesService categoriesService, IMapp
     var categories = await categoriesService.GetAllAsync();
 
     //var categoryDtos = mapper.Map<IEnumerable<ReadCategoryModel>>(categories);
-    
+
     return Results.Ok(categories);
 });
 

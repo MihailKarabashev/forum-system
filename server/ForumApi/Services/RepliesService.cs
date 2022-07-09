@@ -57,6 +57,7 @@ namespace ForumApi.Services
             return  await this.db.Replies
                 .AsNoTracking()
                 .Where(r => r.PostId == postId && !r.IsDeleted)
+                .Take(5)
                 .Include(a => a.Author)
                 .Include(x => x.Parent)
                 .ThenInclude(x => x.Author)
