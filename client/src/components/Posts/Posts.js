@@ -4,10 +4,18 @@ import * as postService from "../../services/postServices";
 import { usePagination } from "../../hooks/usePagination";
 
 import PostCard from "./PostCard/PostCard";
+import Pagination from "../Pagination/Pagination";
+
+const amountPerPage = 4;
 
 const Posts = () => {
   //add loader
-  const { setPosts, setPostPerPage, setLoading, currentPosts, loading } = usePagination([]);
+  const {
+    setPosts,
+    setPostPerPage,
+    setLoading,
+    currentPosts,
+    loading } = usePagination([], 1, amountPerPage);
 
   useEffect(() => {
     let ignore = false;
@@ -25,9 +33,8 @@ const Posts = () => {
 
 
   const onPaginationClickHandler = () => {
-    setTimeout(() => {
-      setPostPerPage(ss => ss += 2);
-    }, 1000);
+    setPostPerPage(state => state += amountPerPage);
+    console.log('here');
   }
 
 
@@ -46,13 +53,7 @@ const Posts = () => {
           currentPosts.map(post => <PostCard key={post.id} post={post} />)
         }
 
-        <div className="tt-row-btn">
-          <button onClick={onPaginationClickHandler} type="button" className="btn-icon js-topiclist-showmore">
-            <svg className="tt-icon">
-              <use xlinkHref="#icon-load_lore_icon"></use>
-            </svg>
-          </button>
-        </div>
+        <Pagination onPaginationClickHandler={onPaginationClickHandler} />
       </div>
     </div>
   );
