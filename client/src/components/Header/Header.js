@@ -1,7 +1,32 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuthContext } from '../../contexts/AuthContext';
 
+import Search from "../Search/Search";
+const intialUsers = [
+  { id: 1, name: 'misho', email: 'misho@abv.bg' },
+  { id: 2, name: 'koce', email: 'koce@abv.bg' },
+  { id: 3, name: 'neli', email: 'neli@abv.bg' },
+  { id: 4, name: 'anton', email: 'anton@abv.bg' },
+  { id: 5, name: 'mishaki', email: 'mishaki@abv.bg' }
+]
+
+// const initialSearchState = {
+//   suggestions: [],
+//   suggestionIndex: 0,
+//   suggestionsActive: false,
+//   value: ""
+// }
+
+// const [search, setSearch] = useState(initialSearchState);
+
 const Header = () => {
+  const [users, setUsers] = useState(intialUsers);
+  const [suggestions, setSuggestions] = useState([]);
+  const [suggestionIndex, setSuggestionIndex] = useState(0);
+  const [suggestionsActive, setSuggestionsActive] = useState(false);
+  const [value, setValue] = useState("");
+
   const { user } = useAuthContext();
 
   const guestNavigation =
@@ -47,6 +72,46 @@ const Header = () => {
     </>
   )
 
+  const handleChange = (e) => {
+    const query = e.target.value.toLowerCase();
+    setValue(query);
+    if (query.length > 1) {
+      const filterSuggestions = users.filter(
+        suggestion => suggestion.email.toLowerCase().indexOf(query) > -1
+      );
+      setSuggestions(filterSuggestions);
+      setSuggestionsActive(true);
+    } else {
+      setSuggestionsActive(false);
+    }
+  };
+
+  const handleClick = () => {
+    setSuggestions([]);
+    setValue("");
+    setSuggestionsActive(false);
+  };
+
+
+  const handleKeyDown = (e) => {
+    if (e.keyCode === 38) {
+      if (suggestionIndex === 0) {
+        return;
+      }
+      setSuggestionIndex(suggestionIndex - 1);
+    }
+    else if (e.keyCode === 40) {
+      if (suggestionIndex - 1 === suggestions.length) {
+        return;
+      }
+      setSuggestionIndex(suggestionIndex + 1);
+    }
+    else if (e.keyCode === 13) {
+      setValue(suggestions[suggestionIndex].email);
+      setSuggestionIndex(0);
+      setSuggestionsActive(false);
+    }
+  };
 
   return (
     <header id="tt-header">
@@ -78,28 +143,14 @@ const Header = () => {
                 </ul>
               </nav>
             </div>
-            <div className="tt-search">
-              <button className="tt-search-toggle" data-toggle="modal" data-target="#modalAdvancedSearch">
-                <svg className="tt-icon">
-                  <use xlinkHref="#icon-search"></use>
-                </svg>
-              </button>
-              <form className="search-wrapper">
-                <div className="search-form">
-                  <input type="text" className="tt-search__input" placeholder="Search" />
-                  <button className="tt-search__btn" type="submit">
-                    <svg className="tt-icon">
-                      <use xlinkHref="#icon-search"></use>
-                    </svg>
-                  </button>
-                  <button className="tt-search__close">
-                    <svg className="tt-icon">
-                      <use xlinkHref="#cancel"></use>
-                    </svg>
-                  </button>
-                </div>
-              </form>
-            </div>
+            <Search
+              value={value}
+              suggestions={suggestions}
+              suggestionsActive={suggestionsActive}
+              handleChange={handleChange}
+              handleKeyDown={(e) => handleKeyDown(e)}
+              handleClick={handleClick}
+            />
           </div>
           {
             user.email
