@@ -27,7 +27,7 @@ export const deletePost = (id) => {
         method: 'DELETE',
         headers: {
             'content-type': 'application/json',
-            //authorization header
+            'Authorization': `Bearer ${getToken()}`
         },
     }).then(res => res.json());
 }

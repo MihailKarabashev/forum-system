@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import CommentReply from "../CommentReply";
 import { generateSvgIcon } from "../../../utils/getProfilePicture";
 
@@ -20,11 +22,11 @@ const CommentCard = ({
                 <i className="tt-icon"><svg><use xlinkHref={`#icon-ava-${generateSvgIcon(reply.authorUserName)}`}></use></svg></i>
               </div>
               <div className="tt-avatar-title">
-                <a href="#">{reply.authorUserName}</a>
+                <Link to="#">{reply.authorUserName}</Link>
               </div>
-              <a href="#" className="tt-info-time">
+              <Link to="#" className="tt-info-time">
                 <i className="tt-icon"><svg><use xlinkHref="#icon-time"></use></svg></i>{reply.createdOn}
-              </a>
+              </Link>
             </div>
           </div>
           <div className="tt-item-description">
@@ -34,16 +36,23 @@ const CommentCard = ({
               reply.parentId && <CommentReply reply={reply} />
             }
 
-            <div className="tt-item-info info-bottom">
-              <a href="#" className="tt-icon-btn">
-                <i className="tt-icon"><svg><use xlinkHref="#icon-like"></use></svg></i>
-                <span className="tt-text">671</span>
-              </a>
-              <a href="#" className="tt-icon-btn">
-                <i className="tt-icon"><svg><use xlinkHref="#icon-dislike"></use></svg></i>
-                <span className="tt-text">39</span>
-              </a>
+            <div className="row">
+              <div className="tt-item-info info-bottom">
+                <Link to="#" className="tt-icon-btn">
+                  <i className="tt-icon"><svg><use xlinkHref="#icon-like"></use></svg></i>
+                  <span className="tt-text">671</span>
+                </Link>
+                <Link to="#" className="tt-icon-btn">
+                  <i className="tt-icon"><svg><use xlinkHref="#icon-dislike"></use></svg></i>
+                  <span className="tt-text">39</span>
+                </Link>
+              </div>
+              <div className="col-auto ml-auto">
+                <Link to="#" class="btn btn-primaryCustom tt-offset-27">Delete</Link>
+              </div>
+
             </div>
+
           </div>
         </div>
       </div>

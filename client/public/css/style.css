@@ -8,12 +8,19 @@
  * Forked from Normalize.css, licensed MIT (https://github.com/necolas/normalize.css/blob/master/LICENSE.md)
  */
 
+
+
 .custom {
 	fill: blue;
 }
 
 .suggestions :hover {
 	background-color: aqua;
+}
+
+.custom:hover {
+	background-color: red;
+	margin-right: 5px;
 }
 
 .mfp-bg {
@@ -6154,6 +6161,28 @@ hr {
 	top: -1px
 }
 
+.btn.btn-secoundaryCustom {
+	background-color: #e2e7ea;
+	color: #182730;
+	margin-right: 5px;
+}
+
+.btn.btn-secoundaryCustom:hover {
+	background-color: greenyellow;
+	color: #182730;
+}
+
+.btn.btn-primaryCustom {
+	background-color: #e2e7ea;
+	color: #182730;
+	margin-right: 5px;
+}
+
+.btn.btn-primaryCustom:hover {
+	background-color: red;
+	color: #182730;
+}
+
 .btn.btn-primary {
 	background-color: #e2e7ea;
 	color: #182730
@@ -8829,7 +8858,7 @@ hr {
 }
 
 .modal {
-	display: none;
+	display: block;
 	overflow: hidden;
 	position: fixed;
 	top: 0;
@@ -8843,7 +8872,9 @@ hr {
 	padding: 10px;
 	-webkit-transition: opacity .15s linear;
 	transition: opacity .15s linear;
-	opacity: 0
+	opacity: 0;
+	padding-right: 0px;
+	backdrop-filter: blur(10px);
 }
 
 .modal.show {

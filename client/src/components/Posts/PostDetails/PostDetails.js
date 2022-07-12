@@ -12,6 +12,7 @@ import Tags from '../../Tags/Tags';
 import LoginAction from '../../Login/LoginAction';
 import CreatePostReply from '../PostReplies/CreatePostReply';
 import CommentCard from "../../Comments/CommentCard/CommentCard";
+import Modal from '../../Modal/Modal';
 
 
 const PostDetails = () => {
@@ -80,6 +81,17 @@ const PostDetails = () => {
       })
   }
 
+  const onPostDeleteHandler = (e) => {
+    e.preventDefault();
+
+    postService.deletePost(postId)
+      .then(data => {
+        console.log(data);
+
+      })
+
+  }
+
   return (
     <div className="container">
       <div className="tt-single-topic-list">
@@ -90,6 +102,11 @@ const PostDetails = () => {
                 <div className="tt-avatar-icon">
                   <i className="tt-icon"><svg><use xlinkHref={`#icon-ava-${generateSvgIcon(post.authorUserName)}`}></use></svg></i>
                 </div>
+                <div className="col-auto ml-auto">
+                  <Link to="#" className="btn btn-primaryCustom tt-offset-27" onClick={onPostDeleteHandler}>Delete</Link>
+                  <Link to="#" className="btn btn-secoundaryCustom tt-offset-27">Update</Link>
+                </div>
+
                 <div className="tt-avatar-title">
                   <Link to="#">{post.authorUserName}</Link>
                 </div>
@@ -110,17 +127,18 @@ const PostDetails = () => {
             </div>
             <div className="tt-item-info info-bottom">
               <Link to="#" onClick={onLikeSubmitHandler} className="tt-icon-btn">
-                <i className="tt-icon" ><svg style={reactions.isLiked ? { fill: 'red' } : {}}><use xlinkHref="#icon-like"></use></svg></i>
+                <i className="tt-icon" ><svg style={reactions.isLiked ? { fill: 'green' } : {}}><use xlinkHref="#icon-like"></use></svg></i>
                 {
                   reactions && <span className="tt-text">{reactions.likes}</span>
                 }
               </Link>
               <Link to="#" onClick={onDislikeSubmitHandler} className="tt-icon-btn">
-                <i className="tt-icon"><svg style={reactions.isDisliked ? { fill: 'blue' } : {}} ><use xlinkHref="#icon-dislike"></use></svg></i>
+                <i className="tt-icon"><svg style={reactions.isDisliked ? { fill: 'red' } : {}} ><use xlinkHref="#icon-dislike"></use></svg></i>
                 {
                   reactions && <span className="tt-text">{reactions.dislikes}</span>
                 }
               </Link>
+
               <div className="col-separator"></div>
             </div>
           </div>
@@ -138,6 +156,7 @@ const PostDetails = () => {
               />)
         }
       </div>
+      <Modal />
 
       <div className="tt-wrapper-inner">
         <h4 className="tt-title-separator"><span>You’ve reached the end of replies</span></h4>
