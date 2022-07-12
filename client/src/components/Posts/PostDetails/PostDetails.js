@@ -6,7 +6,7 @@ import { useAuthContext } from '../../../contexts/AuthContext';
 import * as postService from "../../../services/postServices";
 import * as replyService from "../../../services/replyService";
 import * as reactionService from "../../../services/reactionService";
-import { generateSvgIcon } from '../../utils/getProfilePicture';
+import { generateSvgIcon } from '../../../utils/getProfilePicture';
 
 import Tags from '../../Tags/Tags';
 import LoginAction from '../../Login/LoginAction';
@@ -30,7 +30,7 @@ const PostDetails = () => {
         setPostReactions(data.reaction);
         setPostReplies(data.replies);
       });
-  }, []);
+  }, [postId]);
 
   const onSubmitFormHandler = (e) => {
     e.preventDefault();

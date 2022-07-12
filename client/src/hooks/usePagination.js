@@ -1,20 +1,18 @@
 import { useState } from "react"
 
-export const usePagination = (arrayOfPosts, currentDefaultPage = 1, amountPerPage = 2) => {
-    const [posts, setPosts] = useState(arrayOfPosts);
+export const usePagination = (posts, currentDefaultPage = 1, amountPerPage = 2) => {
     const [loading, setLoading] = useState(false);
-    const [currentPage, setCurrentPage] = useState(currentDefaultPage);
+    const [currentPage] = useState(currentDefaultPage);
     const [postPerPage, setPostPerPage] = useState(amountPerPage);
 
 
     const indexOfLastPost = currentPage * postPerPage;
     const indexOfFirstPost = indexOfLastPost - postPerPage;
-    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+    const currentPosts = posts && posts.slice(indexOfFirstPost, indexOfLastPost);
 
 
     return {
         //loader
-        setPosts,
         setPostPerPage,
         setLoading,
         currentPosts,

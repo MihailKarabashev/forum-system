@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 
 import * as postService from "../../services/postServices";
 import { usePagination } from "../../hooks/usePagination";
@@ -6,16 +6,18 @@ import { usePagination } from "../../hooks/usePagination";
 import PostCard from "./PostCard/PostCard";
 import Pagination from "../Pagination/Pagination";
 
+import { PostDataContext } from "../../contexts/PostDataContext";
+
 const amountPerPage = 4;
 
 const Posts = () => {
   //add loader
+  const { posts, setPosts } = useContext(PostDataContext);
   const {
-    setPosts,
     setPostPerPage,
     setLoading,
     currentPosts,
-    loading } = usePagination([], 1, amountPerPage);
+    loading } = usePagination(posts, 1, amountPerPage);
 
   useEffect(() => {
     let ignore = false;
@@ -34,7 +36,6 @@ const Posts = () => {
 
   const onPaginationClickHandler = () => {
     setPostPerPage(state => state += amountPerPage);
-    console.log('here');
   }
 
 

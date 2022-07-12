@@ -1,5 +1,5 @@
 import CommentReply from "../CommentReply";
-import { generateSvgIcon } from "../../utils/getProfilePicture";
+import { generateSvgIcon } from "../../../utils/getProfilePicture";
 
 const CommentCard = ({
   reply,

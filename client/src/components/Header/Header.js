@@ -1,33 +1,21 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from '../../contexts/AuthContext';
+import { PostDataContext } from "../../contexts/PostDataContext";
 
 import Search from "../Search/Search";
-const intialUsers = [
-  { id: 1, name: 'misho', email: 'misho@abv.bg' },
-  { id: 2, name: 'koce', email: 'koce@abv.bg' },
-  { id: 3, name: 'neli', email: 'neli@abv.bg' },
-  { id: 4, name: 'anton', email: 'anton@abv.bg' },
-  { id: 5, name: 'mishaki', email: 'mishaki@abv.bg' }
-]
 
-// const initialSearchState = {
-//   suggestions: [],
-//   suggestionIndex: 0,
-//   suggestionsActive: false,
-//   value: ""
-// }
-
-// const [search, setSearch] = useState(initialSearchState);
 
 const Header = () => {
-  const [users, setUsers] = useState(intialUsers);
   const [suggestions, setSuggestions] = useState([]);
   const [suggestionIndex, setSuggestionIndex] = useState(0);
   const [suggestionsActive, setSuggestionsActive] = useState(false);
   const [value, setValue] = useState("");
 
+  const { posts, setPosts } = useContext(PostDataContext);
   const { user } = useAuthContext();
+
+  const navigate = useNavigate();
 
   const guestNavigation =
     (
@@ -76,8 +64,8 @@ const Header = () => {
     const query = e.target.value.toLowerCase();
     setValue(query);
     if (query.length > 1) {
-      const filterSuggestions = users.filter(
-        suggestion => suggestion.email.toLowerCase().indexOf(query) > -1
+      const filterSuggestions = posts.filter(
+        suggestion => suggestion.title.toLowerCase().indexOf(query) > -1
       );
       setSuggestions(filterSuggestions);
       setSuggestionsActive(true);
@@ -86,10 +74,12 @@ const Header = () => {
     }
   };
 
-  const handleClick = () => {
+  const handleClick = (postId) => {
     setSuggestions([]);
     setValue("");
     setSuggestionsActive(false);
+
+    navigate(`/posts/details/${postId}`)
   };
 
 
@@ -107,7 +97,7 @@ const Header = () => {
       setSuggestionIndex(suggestionIndex + 1);
     }
     else if (e.keyCode === 13) {
-      setValue(suggestions[suggestionIndex].email);
+      setValue(suggestions[suggestionIndex].title);
       setSuggestionIndex(0);
       setSuggestionsActive(false);
     }
