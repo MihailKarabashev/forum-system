@@ -10,8 +10,10 @@ import Logout from "./components/Logout/Logout";
 import NotFound from "./components/NotFound/NotFound";
 import Posts from "./components/Posts/Posts";
 import CreatePost from "./components/CreatePost/CreatePost";
+import EditPost from "./components/Posts/EditPost/EditPost";
 import PostDetails from "./components/Posts/PostDetails/PostDetails";
 import Categories from "./components/Categories/Categories";
+import RouteGuard from "./components/RouteGuard/RouteGuard";
 
 import "../src/App.css";
 
@@ -31,8 +33,11 @@ function App() {
             <Route path="/categories" element={<Categories />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/logout" element={<Logout />} />
-            <Route path="/posts/create" element={<CreatePost />} />
+            <Route element={<RouteGuard />}>
+              <Route path="/posts/create" element={<CreatePost />} />
+              <Route path="/edit/:postId" element={<EditPost />} />
+              <Route path="/logout" element={<Logout />} />
+            </Route>
             <Route path="/posts/details/:postId" element={<PostDetails />} />
           </Routes>
 

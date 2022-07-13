@@ -1,0 +1,1 @@
+export const isAuthenticated = (token) => token ? true : false;
