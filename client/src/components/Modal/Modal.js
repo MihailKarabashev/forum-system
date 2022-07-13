@@ -1,9 +1,11 @@
-const Modal = () => {
+import { Link } from "react-router-dom"
+
+const Modal = ({ onClose, onSave }) => {
     return (
         <div className="modal fade show modal-open container" id="modalAgeConfirmation" tabIndex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-md">
                 <div className="modal-content">
-                    <div className="modal-header">
+                    <div className="modal-header" onClick={onClose}>
                         <button type="button" className="close" data-dismiss="modal" aria-hidden="true"></button>
                     </div>
                     <div className="tt-modal-confirmation">
@@ -15,20 +17,21 @@ const Modal = () => {
                         </div>
                         <div className="tt-confirmation-btn">
                             <div className="tt-col">
-                                <a href="#" className="tt-option-btn">
+                                <Link onClick={onClose} to="#" className="tt-option-btn">
                                     <span className="tt-icon">
-                                        <svg><use xlinkHref="#icon-exit"></use></svg>
+                                        <svg style={{ fill: 'red' }}><use xlinkHref="#icon-cancel"></use></svg>
+
                                     </span>
                                     <span className="btn btn-primary">No Thank You</span>
-                                </a>
+                                </Link>
                             </div>
                             <div className="tt-col">
-                                <a href="#" className="tt-option-btn" data-dismiss="modal">
+                                <Link onClick={onSave} to="#" className="tt-option-btn" data-dismiss="modal">
                                     <span className="tt-icon">
-                                        <svg><use xlinkHref="#icon-enter"></use></svg>
+                                        <svg style={{ fill: 'green' }}><use xlinkHref="#icon-verified"></use></svg>
                                     </span>
                                     <span className="btn btn-primary">Continue</span>
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>

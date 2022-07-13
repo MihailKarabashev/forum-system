@@ -12,8 +12,6 @@ const CommentCard = ({
 
   return (
     <>
-
-      {/* <div className={isReplyCreated ? "tt-item tt-wrapper-success" : "tt-item"}> */}
       <div className={(array.length - 1 === index && isReplyCreated) ? "tt-item tt-wrapper-success" : "tt-item"}>
         <div className="tt-single-topic">
           <div className="tt-item-header pt-noborder">
@@ -48,7 +46,7 @@ const CommentCard = ({
                 </Link>
               </div>
               <div className="col-auto ml-auto">
-                <Link to="#" class="btn btn-primaryCustom tt-offset-27">Delete</Link>
+                <Link to="#" className="btn btn-primaryCustom tt-offset-27">Delete</Link>
               </div>
 
             </div>

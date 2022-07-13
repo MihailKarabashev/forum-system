@@ -68,6 +68,11 @@ namespace ForumApi.Services
             return await userManager.GetUserAsync(this.httpContextAccesor.HttpContext.User);
         }
 
+        public async Task<bool> IsAdministrator(ForumUser user)
+        {
+            return await userManager.IsInRoleAsync(user, "Admin");
+        }
+
         public async Task<AuthResponseModel> LoginAsync(LoginRequestModel model)
         {
             var user = await this.userManager.FindByEmailAsync(model.Email);
@@ -94,6 +99,7 @@ namespace ForumApi.Services
 
             return new AuthResponseModel
             {
+                Id = user.Id,
                 Username = user.UserName,
                 Token = generateToken,
                 Email = model.Email,
@@ -124,6 +130,7 @@ namespace ForumApi.Services
 
             return new AuthResponseModel
             {
+                Id = user.Id,
                 Username = model.Username,
                 Email = model.Email,
                 Token = generateToken,

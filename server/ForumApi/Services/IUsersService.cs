@@ -12,5 +12,7 @@ namespace ForumApi.Services
         Task<AuthResponseModel> LoginAsync(LoginRequestModel model);
 
         Task<ForumUser> GetCurrentLoggedInUser();
+
+        Task<bool> IsAdministrator(ForumUser user);
     }
 }

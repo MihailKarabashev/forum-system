@@ -3,10 +3,11 @@ import { createContext, useContext } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 
 const initialUserData = {
+    id: '',
     username: '',
     token: '',
     email: '',
-    roleName: ''
+    roleName: '',
 }
 
 const AuthContext = createContext();

@@ -179,13 +179,21 @@ app.MapGet("api/posts",
 
 app.MapDelete("api/posts/{id}",
     [Authorize]
-async (string id, IMapper mapper, IPostService postService) =>
+async (string id, IMapper mapper, IPostService postService, IUsersService usersService) =>
 {
+    var user = await usersService.GetCurrentLoggedInUser();
+    var isAdministrator = await usersService.IsAdministrator(user);
+
     var post = await postService.GetByIdAsync(id);
 
     if (post == null)
     {
         return Results.NotFound();
+    }
+
+    if (post.AuthorId != user.Id && !isAdministrator)
+    {
+        return Results.Unauthorized();
     }
 
     await postService.DeleteAsync(id);
@@ -211,13 +219,21 @@ async (IMapper mapper, IPostService postService, IUsersService userService, Crea
 
 app.MapPut("/api/posts",
     [Authorize]
-async (string id, IPostService postService, EditPostModel dto) =>
+async (string id, IPostService postService, EditPostModel dto, IUsersService usersService) =>
 {
+    var user = await usersService.GetCurrentLoggedInUser();
+    var isAdministrator = await usersService.IsAdministrator(user);
+
     var post = await postService.GetByIdAsync(id);
 
     if (post == null)
     {
         return Results.NotFound();
+    }
+
+    if (post.AuthorId != user.Id && !isAdministrator)
+    {
+        return Results.Unauthorized();
     }
 
     await postService.EditAsync(id, dto.Title, dto.Description, dto.CategoryId);
