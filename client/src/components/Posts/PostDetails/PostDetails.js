@@ -26,6 +26,7 @@ const PostDetails = () => {
   const { postId } = useParams();
   const { user } = useAuthContext();
 
+
   useEffect(() => {
     postService.getPostById(postId)
       .then(data => {
@@ -60,29 +61,18 @@ const PostDetails = () => {
     e.target.reset();
   }
 
-  const onLikeSubmitHandler = (e) => {
-    e.preventDefault();
 
-    reactionService.createLike(postId)
-      .then(reactions => {
-        setPostReactions(reactions);
-      })
-      .catch(err => {
-        console.log(err);
-      })
+  const reactionHandler = (e, id, service, reactionType, state) => {
+    e.preventDefault();
+    console.log(state);
+
+    service.createReaction(id, reactionType)
+      .then(reaction => {
+        state(reaction);
+      });
+
   }
 
-  const onDislikeSubmitHandler = (e) => {
-    e.preventDefault();
-
-    reactionService.createDislike(postId)
-      .then(reactions => {
-        setPostReactions(reactions);
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  }
 
   const onDeleteClickHandler = (e) => {
     e.preventDefault();
@@ -106,7 +96,7 @@ const PostDetails = () => {
   const ownerButtons = (
     <div className="col-auto ml-auto">
       <Link to="#" className="btn btn-primaryCustom tt-offset-27" onClick={onDeleteClickHandler}>Delete</Link>
-      <Link to="#" className="btn btn-secoundaryCustom tt-offset-27">Update</Link>
+      <Link to={`posts/edit/${postId}`} className="btn btn-secoundaryCustom tt-offset-27">Update</Link>
     </div>
   );
 
@@ -147,13 +137,13 @@ const PostDetails = () => {
                 <p> {post.description}</p>
               </div>
               <div className="tt-item-info info-bottom">
-                <Link to="#" onClick={onLikeSubmitHandler} className="tt-icon-btn">
+                <Link to="#" onClick={(e) => reactionHandler(e, postId, reactionService, 'like', setPostReactions)} className="tt-icon-btn">
                   <i className="tt-icon" ><svg style={reactions.isLiked ? { fill: 'green' } : {}}><use xlinkHref="#icon-like"></use></svg></i>
                   {
                     reactions && <span className="tt-text">{reactions.likes}</span>
                   }
                 </Link>
-                <Link to="#" onClick={onDislikeSubmitHandler} className="tt-icon-btn">
+                <Link to="#" onClick={(e) => reactionHandler(e, postId, reactionService, 'dislike', setPostReactions)} className="tt-icon-btn">
                   <i className="tt-icon"><svg style={reactions.isDisliked ? { fill: 'red' } : {}} ><use xlinkHref="#icon-dislike"></use></svg></i>
                   {
                     reactions && <span className="tt-text">{reactions.dislikes}</span>

@@ -35,7 +35,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route element={<RouteGuard />}>
               <Route path="/posts/create" element={<CreatePost />} />
-              <Route path="/edit/:postId" element={<EditPost />} />
+              <Route path="posts/edit/:postId" element={<EditPost />} />
               <Route path="/logout" element={<Logout />} />
             </Route>
             <Route path="/posts/details/:postId" element={<PostDetails />} />
