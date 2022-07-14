@@ -64,7 +64,6 @@ namespace ForumApi.Services
                 .OrderBy(r => r.CreatedOn)
                 .ToListAsync();
 
-
             //return this.GetCleanReplies(replies);
         }
 

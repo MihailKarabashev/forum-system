@@ -1,14 +1,33 @@
 import { Link } from "react-router-dom";
 
-import CommentReply from "../CommentReply";
 import { generateSvgIcon } from "../../../utils/getProfilePicture";
+import { hasPermissions } from "../../../utils/hasPermissions";
+
+import { useAuthContext } from "../../../contexts/AuthContext";
+
+import * as replyService from '../../../services/replyService';
+
+import CommentReply from "../CommentReply";
+
 
 const CommentCard = ({
   reply,
   isReplyCreated,
   array,
-  index
+  index,
+  onDeleteClickHandler
 }) => {
+
+  const { user } = useAuthContext();
+
+  const deleteBtn = (
+    <div className="row">
+      <div className="col-auto ml-auto">
+        <Link to="#" onClick={onDeleteClickHandler} className="btn btn-primaryCustom tt-offset-27">Delete</Link>
+      </div>
+    </div>
+  )
+
 
   return (
     <>
@@ -34,22 +53,10 @@ const CommentCard = ({
               reply.parentId && <CommentReply reply={reply} />
             }
 
-            <div className="row">
-              <div className="tt-item-info info-bottom">
-                <Link to="#" className="tt-icon-btn">
-                  <i className="tt-icon"><svg><use xlinkHref="#icon-like"></use></svg></i>
-                  <span className="tt-text">671</span>
-                </Link>
-                <Link to="#" className="tt-icon-btn">
-                  <i className="tt-icon"><svg><use xlinkHref="#icon-dislike"></use></svg></i>
-                  <span className="tt-text">39</span>
-                </Link>
-              </div>
-              <div className="col-auto ml-auto">
-                <Link to="#" className="btn btn-primaryCustom tt-offset-27">Delete</Link>
-              </div>
+            {
+              (hasPermissions(user, reply)) ? deleteBtn : ''
+            }
 
-            </div>
 
           </div>
         </div>

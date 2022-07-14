@@ -22,7 +22,7 @@ export const createPost = (data) => {
     }).then(res => res.json());
 }
 
-export const deletePost = (id) => {
+export const remove = (id) => {
     return fetch(`${baseUrl}/posts/${id}`, {
         method: 'DELETE',
         headers: {

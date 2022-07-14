@@ -12,3 +12,14 @@ export const createPostReply = (postId, description) => {
         body: JSON.stringify({ description, postId })
     }).then(res => res.json());
 };
+
+
+export const remove = (id) => {
+    return fetch(`${baseUrl}/replies/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'content-type': 'application/json',
+            'Authorization': `Bearer ${getToken()}`
+        },
+    }).then();
+}

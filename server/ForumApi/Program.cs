@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -98,9 +99,7 @@ builder.Services.AddTransient<IRepliesService, RepliesService>();
 builder.Services.AddTransient<ITagsService, TagsService>();
 builder.Services.AddTransient<ICategoriesService, CategoriesService>();
 builder.Services.AddTransient<IPostReactionsService, PostReactionsService>();
-
-
-
+builder.Services.AddTransient<IReplyReactionsService, ReplyReactionsService>();
 
 
 var app = builder.Build();
@@ -125,6 +124,7 @@ app.MapGet("api/posts/{id}", async (string id,
     IPostService postService,
     ITagsService tagsService,
     IRepliesService repliesService,
+     IReplyReactionsService replyReactionsService,
     IPostReactionsService postReactionService) =>
 {
     var post = await postService.GetByIdAsync(id);
@@ -145,8 +145,15 @@ app.MapGet("api/posts/{id}", async (string id,
 
     postDto.Replies = mapper.Map<IEnumerable<ReadReplyDto>>(replies);
     postDto.Tags = mapper.Map<IEnumerable<ReadTagModel>>(tags);
+
     postDto.Reaction = reaction;
     postDto.Views = view;
+
+    foreach (var reply in postDto.Replies)
+    {
+        var replyReaction = await replyReactionsService.GetCountByReplyIdAsync(reply.Id);
+       reply.Reaction = replyReaction;
+    }
 
     return Results.Ok(postDto);
 });
@@ -168,6 +175,7 @@ app.MapGet("api/posts",
     {
         var postTag = await tagsService.GetAllByPostIdAsync(postDto.Id);
         var postReaction = await postReactionService.GetCountByPostIdAsync(postDto.Id);
+
 
         postDto.Tags = mapper.Map<IEnumerable<ReadTagModel>>(postTag);
         postDto.Reaction = postReaction;
@@ -270,6 +278,27 @@ async (IUsersService usersService, RegisterRequestModel model) =>
 // Replies
 //check roles (administarator)
 
+app.MapGet("/api/replies/{replyId}",
+    async (int replyId,
+    IMapper mapper,
+    IRepliesService repliesService,
+    IReplyReactionsService replyReactiosService) =>
+    {
+        var reply = await repliesService.GetByIdAsync(replyId);
+
+        if (reply == null)
+        {
+            return Results.NotFound();
+        }
+        var reaction = await replyReactiosService.GetCountByReplyIdAsync(replyId);
+
+        var replyDto = mapper.Map<ReadReplyDto>(reply);
+        
+
+        return Results.Ok(replyDto);
+    });
+
+
 app.MapPost("/api/replies",
     [Authorize]
 async (IMapper mapper,
@@ -370,5 +399,43 @@ app.MapGet("/api/categories", async (ICategoriesService categoriesService, IMapp
 
     return Results.Ok(categories);
 });
+
+
+//Reply Reactions
+app.MapPost("/api/reply/reaction/like/{replyId}",
+    [Authorize]
+async (IUsersService usersService, IReplyReactionsService replyReactionService, int replyId) =>
+    {
+        var user = await usersService.GetCurrentLoggedInUser();
+
+        if (user.Id == null)
+        {
+            return Results.Unauthorized();
+        }
+
+
+        var reaction = await replyReactionService.ReactAsync(ReactionType.Like, replyId, user.Id);
+
+        return Results.Created($"api/replies/{replyId}", reaction);
+    });
+
+
+app.MapPost("/api/reply/reaction/dislike/{replyId}",
+    [Authorize]
+async (IUsersService usersService, IReplyReactionsService replyReactionService, int replyId) =>
+    {
+        var user = await usersService.GetCurrentLoggedInUser();
+
+        if (user.Id == null)
+        {
+            return Results.Unauthorized();
+        }
+
+
+        var reaction = await replyReactionService.ReactAsync(ReactionType.DisLike, replyId, user.Id);
+
+        return Results.Created($"api/replies/{replyId}", reaction);
+    });
+
 
 app.Run();

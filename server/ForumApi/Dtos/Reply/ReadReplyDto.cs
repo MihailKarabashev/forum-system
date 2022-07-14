@@ -1,4 +1,6 @@
-﻿namespace ForumApi.Dtos.Reply
+﻿using ForumApi.Dtos.Reaction;
+
+namespace ForumApi.Dtos.Reply
 {
     public class ReadReplyDto
     {
@@ -19,5 +21,7 @@
         public string AuthorUserName { get; set; }
 
         public string CreatedOn { get; set; }
+
+        public ReadReactionsCountModel Reaction { get; set; }
     }
 }

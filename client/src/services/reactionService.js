@@ -1,8 +1,8 @@
 import { getToken } from "./authService";
 export const baseUrl = 'https://localhost:7229/api';
 
-export const createReaction = (postId, reactionType) => {
-    return fetch(`${baseUrl}/posts/reaction/${reactionType}/${postId}`, {
+export const createReaction = (id, collection, reactionType) => {
+    return fetch(`${baseUrl}/${collection}/reaction/${reactionType}/${id}`, {
         method: 'POST',
         headers: {
             'content-type': 'application/json',

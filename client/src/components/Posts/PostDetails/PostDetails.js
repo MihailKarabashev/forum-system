@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 
 import { useAuthContext } from '../../../contexts/AuthContext';
@@ -6,13 +6,16 @@ import { useAuthContext } from '../../../contexts/AuthContext';
 import * as postService from "../../../services/postServices";
 import * as replyService from "../../../services/replyService";
 import * as reactionService from "../../../services/reactionService";
+
 import { generateSvgIcon } from '../../../utils/getProfilePicture';
+import { hasPermissions } from '../../../utils/hasPermissions';
 
 import Tags from '../../Tags/Tags';
+import Modal from '../../Modal/Modal';
 import LoginAction from '../../Login/LoginAction';
 import CreatePostReply from '../PostReplies/CreatePostReply';
+import ReactionButton from '../../ReactionButton/ReactionButton';
 import CommentCard from "../../Comments/CommentCard/CommentCard";
-import Modal from '../../Modal/Modal';
 
 
 const PostDetails = () => {
@@ -62,15 +65,13 @@ const PostDetails = () => {
   }
 
 
-  const reactionHandler = (e, id, service, reactionType, state) => {
+  const reactionHandler = (e, id, collection, reactionType, state) => {
     e.preventDefault();
-    console.log(state);
 
-    service.createReaction(id, reactionType)
+    reactionService.createReaction(id, collection, reactionType)
       .then(reaction => {
         state(reaction);
       });
-
   }
 
 
@@ -79,9 +80,9 @@ const PostDetails = () => {
     setShowModal(true);
   }
 
-  const deleteHandler = (e) => {
+  const deleteHandler = (e, service, id) => {
     e.preventDefault();
-    postService.deletePost(postId)
+    service.remove(id)
       .then(res => {
         navigate('/');
       })
@@ -102,7 +103,7 @@ const PostDetails = () => {
 
   return (
     <>
-      {showModal && <Modal onClose={() => setShowModal(false)} onSave={deleteHandler} />}
+      {showModal && <Modal onClose={() => setShowModal(false)} onSave={(e) => deleteHandler(e, postService, postId)} />}
       <div className="container">
         <div className="tt-single-topic-list">
           <div className="tt-item" >
@@ -112,12 +113,7 @@ const PostDetails = () => {
                   <div className="tt-avatar-icon">
                     <i className="tt-icon"><svg><use xlinkHref={`#icon-ava-${generateSvgIcon(post.authorUserName)}`}></use></svg></i>
                   </div>
-                  {
-                    (user.id === post.authorId || user.roleName === 'Admin')
-                      ? ownerButtons
-                      : ''
-                  }
-
+                  {(hasPermissions(user, post)) ? ownerButtons : ''}
                   <div className="tt-avatar-title">
                     <Link to="#">{post.authorUserName}</Link>
                   </div>
@@ -137,19 +133,21 @@ const PostDetails = () => {
                 <p> {post.description}</p>
               </div>
               <div className="tt-item-info info-bottom">
-                <Link to="#" onClick={(e) => reactionHandler(e, postId, reactionService, 'like', setPostReactions)} className="tt-icon-btn">
-                  <i className="tt-icon" ><svg style={reactions.isLiked ? { fill: 'green' } : {}}><use xlinkHref="#icon-like"></use></svg></i>
-                  {
-                    reactions && <span className="tt-text">{reactions.likes}</span>
-                  }
-                </Link>
-                <Link to="#" onClick={(e) => reactionHandler(e, postId, reactionService, 'dislike', setPostReactions)} className="tt-icon-btn">
-                  <i className="tt-icon"><svg style={reactions.isDisliked ? { fill: 'red' } : {}} ><use xlinkHref="#icon-dislike"></use></svg></i>
-                  {
-                    reactions && <span className="tt-text">{reactions.dislikes}</span>
-                  }
-                </Link>
+                <ReactionButton
+                  reaction={reactions.likes}
+                  isReaction={reactions.isLiked}
+                  iconType={'like'}
+                  style={{ fill: 'green' }}
+                  onReact={(e) => reactionHandler(e, postId, 'posts', 'like', setPostReactions)}
+                />
 
+                <ReactionButton
+                  reaction={reactions.dislikes}
+                  isReaction={reactions.isDisliked}
+                  iconType={'dislike'}
+                  style={{ fill: 'red' }}
+                  onReact={(e) => reactionHandler(e, postId, 'posts', 'dislike', setPostReactions)}
+                />
                 <div className="col-separator"></div>
               </div>
             </div>
@@ -164,6 +162,7 @@ const PostDetails = () => {
                   isReplyCreated={isReplyCreated}
                   array={array}
                   index={index}
+                  onDeleteClickHandler={onDeleteClickHandler}
                 />)
           }
         </div>
