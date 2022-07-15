@@ -1,5 +1,9 @@
-﻿using ForumApi.Data;
+﻿using AutoMapper;
+using ForumApi.Data;
+using ForumApi.Dtos.Tag;
+using ForumApi.Dtos.User;
 using ForumApi.Models;
+using ForumApi.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace ForumApi.Services
@@ -7,10 +11,12 @@ namespace ForumApi.Services
     public class PostService : IPostService
     {
         private readonly ForumDbContext db;
+        private readonly IMapper mapper;
 
-        public PostService(ForumDbContext db)
+        public PostService(ForumDbContext db, IMapper mapper)
         {
             this.db = db;
+            this.mapper = mapper;
         }
 
         public async Task<Post> CreateAsync(string title, string description, string authorId, int categoryId, IEnumerable<int> tags)
@@ -75,6 +81,51 @@ namespace ForumApi.Services
                                      .OrderBy(x => x.CreatedOn)
                                      .Where(x => !x.IsDeleted)
                                      .ToListAsync();
+        }
+
+        public  async Task<IEnumerable<ReadPostsByUserIdModel>> GetAllByUserIdAsync(string userId)
+        {
+            var posts = await this.db.Posts
+                                      .Where(x=> x.AuthorId == userId)
+                                      .Include(x => x.Category)
+                                     .Include(x => x.Author)
+                                     .Include(x => x.Replies)
+                                     .Include(x => x.Tags)
+                                     .Include(x=> x.PostReactions)
+                                     .OrderBy(x => x.CreatedOn)
+                                     .Where(x => !x.IsDeleted)
+                                     .ToListAsync(); 
+
+
+            var listOfDtos = new List<ReadPostsByUserIdModel>();
+
+
+            foreach (var post in posts)
+            {
+                var tags = await
+                    this.db.PostsTags.
+                    Where(x => x.PostId == post.Id).
+                    Select(x => x.Tag).
+                    ToListAsync();
+
+
+                listOfDtos.Add(new ReadPostsByUserIdModel
+                {
+                    Id = post.Id,
+                    Title = post.Title,
+                    Description = post.Description,
+                    AuthorUserName = post.Author.UserName,
+                    Activity = await this.GetLatestActivityByIdAsync(post.Id),
+                    Views = post.Views,
+                    CategoryName = post.Category.Name,
+                    RepliesCount = post.Replies.Count(),
+                    LikesCount = post.PostReactions.Where(x => x.ReactionType == ReactionType.Like).Count(),
+                    Tags = mapper.Map<IEnumerable<ReadTagModel>>(tags),
+                });
+            }
+
+            return listOfDtos;
+
         }
 
         public async Task<Post> GetByIdAsync(string id)

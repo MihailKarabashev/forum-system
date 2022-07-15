@@ -14,5 +14,7 @@ namespace ForumApi.Services
         Task<ForumUser> GetCurrentLoggedInUser();
 
         Task<bool> IsAdministrator(ForumUser user);
+
+        Task<bool> IsExist(string userId); 
     }
 }

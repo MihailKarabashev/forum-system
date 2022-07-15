@@ -1,13 +1,18 @@
 import { useState, useEffect } from "react"
-import * as postService from '../../services/postServices';
+import * as userService from '../../services/userService';
+
+import { useAuthContext } from '../../contexts/AuthContext';
+
 
 import PostCard from "../Posts/PostCard/PostCard";
 
 const UserActivity = () => {
     const [posts, setPosts] = useState([]);
+    const { user } = useAuthContext();
+
 
     useEffect(() => {
-        postService.getPosts()
+        userService.getUserPosts(user.id)
             .then(data => {
                 setPosts(data);
             })

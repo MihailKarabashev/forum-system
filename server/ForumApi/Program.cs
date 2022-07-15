@@ -438,4 +438,24 @@ async (IUsersService usersService, IReplyReactionsService replyReactionService, 
     });
 
 
+//User statistics
+
+app.MapGet("/api/user/post-statistics/{userId}",
+    [Authorize]
+    async (
+        string userId ,
+        IPostService postsService,
+        IUsersService usersService ) =>
+{
+    if (!await usersService.IsExist(userId))
+    {
+        return Results.Unauthorized();
+    }
+
+      var posts = await postsService.GetAllByUserIdAsync(userId);
+
+    return Results.Ok(posts);
+});
+
+
 app.Run();

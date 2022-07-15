@@ -73,6 +73,8 @@ namespace ForumApi.Services
             return await userManager.IsInRoleAsync(user, "Admin");
         }
 
+        public async Task<bool> IsExist(string userId) => await userManager.FindByIdAsync(userId) != null;
+
         public async Task<AuthResponseModel> LoginAsync(LoginRequestModel model)
         {
             var user = await this.userManager.FindByEmailAsync(model.Email);

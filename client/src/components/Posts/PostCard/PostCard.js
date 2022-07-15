@@ -33,7 +33,7 @@ const PostCard = ({
                 </div>
             </div>
             <div className="tt-col-category"><span className="tt-color01 tt-badge">{post.categoryName}</span></div>
-            <div className="tt-col-value hide-mobile">{post.reaction.likes}</div>
+            <div className="tt-col-value hide-mobile">{post.reaction ? post.reaction.like : post.likesCount}</div>
             <div className="tt-col-value tt-color-select hide-mobile">{post.repliesCount}</div>
             <div className="tt-col-value hide-mobile">{post.views}</div>
             <div className="tt-col-value hide-mobile">{post.activity}</div>

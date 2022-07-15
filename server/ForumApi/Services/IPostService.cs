@@ -1,4 +1,5 @@
-﻿using ForumApi.Models;
+﻿using ForumApi.Dtos.User;
+using ForumApi.Models;
 using System.Collections.Generic;
 
 namespace ForumApi.Services
@@ -12,9 +13,10 @@ namespace ForumApi.Services
         Task DeleteAsync(string id);
 
         Task<Post> GetByIdAsync(string id);
-
-        // create pagination, sorting , filtering
+       
         Task<IEnumerable<Post>> GetAllAsync();
+
+        Task<IEnumerable<ReadPostsByUserIdModel>> GetAllByUserIdAsync(string userId);
 
         Task<string> GetLatestActivityByIdAsync(string id);
 
