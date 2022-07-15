@@ -3,11 +3,14 @@ import Tags from "../../Tags/Tags";
 
 
 const PostCard = ({
-    post
+    post,
+    decoration
 }) => {
     console.log(post);
+
+
     return (
-        <div className="tt-item tt-itemselect">
+        <div className={`tt-item ${decoration}`}>
             <div className="tt-col-avatar">
                 <svg className="tt-icon">
                     <use xlinkHref={`#icon-ava-${post.authorUserName[0].toLowerCase()}`}></use>

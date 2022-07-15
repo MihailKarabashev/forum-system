@@ -50,7 +50,7 @@ const Header = () => {
   const userNavLinks = (
     <>
       <li><Link to="/posts/create">Create Topic</Link></li>
-      <li><Link to="page-single_settings.html">Single User Settings</Link></li>
+      <li><Link to="/user">Single User Settings</Link></li>
     </>
   );
 

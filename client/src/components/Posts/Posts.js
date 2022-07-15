@@ -51,7 +51,7 @@ const Posts = () => {
           <div className="tt-col-value">Activity</div>
         </div>
         {
-          currentPosts.map(post => <PostCard key={post.id} post={post} />)
+          currentPosts.map(post => <PostCard key={post.id} post={post} decoration={"tt-itemselect"} />)
         }
 
         <Pagination onPaginationClickHandler={onPaginationClickHandler} />
