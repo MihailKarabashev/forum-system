@@ -80,9 +80,9 @@ const PostDetails = () => {
     setShowModal(true);
   }
 
-  const deleteHandler = (e, service, id) => {
+  const deleteHandler = (e) => {
     e.preventDefault();
-    service.remove(id)
+    postService.remove(postId)
       .then(res => {
         navigate('/');
       })
@@ -91,6 +91,20 @@ const PostDetails = () => {
       })
       .finally(() => {
         setShowModal(false);
+      })
+  }
+
+  const onRemovePostReply = (e, replyId) => {
+    e.preventDefault()
+    console.log(replyId);
+    replyService.remove(replyId)
+      .then(res => {
+        setPostReplies(replies => {
+          return replies.filter(reply => reply.id !== replyId);
+        })
+      })
+      .catch(err => {
+        console.log(err);
       })
   }
 
@@ -103,7 +117,7 @@ const PostDetails = () => {
 
   return (
     <>
-      {showModal && <Modal onClose={() => setShowModal(false)} onSave={(e) => deleteHandler(e, postService, postId)} />}
+      {showModal && <Modal onClose={() => setShowModal(false)} onSave={(e) => deleteHandler(e)} />}
       <div className="container">
         <div className="tt-single-topic-list">
           <div className="tt-item" >
@@ -162,7 +176,7 @@ const PostDetails = () => {
                   isReplyCreated={isReplyCreated}
                   array={array}
                   index={index}
-                  onDeleteClickHandler={onDeleteClickHandler}
+                  onRemove={onRemovePostReply}
                 />)
           }
         </div>

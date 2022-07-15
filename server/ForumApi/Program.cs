@@ -319,11 +319,11 @@ async (IMapper mapper,
 
 app.MapDelete("/api/replies/{id}",
     [Authorize]
-async (int replyId,
+async (int id,
     IRepliesService repliesService,
     IUsersService usersService) =>
 {
-    var reply = await repliesService.GetByIdAsync(replyId);
+    var reply = await repliesService.GetByIdAsync(id);
 
     if (reply == null)
     {
@@ -337,7 +337,7 @@ async (int replyId,
         return Results.Unauthorized();
     }
 
-    await repliesService.DeleteAsync(replyId);
+    await repliesService.DeleteAsync(id);
 
     return Results.NoContent();
 });

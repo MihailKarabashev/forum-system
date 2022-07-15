@@ -27,7 +27,7 @@ const Categories = () => {
             <div className="tt-categories-list">
                 <div className="row">
                     {
-                        categories && categories.map(category => <CategoryCard category={category} key={category.id} />)
+                        categories && categories.map(category => <CategoryCard key={category.id} category={category} />)
                     }
                 </div>
             </div>

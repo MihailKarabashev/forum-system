@@ -32,10 +32,12 @@ namespace ForumApi.Services
 
         public async Task DeleteAsync(int id)
         {
-            var reply = await this.GetByIdAsync(id);
+            var reply = await this.db.Replies.FirstOrDefaultAsync(x => x.Id == id);
 
             reply.IsDeleted = true;
             reply.DeletedOn = DateTime.UtcNow;
+
+            this.db.Update(reply);
 
             await this.db.SaveChangesAsync();
             await this.DeleteNestedRepliesAsync(id);
@@ -89,6 +91,7 @@ namespace ForumApi.Services
             nestedReply.IsDeleted = true;
             nestedReply.DeletedOn = DateTime.UtcNow;
 
+            this.db.Update(nestedReply);
             await this.db.SaveChangesAsync();
             await this.DeleteNestedRepliesAsync(nestedReply.Id);
         }

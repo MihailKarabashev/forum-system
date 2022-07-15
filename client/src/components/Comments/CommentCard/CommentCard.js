@@ -15,7 +15,7 @@ const CommentCard = ({
   isReplyCreated,
   array,
   index,
-  onDeleteClickHandler
+  onRemove
 }) => {
 
   const { user } = useAuthContext();
@@ -23,7 +23,7 @@ const CommentCard = ({
   const deleteBtn = (
     <div className="row">
       <div className="col-auto ml-auto">
-        <Link to="#" onClick={onDeleteClickHandler} className="btn btn-primaryCustom tt-offset-27">Delete</Link>
+        <Link to="#" onClick={(e) => onRemove(e, reply.id)} className="btn btn-primaryCustom tt-offset-27">Delete</Link>
       </div>
     </div>
   )
