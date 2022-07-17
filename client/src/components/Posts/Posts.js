@@ -7,12 +7,13 @@ import PostCard from "./PostCard/PostCard";
 import Pagination from "../Pagination/Pagination";
 
 import { PostDataContext } from "../../contexts/PostDataContext";
+import { useState } from "react";
 
 const amountPerPage = 4;
 
 const Posts = () => {
   //add loader
-  const { posts, setPosts } = useContext(PostDataContext);
+  const [posts, setPosts] = useState([]);
   const {
     setPostPerPage,
     setLoading,
@@ -51,7 +52,7 @@ const Posts = () => {
           <div className="tt-col-value">Activity</div>
         </div>
         {
-          currentPosts.map(post => <PostCard key={post.id} post={post} decoration={"tt-itemselect"} />)
+          currentPosts.map(post => <PostCard key={post.id} data={post} decoration={"tt-itemselect"} />)
         }
 
         <Pagination onPaginationClickHandler={onPaginationClickHandler} />

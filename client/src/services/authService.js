@@ -41,7 +41,6 @@ export function getToken() {
             throw { message: 'You must be authenticated', statusCode: 403 };
         }
 
-        console.log('no error');
         let user = JSON.parse(userItem);
 
         return user.token;

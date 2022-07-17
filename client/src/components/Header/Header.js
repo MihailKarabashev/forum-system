@@ -1,22 +1,26 @@
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
 import { useAuthContext } from '../../contexts/AuthContext';
+
 import { PostDataContext } from "../../contexts/PostDataContext";
+
+import { generateSvgIcon } from "../../utils/getProfilePicture";
 
 import Search from "../Search/Search";
 
 
 const Header = () => {
+  const [posts, setPosts] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
   const [suggestionIndex, setSuggestionIndex] = useState(0);
   const [suggestionsActive, setSuggestionsActive] = useState(false);
   const [value, setValue] = useState("");
 
-  const { posts, setPosts } = useContext(PostDataContext);
+  // const { posts, setPosts } = useContext(PostDataContext);
   const { user } = useAuthContext();
 
   const navigate = useNavigate();
-
 
   const guestNavigation =
     (
@@ -36,7 +40,7 @@ const Header = () => {
             <i className="tt-icon"><svg><use xlinkHref="#icon-notification"></use></svg></i>
           </Link>
           <div className="tt-avatar-icon tt-size-md">
-            <i className="tt-icon"><svg><use xlinkHref={`#icon-ava-${user.username[0]}`}></use></svg></i>
+            <i className="tt-icon"><svg><use xlinkHref={`#icon-ava-${generateSvgIcon(user.username)}`}></use></svg></i>
           </div>
           <div className="custom-select-01">
             <select>
@@ -126,7 +130,7 @@ const Header = () => {
                         ? userNavLinks
                         : guestNavLinks
                       }
-                      <li><Link to="page-categories.html">Categories</Link></li>
+                      <li><Link to="/categories">Categories</Link></li>
                       <li><Link to="_demo_modal-advancedSearch.html">Advanced Search</Link></li>
                       <li><Link to="error404.html">Error 404</Link></li>
                     </ul>

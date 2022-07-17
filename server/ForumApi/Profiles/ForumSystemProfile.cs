@@ -43,6 +43,9 @@ namespace ForumApi.Profiles.Post
             this.CreateMap<Tag, ReadTagModel>();
           
             this.CreateMap<Category, ReadCategoryModel>();
+
+            this.CreateMap<Reply, ReadReplyUserStatistic>()
+                .ForMember(x=> x.CategoryName , y=> y.MapFrom(src => src.Post.Category.Name));
         }
     }
 }

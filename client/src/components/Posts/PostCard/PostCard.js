@@ -3,40 +3,50 @@ import Tags from "../../Tags/Tags";
 
 
 const PostCard = ({
-    post,
-    decoration
+    data
 }) => {
-    console.log(post);
+
+    const menu = (
+        <>
+            <div className="tt-col-value hide-mobile">{data.reaction ? data.reaction.likes : data.likesCount}</div>
+            <div className="tt-col-value tt-color-select hide-mobile">{data.repliesCount}</div>
+            <div className="tt-col-value hide-mobile">{data.views}</div>
+        </>
+    )
+
+    const tagsMenu = (
+        <div className="row align-items-center no-gutters">
+            <div className="col-11">
+                <Tags tags={data.tags} />
+            </div>
+        </div>
+    )
 
 
     return (
-        <div className={`tt-item ${decoration}`}>
+        <div className="tt-item">
             <div className="tt-col-avatar">
                 <svg className="tt-icon">
-                    <use xlinkHref={`#icon-ava-${post.authorUserName[0].toLowerCase()}`}></use>
+                    <use xlinkHref={`#icon-ava-${data.authorUserName[0].toLowerCase()}`}></use>
                 </svg>
             </div>
             <div className="tt-col-description">
                 <h6 className="tt-title">
-                    <Link to={`/posts/details/${post.id}`}>
+                    <Link to={`/posts/details/${data.id}`}>
                         <svg className="tt-icon">
                             <use xlinkHref="#icon-pinned"></use>
                         </svg>
-                        {post.title}
+                        {data.title || data.postTitle}
                     </Link>
                 </h6>
 
-                <div className="row align-items-center no-gutters">
-                    <div className="col-11">
-                        <Tags tags={post.tags} />
-                    </div>
-                </div>
+                {
+                    data.tags ? tagsMenu : <div className="tt-content"> {data.description}</div>
+                }
             </div>
-            <div className="tt-col-category"><span className="tt-color01 tt-badge">{post.categoryName}</span></div>
-            <div className="tt-col-value hide-mobile">{post.reaction ? post.reaction.like : post.likesCount}</div>
-            <div className="tt-col-value tt-color-select hide-mobile">{post.repliesCount}</div>
-            <div className="tt-col-value hide-mobile">{post.views}</div>
-            <div className="tt-col-value hide-mobile">{post.activity}</div>
+            <div className="tt-col-category"><span className="tt-color01 tt-badge">{data.categoryName}</span></div>
+            {data.views && menu}
+            <div className="tt-col-value hide-mobile">{data.activity || data.postViews}</div>
         </div>
     );
 }

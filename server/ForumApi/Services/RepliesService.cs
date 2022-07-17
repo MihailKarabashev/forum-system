@@ -69,6 +69,16 @@ namespace ForumApi.Services
             //return this.GetCleanReplies(replies);
         }
 
+        public async Task<IEnumerable<Reply>> GetAllByUserIdAsync(string userId)
+        {
+            return await this.db.Replies
+               .Where(r => r.AuthorId == userId && !r.IsDeleted)
+               .Include(x=> x.Post)
+               .ThenInclude(x=> x.Category)
+               .OrderBy(r => r.CreatedOn)
+               .ToListAsync();
+        }
+
         public async Task<Reply> GetByIdAsync(int id)
         {
             return await this.db.Replies

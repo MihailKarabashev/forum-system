@@ -11,8 +11,10 @@ using ForumApi.Models.Enums;
 using ForumApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -70,7 +72,7 @@ builder.Services.AddAuthentication(opt =>
                 StatusCode = context.Response.StatusCode,
             };
 
-            await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
+            await context.Response.WriteAsync(System.Text.Json.JsonSerializer.Serialize(errorResponse));
         },
     };
 
@@ -101,6 +103,9 @@ builder.Services.AddTransient<ICategoriesService, CategoriesService>();
 builder.Services.AddTransient<IPostReactionsService, PostReactionsService>();
 builder.Services.AddTransient<IReplyReactionsService, ReplyReactionsService>();
 
+//builder.Services.
+//    Configure<JsonOptions>(opt =>
+//    opt.SerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
 
 var app = builder.Build();
 
@@ -440,21 +445,46 @@ async (IUsersService usersService, IReplyReactionsService replyReactionService, 
 
 //User statistics
 
-app.MapGet("/api/user/post-statistics/{userId}",
+app.MapGet("/api/user/post-statistics",
     [Authorize]
     async (
-        string userId ,
         IPostService postsService,
         IUsersService usersService ) =>
 {
-    if (!await usersService.IsExist(userId))
+    var user = await usersService.GetCurrentLoggedInUser();
+
+    if (user == null)
     {
         return Results.Unauthorized();
     }
 
-      var posts = await postsService.GetAllByUserIdAsync(userId);
+      var posts = await postsService.GetAllByUserIdAsync(user.Id);
 
     return Results.Ok(posts);
+});
+
+
+app.MapGet("/api/user/replies-statistics",
+    [Authorize]
+    async (
+        IRepliesService repliesService,
+        IUsersService usersService,
+        IMapper mapper
+    ) =>
+{
+    var user = await usersService.GetCurrentLoggedInUser();
+
+    if (user == null)
+    {
+        return Results.Unauthorized();
+    }
+
+    var replies = await repliesService.GetAllByUserIdAsync(user.Id);
+
+
+    var replyDtos = mapper.Map<IEnumerable<ReadReplyUserStatistic>>(replies);
+
+    return Results.Ok(replyDtos);
 });
 
 

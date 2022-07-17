@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 
 import { AuthProvider } from './contexts/AuthContext';
-import { PostDatProvider } from "./contexts/PostDataContext";
 
 import Header from "./components/Header/Header";
 import Login from "./components/Login/Login";
@@ -25,25 +24,23 @@ function App() {
   return (
     <main id="tt-pageContent">
       <AuthProvider>
-        <PostDatProvider>
-          <Header />
+        <Header />
 
-          <Routes>
-            <Route path="/" element={<Posts />} />
-            <Route path="*" element={<NotFound />} />
-            <Route path="/categories" element={<Categories />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route element={<RouteGuard />}>
-              <Route path="/user/*" element={<UserNavigation />} />
-              <Route path="/posts/create" element={<CreatePost />} />
-              <Route path="posts/edit/:postId" element={<EditPost />} />
-              <Route path="/logout" element={<Logout />} />
-            </Route>
-            <Route path="/posts/details/:postId" element={<PostDetails />} />
-          </Routes>
+        <Routes>
+          <Route path="/" element={<Posts />} />
+          <Route path="*" element={<NotFound />} />
+          <Route path="/categories" element={<Categories />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route element={<RouteGuard />}>
+            <Route path="/user/*" element={<UserNavigation />} />
+            <Route path="/posts/create" element={<CreatePost />} />
+            <Route path="posts/edit/:postId" element={<EditPost />} />
+            <Route path="/logout" element={<Logout />} />
+          </Route>
+          <Route path="/posts/details/:postId" element={<PostDetails />} />
+        </Routes>
 
-        </PostDatProvider>
       </AuthProvider>
 
     </main>
