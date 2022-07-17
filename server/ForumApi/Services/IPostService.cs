@@ -14,7 +14,7 @@ namespace ForumApi.Services
 
         Task<Post> GetByIdAsync(string id);
        
-        Task<IEnumerable<Post>> GetAllAsync();
+        Task<IEnumerable<Post>> GetAllAsync(string search);
 
         Task<IEnumerable<ReadPostsByUserIdModel>> GetAllByUserIdAsync(string userId);
 

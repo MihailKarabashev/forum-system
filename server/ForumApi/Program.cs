@@ -172,7 +172,7 @@ app.MapGet("api/posts",
     ) 
     =>
 {
-    var posts = await postService.GetAllAsync();
+    var posts = await postService.GetAllAsync(null);
     var postDtos = mapper.Map<IEnumerable<ReadPostModel>>(posts);
 
 
@@ -485,6 +485,22 @@ app.MapGet("/api/user/replies-statistics",
     var replyDtos = mapper.Map<IEnumerable<ReadReplyUserStatistic>>(replies);
 
     return Results.Ok(replyDtos);
+});
+
+app.MapGet("/api/posts/search/{title}",
+async (string title, IPostService postService, IMapper mapper) =>
+{
+    if (title == null)
+    {
+        return Results.BadRequest();
+    }
+
+    var searchedValues = await postService.GetAllAsync(title);
+
+    var searchedValueDtos = mapper.Map<IEnumerable<ReadSearchedPostModel>>(searchedValues);
+
+
+    return Results.Ok(searchedValueDtos);
 });
 
 

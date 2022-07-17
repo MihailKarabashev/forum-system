@@ -1,26 +1,48 @@
-import { useState, useContext } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useAuthContext } from '../../contexts/AuthContext';
 
-import { PostDataContext } from "../../contexts/PostDataContext";
-
 import { generateSvgIcon } from "../../utils/getProfilePicture";
 
-import Search from "../Search/Search";
+import * as postService from "../../services/postServices";
 
+import Search from "../Search/Search";
+import useDebounce from "../../hooks/useDebounce";
+
+const initialState = {
+  posts: [],
+  search: "",
+  searchActive: false,
+}
 
 const Header = () => {
-  const [posts, setPosts] = useState([]);
-  const [suggestions, setSuggestions] = useState([]);
-  const [suggestionIndex, setSuggestionIndex] = useState(0);
-  const [suggestionsActive, setSuggestionsActive] = useState(false);
-  const [value, setValue] = useState("");
+  const [headSearch, setHeadSearch] = useState(initialState);
+  const [loading, setLoading] = useState(false);
 
-  // const { posts, setPosts } = useContext(PostDataContext);
   const { user } = useAuthContext();
-
   const navigate = useNavigate();
+
+  const debouncedSearch = useDebounce(headSearch.search, 500);
+
+
+  useEffect(() => {
+
+    if (debouncedSearch) {
+      setLoading(true);
+      postService.searchForPosts(debouncedSearch)
+        .then(data => {
+          setHeadSearch(state => ({
+            ...state,
+            posts: data
+          }));
+
+          setLoading(false);
+        });
+    }
+
+  }, [debouncedSearch]);
+
 
   const guestNavigation =
     (
@@ -65,48 +87,33 @@ const Header = () => {
     </>
   )
 
-  const handleChange = (e) => {
+  const onChange = (e) => {
     const query = e.target.value.toLowerCase();
-    setValue(query);
-    if (query.length > 1) {
-      const filterSuggestions = posts.filter(
-        suggestion => suggestion.title.toLowerCase().indexOf(query) > -1
-      );
-      setSuggestions(filterSuggestions);
-      setSuggestionsActive(true);
-    } else {
-      setSuggestionsActive(false);
-    }
-  };
 
-  const handleClick = (postId) => {
-    setSuggestions([]);
-    setValue("");
-    setSuggestionsActive(false);
+    setHeadSearch(state => ({
+      ...state,
+      search: query
+    }));
+
+    if (query.length > 1) {
+      setHeadSearch(state => ({
+        ...state,
+        searchActive: true
+      }));
+    } else {
+      setHeadSearch(state => ({
+        ...state,
+        searchActive: false
+      }));
+    }
+
+  }
+
+  const onHandlerClick = (postId) => {
+    setHeadSearch(initialState);
 
     navigate(`/posts/details/${postId}`)
-  };
-
-
-  const handleKeyDown = (e) => {
-    if (e.keyCode === 38) {
-      if (suggestionIndex === 0) {
-        return;
-      }
-      setSuggestionIndex(suggestionIndex - 1);
-    }
-    else if (e.keyCode === 40) {
-      if (suggestionIndex - 1 === suggestions.length) {
-        return;
-      }
-      setSuggestionIndex(suggestionIndex + 1);
-    }
-    else if (e.keyCode === 13) {
-      setValue(suggestions[suggestionIndex].title);
-      setSuggestionIndex(0);
-      setSuggestionsActive(false);
-    }
-  };
+  }
 
   return (
     <header id="tt-header">
@@ -139,12 +146,11 @@ const Header = () => {
               </nav>
             </div>
             <Search
-              value={value}
-              suggestions={suggestions}
-              suggestionsActive={suggestionsActive}
-              handleChange={handleChange}
-              handleKeyDown={(e) => handleKeyDown(e)}
-              handleClick={handleClick}
+              search={headSearch.search}
+              posts={headSearch.posts}
+              searchActive={headSearch.searchActive}
+              handleChange={onChange}
+              handleClick={onHandlerClick}
             />
           </div>
           {

@@ -1,11 +1,10 @@
 import SearchCard from "./SearchCard.js/SearchCard"
 
 const Search = ({
-    value,
-    suggestions,
-    suggestionsActive,
+    search,
+    posts,
+    searchActive,
     handleChange,
-    handleKeyDown,
     handleClick
 }) => {
     return (
@@ -14,8 +13,7 @@ const Search = ({
                 <div className="search-form">
                     <input
                         onChange={handleChange}
-                        onKeyDown={handleKeyDown}
-                        value={value}
+                        value={search}
                         type="text" className="tt-search__input"
                         placeholder="Search"
                     />
@@ -25,16 +23,16 @@ const Search = ({
                         </svg>
                     </button>
                 </div>
-                <div className="search-results" style={suggestionsActive ? { display: 'inline-block' } : { display: 'none' }}>
+                <div className="search-results" style={searchActive ? { display: 'inline-block' } : { display: 'none' }}>
                     <div className="tt-search-scroll">
                         <ul>
                             {
-                                suggestionsActive
+                                searchActive
                                 &&
-                                suggestions.map(suggestion =>
+                                posts.map(post =>
                                     <SearchCard
-                                        key={suggestion.id}
-                                        suggestion={suggestion}
+                                        key={post.id}
+                                        post={post}
                                         handleClick={handleClick}
                                     />
                                 )}

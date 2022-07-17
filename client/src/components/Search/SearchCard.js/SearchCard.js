@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom"
 
 const SearchCard = ({
-    suggestion,
+    post,
     handleClick
 }) => {
     return (
-        <li className="suggestions" key={suggestion.id} onClick={() => handleClick(suggestion.id)}>
-            <Link to={`/posts/details/${suggestion.id}`}>
-                <h6 className="tt-title">{suggestion.title}</h6>
+        <li className="suggestions" key={post.id} onClick={() => handleClick(post.id)}>
+            <Link to={`/posts/details/${post.id}`}>
+                <h6 className="tt-title">{post.title}</h6>
                 <div className="tt-description">
-                    {suggestion.description.slice(0, 50) + '...'}
+                    {post.description.slice(0, 50) + '...'}
                 </div>
             </Link>
         </li>

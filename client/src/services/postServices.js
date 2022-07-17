@@ -31,3 +31,8 @@ export const remove = (id) => {
         }
     }).then();
 }
+
+export const searchForPosts = (title) => {
+    return fetch(`${baseUrl}/posts/search/${title}`)
+        .then(res => res.json());
+}

@@ -46,6 +46,8 @@ namespace ForumApi.Profiles.Post
 
             this.CreateMap<Reply, ReadReplyUserStatistic>()
                 .ForMember(x=> x.CategoryName , y=> y.MapFrom(src => src.Post.Category.Name));
+
+            this.CreateMap<Models.Post, ReadSearchedPostModel>();
         }
     }
 }
