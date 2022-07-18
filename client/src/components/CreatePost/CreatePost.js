@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import useForm from "../../hooks/useForm";
+
 
 import * as categoriesService from '../../services/categoryService';
 import * as tagsService from '../../services/tagService';
@@ -14,14 +16,12 @@ const animatedComponent = makeAnimated();
 const CreatePost = () => {
     const navigate = useNavigate();
 
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-
     const [tagsList, setTagsList] = useState([]);
     const [tags, setTags] = useState();
 
     const [categoriesList, setCategoriesList] = useState([]);
     const [category, setCategory] = useState();
+
 
     useEffect(() => {
         (async () => {
@@ -39,21 +39,13 @@ const CreatePost = () => {
 
     }, []);
 
-    const handleCategoryClick = (data) => {
-        setCategory(data);
-    }
-
-    const handleTagsClick = (data) => {
-        setTags(data);
-        console.log(data);
-    }
 
     const onFormSubmit = (e) => {
         e.preventDefault();
 
         const newPost = {
-            title,
-            description,
+            title: values.title,
+            description: values.description,
             categoryId: category.value,
             tags: tags.map(x => Number(x.value))
         }
@@ -67,44 +59,61 @@ const CreatePost = () => {
             })
     }
 
+    const { values, errors, handleChange, handleSubmit } = useForm(onFormSubmit);
+
+
+    const handleCategoryClick = (data) => {
+        setCategory(data);
+    }
+
+    const handleTagsClick = (data) => {
+        setTags(data);
+        console.log(data);
+    }
+
+
+
     return (
         <div className="container">
             <div className="tt-wrapper-inner">
                 <h1 className="tt-title-border">
                     Create New Topic
                 </h1>
-                <form className="form-default form-create-topic" method="POST" onSubmit={onFormSubmit}>
+                <form className="form-default form-create-topic" method="POST" onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="inputTopicTitle">Topic Title</label>
                         <div className="tt-value-wrapper">
                             <input
                                 type="text"
-                                name="name"
+                                name="title"
                                 className="form-control"
                                 id="inputTopicTitle"
                                 placeholder="Subject of your topic"
                                 required
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
+                                value={values.title}
+                                onChange={handleChange}
                             />
                             <span className="tt-value-input">99</span>
                         </div>
-                        <div className="tt-note">Describe your topic well, while keeping the subject as short as possible.</div>
+                        <p style={{ color: 'red' }}>{errors.title}</p>
+
                     </div>
                     <div className="pt-editor">
                         <h6 className="pt-title">Topic Body</h6>
                         <div className="form-group">
                             <textarea
-                                name="message"
+                                name="description"
                                 className="form-control"
                                 rows="5"
                                 placeholder="Lets get started"
                                 required
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
+                                value={values.description}
+                                onChange={handleChange}
                             >
                             </textarea>
                         </div>
+                        <p style={{ color: 'red' }}>{errors.description}</p>
+
 
                         <div className="row">
                             <div className="col-md-4">
@@ -113,6 +122,7 @@ const CreatePost = () => {
                                     <Select
                                         options={categoriesList}
                                         onChange={handleCategoryClick}
+                                        required
                                     />
                                 </div>
                             </div>
@@ -125,6 +135,7 @@ const CreatePost = () => {
                                         components={animatedComponent}
                                         isMulti
                                         isSearchable
+                                        required
                                     />
                                 </div>
                             </div>

@@ -74,9 +74,10 @@ namespace ForumApi.Services
         public async Task<IEnumerable<Post>> GetAllAsync(string search = null)
         {
             var query = this.db.Posts.AsNoTracking()
+                                      .Where(x=> !x.IsDeleted)
                                      .Include(x => x.Category)
                                      .Include(x => x.Author)
-                                     .Include(x => x.Replies)
+                                     .Include(x => x.Replies.Where(r=> !r.IsDeleted))
                                      .Include(x => x.Tags.Take(2))
                                      .Where(x => !x.IsDeleted);
 

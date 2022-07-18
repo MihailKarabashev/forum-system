@@ -3,7 +3,11 @@ import { useState } from "react";
 const initialValues = {
     username: '',
     email: '',
-    password: ''
+    password: '',
+    title: '',
+    description: '',
+    category: '',
+    tags: '',
 }
 
 const useForm = (callback) => {
@@ -49,6 +53,45 @@ const useForm = (callback) => {
                     })
                 } else {
                     let { password, ...newObj } = errors;
+                    setErrors(newObj);
+
+                }
+                break;
+
+            case 'title':
+                if (value.length < 6 || value.length > 40) {
+                    setErrors({
+                        ...errors,
+                        title: 'Title lenght should be between 6 and 40 characters long'
+                    })
+                } else {
+                    let { title, ...newObj } = errors;
+                    setErrors(newObj);
+
+                }
+                break;
+
+            case 'description':
+                if (value.length < 20 || value.length > 140) {
+                    setErrors({
+                        ...errors,
+                        description: 'Description lenght should be between 20 and 140 characters long'
+                    })
+                } else {
+                    let { description, ...newObj } = errors;
+                    setErrors(newObj);
+
+                }
+                break;
+
+            case 'category':
+                if (!value) {
+                    setErrors({
+                        ...errors,
+                        category: 'You have to pick alteast one category to create a topic'
+                    })
+                } else {
+                    let { category, ...newObj } = errors;
                     setErrors(newObj);
 
                 }

@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 
 import * as postService from "../../services/postServices";
 import { usePagination } from "../../hooks/usePagination";
@@ -6,8 +6,10 @@ import { usePagination } from "../../hooks/usePagination";
 import PostCard from "./PostCard/PostCard";
 import Pagination from "../Pagination/Pagination";
 
-import { PostDataContext } from "../../contexts/PostDataContext";
 import { useState } from "react";
+
+import PostCardSkeleton from "../Skeletons/PostCardSkeleton";
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const amountPerPage = 4;
 
@@ -51,6 +53,7 @@ const Posts = () => {
           <div className="tt-col-value hide-mobile">Views</div>
           <div className="tt-col-value">Activity</div>
         </div>
+        <PostCardSkeleton />
         {
           currentPosts.map(post => <PostCard key={post.id} data={post} decoration={"tt-itemselect"} />)
         }
