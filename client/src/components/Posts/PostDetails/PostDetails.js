@@ -16,6 +16,7 @@ import LoginAction from '../../Login/LoginAction';
 import CreatePostReply from '../PostReplies/CreatePostReply';
 import ReactionButton from '../../ReactionButton/ReactionButton';
 import CommentCard from "../../Comments/CommentCard/CommentCard";
+import PostDetailsSkeleton from '../../Skeletons/PostDetailsSkeleton';
 
 
 const PostDetails = () => {
@@ -24,6 +25,7 @@ const PostDetails = () => {
   const [reactions, setPostReactions] = useState({});
   const [isReplyCreated, setIsReplyCreated] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
   const { postId } = useParams();
@@ -33,9 +35,12 @@ const PostDetails = () => {
   useEffect(() => {
     postService.getPostById(postId)
       .then(data => {
-        setPost(data);
-        setPostReactions(data.reaction);
-        setPostReplies(data.replies);
+        setTimeout(() => {
+          setPost(data);
+          setPostReactions(data.reaction);
+          setPostReplies(data.replies);
+          setLoading(false);
+        }, 2000);
       });
   }, [postId]);
 
@@ -94,6 +99,7 @@ const PostDetails = () => {
       })
   }
 
+  console.log(post.authorUserName);
   const onRemovePostReply = (e, replyId) => {
     e.preventDefault()
     console.log(replyId);
@@ -118,81 +124,84 @@ const PostDetails = () => {
   return (
     <>
       {showModal && <Modal onClose={() => setShowModal(false)} onSave={(e) => deleteHandler(e)} />}
-      <div className="container">
-        <div className="tt-single-topic-list">
-          <div className="tt-item" >
-            <div className="tt-single-topic">
-              <div className="tt-item-header">
-                <div className="tt-item-info info-top">
-                  <div className="tt-avatar-icon">
-                    <i className="tt-icon"><svg><use xlinkHref={`#icon-ava-${generateSvgIcon(post.authorUserName)}`}></use></svg></i>
+      {loading ? <PostDetailsSkeleton /> :
+        (<div className="container">
+          <div className="tt-single-topic-list">
+            <div className="tt-item" >
+              <div className="tt-single-topic">
+                <div className="tt-item-header">
+                  <div className="tt-item-info info-top">
+                    <div className="tt-avatar-icon">
+                      <i className="tt-icon"><svg><use xlinkHref={`#icon-ava-${generateSvgIcon(post.authorUserName)}`}></use></svg></i>
+                    </div>
+                    <div className="tt-avatar-title">
+                      <Link to="#">{post.authorUserName}</Link>
+                    </div>
+                    {(hasPermissions(user, post)) ? ownerButtons : ''}
+                    <Link to="#" className="tt-info-time">
+                      <i className="tt-icon"><svg><use xlinkHref="#icon-time"></use></svg></i>{post.createdOn}
+                    </Link>
                   </div>
-                  {(hasPermissions(user, post)) ? ownerButtons : ''}
-                  <div className="tt-avatar-title">
-                    <Link to="#">{post.authorUserName}</Link>
+                  <h3 className="tt-item-title">
+                    <Link to="#">{post.title}</Link>
+                  </h3>
+                  <div className="tt-item-tag">
+                    {post.tags && <Tags tags={post.tags} />}
                   </div>
-                  <Link to="#" className="tt-info-time">
-                    <i className="tt-icon"><svg><use xlinkHref="#icon-time"></use></svg></i>{post.createdOn}
-                  </Link>
                 </div>
-                <h3 className="tt-item-title">
-                  <Link to="#">{post.title}</Link>
-                </h3>
-                <div className="tt-item-tag">
-                  {post.tags && <Tags tags={post.tags} />}
+                <div className="tt-item-description">
+                  <h6 className="tt-title">BOLD TITLE IF POSSIBLE</h6>
+                  <p> {post.description}</p>
                 </div>
-              </div>
-              <div className="tt-item-description">
-                <h6 className="tt-title">BOLD TITLE IF POSSIBLE</h6>
-                <p> {post.description}</p>
-              </div>
-              <div className="tt-item-info info-bottom">
-                <ReactionButton
-                  reaction={reactions.likes}
-                  isReaction={reactions.isLiked}
-                  iconType={'like'}
-                  style={{ fill: 'green' }}
-                  onReact={(e) => reactionHandler(e, postId, 'posts', 'like', setPostReactions)}
-                />
+                <div className="tt-item-info info-bottom">
+                  <ReactionButton
+                    reaction={reactions.likes}
+                    isReaction={reactions.isLiked}
+                    iconType={'like'}
+                    style={{ fill: 'green' }}
+                    onReact={(e) => reactionHandler(e, postId, 'posts', 'like', setPostReactions)}
+                  />
 
-                <ReactionButton
-                  reaction={reactions.dislikes}
-                  isReaction={reactions.isDisliked}
-                  iconType={'dislike'}
-                  style={{ fill: 'red' }}
-                  onReact={(e) => reactionHandler(e, postId, 'posts', 'dislike', setPostReactions)}
-                />
-                <div className="col-separator"></div>
+                  <ReactionButton
+                    reaction={reactions.dislikes}
+                    isReaction={reactions.isDisliked}
+                    iconType={'dislike'}
+                    style={{ fill: 'red' }}
+                    onReact={(e) => reactionHandler(e, postId, 'posts', 'dislike', setPostReactions)}
+                  />
+                  <div className="col-separator"></div>
+                </div>
               </div>
             </div>
+            {
+              replies &&
+              replies.map(
+                (reply, index, array) =>
+                  <CommentCard
+                    key={reply.id}
+                    reply={reply}
+                    isReplyCreated={isReplyCreated}
+                    array={array}
+                    index={index}
+                    onRemove={onRemovePostReply}
+                  />)
+            }
+          </div>
+
+          <div className="tt-wrapper-inner">
+            <h4 className="tt-title-separator"><span>You’ve reached the end of replies</span></h4>
           </div>
           {
-            replies &&
-            replies.map(
-              (reply, index, array) =>
-                <CommentCard
-                  key={reply.id}
-                  reply={reply}
-                  isReplyCreated={isReplyCreated}
-                  array={array}
-                  index={index}
-                  onRemove={onRemovePostReply}
-                />)
+            user.email
+              ? <CreatePostReply
+                onSubmitFormHandler={onSubmitFormHandler}
+              />
+              : <LoginAction />
           }
-        </div>
-
-        <div className="tt-wrapper-inner">
-          <h4 className="tt-title-separator"><span>You’ve reached the end of replies</span></h4>
-        </div>
-        {
-          user.email
-            ? <CreatePostReply
-              onSubmitFormHandler={onSubmitFormHandler}
-            />
-            : <LoginAction />
-        }
-      </div>
+        </div>)
+      }
     </>
+
   )
 };
 

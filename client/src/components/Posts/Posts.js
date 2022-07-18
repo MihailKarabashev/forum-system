@@ -11,7 +11,7 @@ import { useState } from "react";
 import PostCardSkeleton from "../Skeletons/PostCardSkeleton";
 import 'react-loading-skeleton/dist/skeleton.css';
 
-const amountPerPage = 4;
+const amountPerPage = 6;
 
 const Posts = () => {
   //add loader
@@ -27,7 +27,12 @@ const Posts = () => {
 
     postService.getPosts()
       .then(data => {
-        if (!ignore) setPosts(data);
+        setTimeout(() => {
+          if (!ignore) {
+            setPosts(data);
+            setLoading(false);
+          }
+        }, 2000);
       })
       .catch(err => console.log(err))
 
@@ -53,7 +58,9 @@ const Posts = () => {
           <div className="tt-col-value hide-mobile">Views</div>
           <div className="tt-col-value">Activity</div>
         </div>
-        <PostCardSkeleton />
+
+        {loading && <PostCardSkeleton cards={amountPerPage} />}
+
         {
           currentPosts.map(post => <PostCard key={post.id} data={post} decoration={"tt-itemselect"} />)
         }

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Tags from "../../Tags/Tags";
 
-import PostCardSkeleton from "../../Skeletons/PostCardSkeleton";
+import { generateSvgIcon } from '../../../utils/getProfilePicture';
 
 const
     PostCard = ({
@@ -27,10 +27,9 @@ const
 
         return (
             <div className="tt-item">
-
                 <div className="tt-col-avatar">
                     <svg className="tt-icon">
-                        <use xlinkHref={`#icon-ava-${data.authorUserName[0].toLowerCase()}`}></use>
+                        <use xlinkHref={`#icon-ava-${generateSvgIcon(data.authorUserName)}`}></use>
                     </svg>
                 </div>
                 <div className="tt-col-description">
