@@ -1,0 +1,58 @@
+.row.no-gutters {
+    margin-right: 0;
+    margin-left: 0
+}
+
+.row.no-gutters>[class*=" col-"],
+.row.no-gutters>[class^=col-] {
+    padding-right: 0;
+    padding-left: 0
+}
+
+
+.tt-list-badge {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -ms-flex-line-pack: start;
+    align-content: flex-start;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    list-style: none;
+    padding: 0;
+    margin: -8px 0 0 -8px
+}
+
+.tt-list-badge li {
+    margin-left: 8px;
+    margin-top: 8px
+}
+
+.tt-list-badge.tt-size-lg {
+    margin: -15px 0 0 -15px
+}
+
+.tt-list-badge.tt-size-lg li {
+    margin: 15px 0 0 15px
+}
+
+.tt-list-badge.tt-size-lg .tt-badge {
+    height: 39px;
+    font-size: 16px;
+    padding: 1px 14px 2px;
+    letter-spacing: .01em
+}
+
+.tt-topic-list .tt-list-badge {
+    margin-top: -8px
+}

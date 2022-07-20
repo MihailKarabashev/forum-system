@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 
+import './Tags.css';
+
 const Tags = ({
     tags
 }) => {

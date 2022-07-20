@@ -10,6 +10,8 @@ import * as postService from "../../services/postServices";
 import Search from "../Search/Search";
 import useDebounce from "../../hooks/useDebounce";
 
+import './Header.css';
+
 const initialState = {
   posts: [],
   search: "",
@@ -22,6 +24,8 @@ const Header = () => {
 
   const { user } = useAuthContext();
   const navigate = useNavigate();
+
+  console.log(user);
 
   const debouncedSearch = useDebounce(headSearch.search, 500);
 

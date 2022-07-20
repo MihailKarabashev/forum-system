@@ -1,0 +1,320 @@
+.modal {
+    display: block;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 25;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+    text-align: center;
+    padding: 10px;
+    -webkit-transition: opacity .15s linear;
+    transition: opacity .15s linear;
+    opacity: 0;
+    padding-right: 0px;
+    backdrop-filter: blur(10px);
+}
+
+
+.modal.show {
+    opacity: 1
+}
+
+.modal:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px
+}
+
+.modal .modal-dialog {
+    display: inline-block;
+    vertical-align: middle
+}
+
+.modal .modal-title {
+    font-size: 20px;
+    line-height: 26px;
+    margin: 34px 0 0;
+    padding-bottom: 19px;
+    letter-spacing: .02em
+}
+
+.modal .close {
+    width: 56px;
+    height: 56px;
+    line-height: 1;
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-decoration: none;
+    background: 0 0;
+    border: none;
+    cursor: pointer;
+    z-index: 1;
+    outline: 0
+}
+
+.modal .close:after,
+.modal .close:before {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    -webkit-transition: .2s linear;
+    transition: .2s linear
+}
+
+.modal .close:before {
+    content: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE0LjQzNDMgMC40MzQzMTVMMC40MzQzMTUgMTQuNDM0M0wxLjU2NTY5IDE1LjU2NTdMMTUuNTY1NyAxLjU2NTY5TDE0LjQzNDMgMC40MzQzMTVaTTAuNDM0MzE1IDEuNTY1NjlMMTQuNDM0MyAxNS41NjU3TDE1LjU2NTcgMTQuNDM0M0wxLjU2NTY5IDAuNDM0MzE1TDAuNDM0MzE1IDEuNTY1NjlaIiBmaWxsPSIjRDBEMEQwIi8+Cjwvc3ZnPgo=)
+}
+
+.modal .close:after {
+    content: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE0LjQzNDMgMC40MzQzMTVMMC40MzQzMTUgMTQuNDM0M0wxLjU2NTY5IDE1LjU2NTdMMTUuNTY1NyAxLjU2NTY5TDE0LjQzNDMgMC40MzQzMTVaTTAuNDM0MzE1IDEuNTY1NjlMMTQuNDM0MyAxNS41NjU3TDE1LjU2NTcgMTQuNDM0M0wxLjU2NTY5IDAuNDM0MzE1TDAuNDM0MzE1IDEuNTY1NjlaIiBmaWxsPSIjMzMzMzMzIi8+Cjwvc3ZnPgo=);
+    opacity: 0
+}
+
+.modal .close:hover:before {
+    opacity: 0
+}
+
+.modal .close:hover:after {
+    opacity: 1
+}
+
+.modal .close.pt-color-white:before {
+    content: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE0LjQzNDMgMC40MzQzMTVMMC40MzQzMTUgMTQuNDM0M0wxLjU2NTY5IDE1LjU2NTdMMTUuNTY1NyAxLjU2NTY5TDE0LjQzNDMgMC40MzQzMTVaTTAuNDM0MzE1IDEuNTY1NjlMMTQuNDM0MyAxNS41NjU3TDE1LjU2NTcgMTQuNDM0M0wxLjU2NTY5IDAuNDM0MzE1TDAuNDM0MzE1IDEuNTY1NjlaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K)
+}
+
+.modal .modal-header {
+    border: none
+}
+
+.modal .modal-content {
+    border-radius: 0;
+    border: none;
+    background-color: #fff;
+    text-align: left;
+    position: relative
+}
+
+.modal .modal-content.noindent {
+    padding: 0
+}
+
+.modal .modal-footer {
+    border: none
+}
+
+.modal-backdrop {
+    background: #000;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 24
+}
+
+.modal-backdrop.show {
+    opacity: .5
+}
+
+.modal .modal-content .tt-modal-title {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -ms-flex-line-pack: start;
+    align-content: flex-start;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    position: relative;
+    color: #303344;
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 600;
+    padding: 0 27px 24px 0;
+    border-bottom: 1px solid #e2e7ea;
+    margin-bottom: 30px;
+    margin-top: -3px
+}
+
+.modal .modal-content .tt-modal-title .pt-icon {
+    padding-right: 27px
+}
+
+.modal .modal-content .tt-modal-title .pt-icon svg {
+    width: 18px;
+    height: 18px
+}
+
+.modal .modal-content .tt-modal-title .pt-close-modal {
+    color: #687176;
+    display: inline-block;
+    position: absolute;
+    padding: 5px;
+    right: -5px;
+    top: -4px
+}
+
+.modal .modal-content .tt-modal-title .pt-close-modal svg {
+    width: 13px;
+    height: 13px
+}
+
+.modal .modal-content .tt-modal-title .pt-close-modal:hover {
+    color: #2172cd
+}
+
+.modal .modal-content .form-default .form-group {
+    margin-bottom: 21px
+}
+
+.modal .modal-content .form-default .form-group .checkbox-group:last-child label {
+    padding-bottom: 0 !important;
+    margin-bottom: 0
+}
+
+.modal .modal-content .form-default .form-group label:not(.error) {
+    padding-bottom: 7px
+}
+
+.modal .modal-content .form-default .form-group label:not(.error)+.checkbox-group {
+    margin-top: 6px
+}
+
+.modal .modal-content .form-default .form-group .checkbox-group label:not(.error) {
+    padding-bottom: 15px
+}
+
+.modal .modal-content .form-default .checkbox-group+.form-group {
+    margin-top: 25px
+}
+
+.modal .modal-content .form-default .btn {
+    margin-top: 9px
+}
+
+.modal-open {
+    overflow: hidden
+}
+
+.modal-open .modal {
+    overflow-x: hidden;
+    overflow-y: auto
+}
+
+.tt-modal-confirmation {
+    padding: 6px 0 40px;
+    letter-spacing: .01em
+}
+
+.tt-modal-confirmation .tt-title {
+    text-align: center;
+    font-size: 16px;
+    line-height: 26px;
+    color: #303344;
+    font-weight: 600;
+    margin: 0;
+    padding: 0
+}
+
+.tt-modal-confirmation .tt-confirmation-btn {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -ms-flex-line-pack: start;
+    align-content: flex-start;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    margin-top: 38px
+}
+
+.tt-modal-confirmation .tt-confirmation-btn>:first-child .tt-icon:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -1px;
+    width: 1px;
+    height: 100%;
+    background-color: #e2e7ea
+}
+
+.tt-modal-confirmation .tt-confirmation-btn .tt-col {
+    width: 50%
+}
+
+
+.tt-modal-confirmation .tt-option-btn {
+    text-align: center;
+    display: block
+}
+
+.tt-modal-confirmation .tt-option-btn .tt-icon {
+    position: relative;
+    display: block;
+    padding: 55px 0 70px
+}
+
+.tt-modal-confirmation .tt-option-btn .tt-icon svg {
+    width: auto;
+    height: 186px
+}
+
+.tt-modal-confirmation .tt-option-btn .btn {
+    margin-top: 30px
+}
+
+.tt-modal-confirmation .tt-option-btn:hover .btn {
+    background-color: #2172cd;
+    color: #fff
+}
+
+.tt-modal-level-up .tt-option-btn {
+    text-align: center;
+    display: block
+}
+
+.tt-modal-level-up .tt-option-btn .tt-icon {
+    position: relative;
+    display: block;
+    padding: 77px 0 29px
+}
+
+.tt-modal-level-up .tt-option-btn .tt-icon svg {
+    width: auto;
+    height: 133px
+}
+
+.tt-modal-level-up .tt-option-btn .btn {
+    margin-top: 70px;
+    width: 151px
+}
+
+.tt-modal-level-up .tt-option-btn:hover .btn {
+    background-color: #2172cd;
+    color: #fff
+}

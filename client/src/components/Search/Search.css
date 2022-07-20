@@ -1,0 +1,189 @@
+.tt-search {
+    display: inline-block;
+    position: relative;
+    width: 350px
+}
+
+.tt-search form {
+    display: block
+}
+
+.tt-search .tt-search__input {
+    border: none;
+    outline: 0;
+    font-size: 16px;
+    color: #182730;
+    font-weight: 500;
+    letter-spacing: .01em;
+    padding: 3px 15px 5px 47px;
+    width: 100%;
+    background-color: #e2e7ea;
+    border-radius: 3px;
+    height: 39px
+}
+
+.tt-search .tt-search__btn {
+    background: 0 0;
+    border: none;
+    outline: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 5px 5px 7px 15px
+}
+
+.tt-search .tt-search__btn .tt-icon {
+    width: 18px;
+    height: 18px;
+    fill: #666f74
+}
+
+.tt-search .tt-search__btn:hover .tt-icon {
+    fill: #2172cd
+}
+
+.tt-search .tt-search__close {
+    position: absolute;
+    right: -43px;
+    top: 2px;
+    display: none;
+    background: 0 0;
+    border: none;
+    outline: 0;
+    padding: 5px 15px
+}
+
+.tt-search .tt-search__close .tt-icon {
+    width: 13px;
+    height: 13px;
+    -webkit-transition: fill .2s linear;
+    transition: fill .2s linear
+}
+
+.tt-search .tt-search__close:hover .tt-icon {
+    fill: #2172cd
+}
+
+.tt-search .search-form {
+    position: relative
+}
+
+.tt-search .search-wrapper {
+    display: block
+}
+
+
+.tt-search .search-results {
+    position: absolute;
+    background-color: #fff;
+    border-left: 1px solid #e2e7ea;
+    border-right: 1px solid #e2e7ea;
+    border-bottom: 1px solid #e2e7ea;
+    top: auto;
+    left: 0;
+    margin-top: -2px;
+    width: 100%;
+    padding: 1px;
+    border-radius: 3px;
+    display: none
+}
+
+.tt-search .search-results ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+    overflow: hidden
+}
+
+.tt-search .search-results ul li:not(:last-child) {
+    border-bottom: 1px solid #e2e7ea
+}
+
+.tt-search .search-results ul li a {
+    color: #666f74;
+    display: block;
+    padding: 24px 30px 22px;
+    -webkit-transition: color .2s linear;
+    transition: color .2s linear
+}
+
+.tt-search .search-results ul li a .tt-title {
+    color: #182730;
+    font-size: 16px;
+    line-height: 1;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    display: inline-block;
+    -webkit-transition: color .2s linear;
+    transition: color .2s linear
+}
+
+.tt-search .search-results ul li a:hover .tt-title {
+    color: #2172cd
+}
+
+.tt-search .search-results ul li .tt-description {
+    font-size: 14px;
+    line-height: 1
+}
+
+.tt-search .search-results ul li .tt-description,
+.tt-search .search-results ul li .tt-title,
+.tt-search .search-results ul li>a {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+
+.tt-search .search-results ul li:nth-child(odd) {
+    background-color: #f8f9fa
+}
+
+.tt-search .search-results .tt-view-all {
+    background-color: #fff;
+    border: none;
+    outline: 0;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    color: #666f74;
+    font-size: 16px;
+    line-height: 1.1;
+    height: 39px;
+    width: 100%;
+    font-weight: 500;
+    -webkit-transition: color .2s linear;
+    transition: color .2s linear
+}
+
+.tt-search .search-results .tt-view-all:hover {
+    color: #182730
+}
+
+.tt-search .tt-search-scroll {
+    height: 261px;
+    overflow: hidden;
+    position: relative
+}
+
+.tt-search-toggle {
+    background: 0 0;
+    border: none;
+    outline: 0
+}
+
+.tt-search-toggle .tt-icon {
+    width: 18px;
+    height: 18px;
+    fill: #666f74
+}
+
+.tt-search-toggle:hover .tt-icon {
+    fill: #2172cd
+}
+
+.tt-search-toggle:focus {
+    outline: 0
+}

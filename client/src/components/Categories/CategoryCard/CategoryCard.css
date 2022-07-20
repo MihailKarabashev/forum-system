@@ -1,0 +1,82 @@
+.tt-categories-list .tt-item {
+    background-color: #fff;
+    border-radius: 3px
+}
+
+.tt-categories-list .tt-item .tt-item-header {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-line-pack: center;
+    align-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-bottom: 21px
+}
+
+.tt-categories-list .tt-item .tt-item-header .tt-title {
+    color: #182730;
+    font-size: 14px;
+    line-height: 26px;
+    margin-bottom: 0;
+    font-weight: 400
+}
+
+.tt-categories-list .tt-item .tt-item-header .tt-title a {
+    color: #182730;
+    -webkit-transition: color .2s linear;
+    transition: color .2s linear
+}
+
+.tt-categories-list .tt-item .tt-item-header .tt-title a:hover {
+    color: #2172cd
+}
+
+.tt-categories-list .tt-item .tt-item-layout .tt-title {
+    font-size: 14px;
+    line-height: 26px;
+    color: #182730;
+    font-weight: 700;
+    margin-bottom: 6px
+}
+
+.tt-categories-list .tt-item .tt-item-layout .innerwrapper {
+    letter-spacing: .01em
+}
+
+.tt-categories-list .tt-item .tt-item-layout .innerwrapper:not(:first-child) {
+    margin-top: 12px
+}
+
+.tt-categories-list .tt-item .tt-item-layout .tt-btn-icon {
+    margin-top: 19px;
+    padding-left: 0;
+    padding-bottom: 0;
+    height: auto
+}
+
+.tt-categories-list .tt-item .tt-item-layout .tt-btn-icon svg {
+    width: 20px;
+    height: 18px
+}
+
+@media (min-width:576px) {
+    .tt-categories-list {
+        margin-top: -30px
+    }
+
+    .tt-categories-list .tt-item {
+        padding: 30px;
+        margin-top: 30px
+    }
+}

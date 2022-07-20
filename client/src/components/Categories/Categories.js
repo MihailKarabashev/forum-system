@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import * as categoriesService from '../../services/categoryService';
 import CategoryCard from '../Categories/CategoryCard/CategoryCard';
 
+import "./Categories.css";
+
 const Categories = () => {
     const [categories, setCategories] = useState([]);
 

@@ -1,0 +1,77 @@
+.tt-list-time-topic+.tt-wrapper-inner {
+    margin-top: 35px
+}
+
+.tt-title-border {
+    border-bottom: 1px solid #e2e7ea;
+    color: #303344;
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: 500;
+    padding: 0 0 23px;
+    margin-bottom: 21px;
+    letter-spacing: .01em
+}
+
+.form-default {
+    position: relative
+}
+
+.form-default .form-group {
+    margin-bottom: 13px
+}
+
+.form-default .form-group label:not(.error) {
+    font-size: 16px;
+    line-height: 26px;
+    font-weight: 600;
+    color: #182730;
+    padding-bottom: 14px;
+    margin-bottom: 0;
+    letter-spacing: .01em
+}
+
+.form-default .form-control {
+    font-family: Krub, sans-serif;
+    background: #e2e7ea;
+    color: #666f74;
+    font-size: 16px;
+    line-height: 25px;
+    border: 1px solid #e2e7ea;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    outline: 0;
+    width: 100%;
+    font-weight: 500;
+    letter-spacing: .01em;
+    border-radius: 3px;
+    -webkit-transition: border-color .2s linear;
+    transition: border-color .2s linear
+}
+
+
+
+.form-default .form-control:not(textarea) {
+    padding: 7px 12px 10px 13px;
+    height: 39px
+}
+
+.form-default input.form-control,
+.form-default textarea.form-control {
+    -webkit-appearance: none
+}
+
+.form-default textarea.form-control {
+    padding: 20px 30px 23px 28px
+}
+
+
+.form-default .tt-value-wrapper .tt-value-input {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: #666f74;
+    font-size: 14px;
+    line-height: 18px;
+    pointer-events: none
+}

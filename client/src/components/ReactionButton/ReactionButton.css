@@ -1,0 +1,59 @@
+.tt-icon-btn .tt-icon {
+    position: relative;
+    top: -2px
+}
+
+.tt-icon-btn .tt-icon svg {
+    width: 23px;
+    height: 18px;
+    fill: #666f74;
+    -webkit-transition: fill .2s linear;
+    transition: fill .2s linear
+}
+
+.tt-icon-btn .tt-icon svg {
+    width: 23px;
+    height: 18px;
+    fill: #666f74;
+    -webkit-transition: fill .2s linear;
+    transition: fill .2s linear
+}
+
+.tt-icon-btn .tt-icon+.tt-text {
+    margin-left: 10px
+}
+
+.tt-icon-btn .tt-text {
+    color: #666f74;
+    -webkit-transition: text .2s linear;
+    transition: text .2s linear
+}
+
+.tt-icon-btn:hover .tt-text {
+    color: #2172cd
+}
+
+.tt-icon-btn:hover .tt-icon svg,
+.tt-icon-btn:hover .tt-icon svg path {
+    fill: #2172cd
+}
+
+.tt-icon-btn:hover.tt-hover-02 .tt-text {
+    color: #182730
+}
+
+.tt-icon-btn:hover.tt-hover-02 .tt-icon svg {
+    fill: #182730
+}
+
+.tt-icon-btn:hover.tt-hover-02 .tt-icon svg path {
+    fill: #182730
+}
+
+.tt-icon-btn:not(.tt-small-indent)+.tt-icon-btn {
+    margin-left: 29px
+}
+
+.tt-icon-btn.tt-small-indent+.tt-icon-btn {
+    margin-left: 22px
+}

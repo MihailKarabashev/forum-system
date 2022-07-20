@@ -5,6 +5,8 @@ import * as authService from '../../services/authService';
 
 import useForm from '../../hooks/useForm';
 
+import '../Login/Login.css';
+
 const Register = () => {
   const { register } = useAuthContext();
   const navigate = useNavigate();

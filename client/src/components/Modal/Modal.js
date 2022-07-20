@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom"
 
+import './Modal.css';
+
 const Modal = ({ onClose, onSave }) => {
     return (
         <div className="modal fade show modal-open container" id="modalAgeConfirmation" tabIndex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">

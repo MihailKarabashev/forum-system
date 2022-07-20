@@ -1,0 +1,149 @@
+.tt-account-btn {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -ms-flex-line-pack: start;
+    align-content: flex-start;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start
+}
+
+.tt-account-btn [class^=btn] {
+    margin-top: 7px;
+    margin-bottom: 7px
+}
+
+.tt-account-btn [class^=btn]:not(:first-child) {
+    margin-left: 15px
+}
+
+.tt-user-info select {
+    max-width: 120px;
+    overflow: hidden
+}
+
+.tt-user-info>:not(:first-child).custom-select-01 {
+    margin-left: 6px
+}
+
+.tt-avatar-icon.tt-size-md svg {
+    width: 40px;
+    height: 40px
+}
+
+.custom-select-01 {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle
+}
+
+.custom-select-01 select {
+    outline: 0;
+    border: transparent;
+    background: 0 0;
+    font-weight: 500;
+    line-height: 22px;
+    font-size: 16px;
+    padding: 8px 22px 5px 10px;
+    color: #182730;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -webkit-transition: color .2s linear;
+    transition: color .2s linear;
+    letter-spacing: .01em
+}
+
+.custom-select-01 select option {
+    background-color: #fff;
+    border: 0;
+    color: #333;
+    padding: 10px
+}
+
+
+.custom-select-01 select:hover {
+    color: #2172cd
+}
+
+.custom-select-01::after,
+.custom-select-01::before {
+    content: "";
+    pointer-events: none
+}
+
+.custom-select-01::before {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 12px;
+    height: 12px;
+    background: #fff
+}
+
+
+.custom-select-01::after {
+    content: "";
+    background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Generator: Adobe Illustrator 23.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E%3Csvg version='1.1' id='Layer_25' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 81 45' style='enable-background:new 0 0 81 45;' xml:space='preserve'%3E%3Cstyle type='text/css'%3E .st0%7Bfill:%23666F74;%7D%0A%3C/style%3E%3Cg%3E%3Cpath class='st0' d='M40.5,45c-1.15,0-2.3-0.44-3.18-1.32l-36-36c-1.76-1.76-1.76-4.61,0-6.36c1.76-1.76,4.61-1.76,6.36,0 L40.5,34.13L73.32,1.32c1.76-1.76,4.61-1.76,6.36,0c1.76,1.76,1.76,4.61,0,6.36l-36,36C42.8,44.56,41.65,45,40.5,45z'/%3E%3C/g%3E%3C/svg%3E%0A");
+    width: 12px;
+    height: 7px;
+    line-height: 1;
+    right: 0;
+    position: absolute;
+    top: 50%;
+    margin-top: -4px
+}
+
+#tt-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #fff;
+    border-bottom: 1px solid #e2e7ea;
+    z-index: 17
+}
+
+
+#tt-header .tt-row>.col-auto {
+    min-height: 69px;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex
+}
+
+
+#tt-header .tt-logo+* {
+    margin-left: 45px
+}
+
+@media (max-width:1229px) {
+    #tt-header .tt-logo+* {
+        margin-left: 26px
+    }
+}
+
+
+#tt-header .tt-logo img {
+    max-width: 36px;
+    height: auto
+}
+
+#tt-header .tt-desktop-menu+* {
+    margin-left: 36px
+}

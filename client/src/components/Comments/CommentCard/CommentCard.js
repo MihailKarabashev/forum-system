@@ -5,9 +5,8 @@ import { hasPermissions } from "../../../utils/hasPermissions";
 
 import { useAuthContext } from "../../../contexts/AuthContext";
 
-import * as replyService from '../../../services/replyService';
-
 import CommentReply from "../CommentReply";
+import './CommentCard.css';
 
 
 const CommentCard = ({

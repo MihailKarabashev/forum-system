@@ -1,5 +1,7 @@
 import SearchCard from "./SearchCard.js/SearchCard"
 
+import './Search.css';
+
 const Search = ({
     search,
     posts,

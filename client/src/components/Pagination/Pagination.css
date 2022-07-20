@@ -1,0 +1,24 @@
+.tt-row-btn {
+    text-align: center;
+    padding: 65px 0
+}
+
+.tt-row-btn .btn-icon {
+    background-color: transparent;
+    border: none;
+    padding: 5px;
+    display: inline-block;
+    outline: 0
+}
+
+.tt-row-btn .btn-icon svg {
+    width: 23px;
+    height: 29px;
+    fill: #666f74;
+    -webkit-transition: fill .2s linear;
+    transition: fill .2s linear
+}
+
+.tt-row-btn .btn-icon:hover svg {
+    fill: #182730
+}

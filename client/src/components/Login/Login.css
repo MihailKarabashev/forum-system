@@ -1,0 +1,97 @@
+.tt-loginpages-wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-line-pack: stretch;
+    align-content: stretch;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start
+}
+
+.tt-loginpages {
+    letter-spacing: .01em
+}
+
+.tt-loginpages .tt-block-title:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 160px;
+    height: 1px;
+    background-color: #e2e7ea
+}
+
+.tt-loginpages .tt-block-title .tt-title {
+    color: #303344;
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: 600;
+    margin-top: 21px;
+    padding: 0;
+    letter-spacing: .01em;
+    position: relative;
+    -webkit-transition: color .2s linear;
+    transition: color .2s linear
+}
+
+.tt-loginpages .tt-block-title>:nth-child(1) {
+    margin-top: 0
+}
+
+.tt-loginpages .tt-block-title:hover .tt-title {
+    color: #2172cd
+}
+
+.tt-loginpages .tt-description {
+    color: #303344
+}
+
+.tt-loginpages .form-default .form-group {
+    margin-bottom: 21px
+}
+
+.tt-loginpages .form-default .form-group label:not(.error) {
+    padding-bottom: 7px
+}
+
+.tt-loginpages .form-default .form-group .btn {
+    margin-top: 9px
+}
+
+.tt-loginpages .form-default .form-group .checkbox-group label:not(.error) {
+    padding-bottom: 0
+}
+
+.tt-loginpages .form-default p {
+    margin-bottom: 13px !important
+}
+
+.tt-loginpages .tt-notes {
+    position: relative;
+    font-size: 14px;
+    line-height: 26px;
+    padding-top: 21px;
+    margin-top: 22px
+}
+
+.tt-loginpages .tt-notes:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 65px;
+    height: 1px;
+    background-color: #e2e7ea
+}

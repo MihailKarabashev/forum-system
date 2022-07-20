@@ -1,3 +1,5 @@
+import './Pagination.css';
+
 const Pagination = ({
     onPaginationClickHandler,
 }) => {

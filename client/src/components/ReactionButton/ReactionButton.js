@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 
+import './ReactionButton.css';
 const ReactionButton = ({
     reaction,
     isReaction,

@@ -11,6 +11,8 @@ import * as postsService from '../../services/postServices';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated'
 
+import './CreatePost.css';
+
 const animatedComponent = makeAnimated();
 
 const CreatePost = () => {

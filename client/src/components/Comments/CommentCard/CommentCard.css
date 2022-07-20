@@ -1,0 +1,124 @@
+.tt-topic-list .tt-item {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -ms-flex-line-pack: center;
+    align-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    position: relative;
+    min-height: 101px;
+    padding: 20px 15px
+}
+
+.tt-single-topic-list>.tt-item:not([class^=tt-wrapper-success]) {
+    background-color: #fff
+}
+
+.tt-single-topic-list>.tt-item.tt-wrapper-success {
+    border: 1px solid #68c193;
+    background-color: #e6fbf0
+}
+
+.tt-single-topic .tt-item-header .tt-item-info.info-top {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-line-pack: center;
+    align-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-top: 6px;
+    padding-bottom: 8px
+}
+
+.tt-single-topic .tt-item-header .tt-item-info.info-top .tt-avatar-icon .tt-icon svg {
+    width: 40px;
+    height: 40px
+}
+
+.tt-single-topic .tt-item-header .tt-item-info.info-top .tt-avatar-title {
+    color: #666f74;
+    font-size: 14px;
+    line-height: 26px;
+    letter-spacing: .01em;
+    padding-right: 15px
+}
+
+.tt-single-topic .tt-item-header .tt-item-info.info-top .tt-avatar-title a {
+    color: #666f74;
+    display: inline-block;
+    margin-right: 11px
+}
+
+.tt-single-topic .tt-item-header .tt-item-info.info-top .tt-avatar-title a:hover {
+    color: #2172cd
+}
+
+.tt-single-topic .tt-item-header .tt-item-info.info-top .tt-info-time {
+    white-space: nowrap;
+    font-size: 14px;
+    color: #666f74;
+    padding: 0
+}
+
+.tt-single-topic .tt-item-header .tt-item-info.info-top .tt-info-time .tt-icon {
+    margin-right: 16px
+}
+
+.tt-single-topic .tt-item-header .tt-item-info.info-top .tt-info-time .tt-icon svg {
+    width: 16px;
+    height: 16px
+}
+
+.tt-single-topic .tt-item-header .tt-item-title {
+    font-size: 18px;
+    line-height: 30px;
+    font-weight: 500;
+    margin: 3px 0 0;
+    letter-spacing: .01em
+}
+
+.tt-single-topic .tt-item-header .tt-item-title a {
+    display: inline-block;
+    color: #303344;
+    -webkit-transition: color .2s linear;
+    transition: color .2s linear
+}
+
+.tt-single-topic .tt-item-header .tt-item-title a:hover {
+    color: #2172cd
+}
+
+.tt-single-topic .tt-item-header .tt-item-tag {
+    margin-top: 12px
+}
+
+.tt-single-topic .tt-item-header:not(.pt-noborder) {
+    border-bottom: 1px solid #e2e7ea;
+    padding: 0 0 30px
+}
+
+.tt-single-topic .tt-item-header.pt-noborder+.tt-item-description {
+    padding-top: 5px
+}

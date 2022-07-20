@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 
+import './CategoryCard.css';
+
 const CategoryCard = ({
     category
 }) => {

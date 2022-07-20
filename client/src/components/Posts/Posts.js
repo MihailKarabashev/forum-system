@@ -11,6 +11,8 @@ import { useState } from "react";
 import PostCardSkeleton from "../Skeletons/PostCardSkeleton";
 import 'react-loading-skeleton/dist/skeleton.css';
 
+import './Posts.css';
+
 const amountPerPage = 6;
 
 const Posts = () => {
@@ -38,7 +40,7 @@ const Posts = () => {
 
 
     return () => { ignore = true };
-  }, []);
+  }, [setLoading]);
 
 
 

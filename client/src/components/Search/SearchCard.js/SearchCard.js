@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom"
 
+import './SearchCard.css';
+
 const SearchCard = ({
     post,
     handleClick

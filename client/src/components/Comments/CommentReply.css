@@ -1,0 +1,8 @@
+.tt-single-topic .tt-item-description .topic-inner-list {
+    margin-top: 37px;
+    padding-bottom: 8px
+}
+
+.tt-single-topic .tt-item-description .topic-inner-list .topic-inner:not(:first-child) {
+    margin-top: 30px
+}

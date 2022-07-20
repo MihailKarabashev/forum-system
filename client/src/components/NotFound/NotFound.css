@@ -1,0 +1,30 @@
+.tt-layout-404 {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-line-pack: stretch;
+    align-content: stretch;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    text-align: center;
+    letter-spacing: .01em
+}
+
+.tt-layout-404 .tt-title {
+    color: #303344;
+    font-size: 18px;
+    line-height: 1.3;
+    font-weight: 500;
+    margin-top: 64px;
+    padding-bottom: 8px
+}
