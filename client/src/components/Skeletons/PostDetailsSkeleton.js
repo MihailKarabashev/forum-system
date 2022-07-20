@@ -1,7 +1,10 @@
 import Skeleton from "react-loading-skeleton"
+import PostCommentSkeleton from "./PostCommentSkeleton"
+
 
 const PostDetailsSkeleton = () => {
     return (
+
         <div class="container">
             <div class="tt-single-topic-list">
                 <div class="tt-item">
@@ -38,8 +41,11 @@ const PostDetailsSkeleton = () => {
                         </div>
                     </div>
                 </div>
+
+                <PostCommentSkeleton count={2} />
             </div>
         </div>
+
     )
 }
 

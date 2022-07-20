@@ -18,7 +18,6 @@ import ReactionButton from '../../ReactionButton/ReactionButton';
 import CommentCard from "../../Comments/CommentCard/CommentCard";
 import PostDetailsSkeleton from '../../Skeletons/PostDetailsSkeleton';
 
-
 const PostDetails = () => {
   const [post, setPost] = useState({});
   const [replies, setPostReplies] = useState([]);
@@ -43,7 +42,6 @@ const PostDetails = () => {
         }, 2000);
       });
   }, [postId]);
-
 
   const onSubmitFormHandler = (e) => {
     e.preventDefault();
@@ -99,7 +97,6 @@ const PostDetails = () => {
       })
   }
 
-  console.log(post.authorUserName);
   const onRemovePostReply = (e, replyId) => {
     e.preventDefault()
     console.log(replyId);
@@ -187,6 +184,7 @@ const PostDetails = () => {
                   />)
             }
           </div>
+
 
           <div className="tt-wrapper-inner">
             <h4 className="tt-title-separator"><span>You’ve reached the end of replies</span></h4>

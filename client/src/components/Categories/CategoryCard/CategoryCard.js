@@ -4,6 +4,7 @@ const CategoryCard = ({
     category
 }) => {
     return (
+
         <div className="col-md-6 col-lg-4">
             <div className="tt-item">
                 <div className="tt-item-header">
@@ -38,6 +39,7 @@ const CategoryCard = ({
                 </div>
             </div>
         </div>
+
     )
 }
 
