@@ -230,9 +230,9 @@ async (IMapper mapper, IPostService postService, IUsersService userService, Crea
 
 });
 
-app.MapPut("/api/posts",
+app.MapPut("/api/posts/{id}",
     [Authorize]
-async (string id, IPostService postService, EditPostModel dto, IUsersService usersService) =>
+async (string id, IPostService postService, CreatePostModel dto, IUsersService usersService) =>
 {
     var user = await usersService.GetCurrentLoggedInUser();
     var isAdministrator = await usersService.IsAdministrator(user);
@@ -249,7 +249,7 @@ async (string id, IPostService postService, EditPostModel dto, IUsersService use
         return Results.Unauthorized();
     }
 
-    await postService.EditAsync(id, dto.Title, dto.Description, dto.CategoryId);
+    await postService.EditAsync(id, dto.Title, dto.Description, dto.CategoryId, dto.Tags);
 
     return Results.NoContent();
 

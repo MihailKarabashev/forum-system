@@ -114,7 +114,7 @@ const PostDetails = () => {
   const ownerButtons = (
     <div className="col-auto ml-auto">
       <Link to="#" className="btn btn-primaryCustom tt-offset-27" onClick={onDeleteClickHandler}>Delete</Link>
-      <Link to={`posts/edit/${postId}`} className="btn btn-secoundaryCustom tt-offset-27">Update</Link>
+      <Link to={`/posts/edit/${postId}`} className="btn btn-secoundaryCustom tt-offset-27">Update</Link>
     </div>
   );
 

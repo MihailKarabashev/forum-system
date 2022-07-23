@@ -57,14 +57,18 @@ namespace ForumApi.Services
             await this.db.SaveChangesAsync();
         }
 
-        public async Task EditAsync(string id, string title, string description, int categoryId)
+        public async Task EditAsync(string id, string title, string description, int categoryId, IEnumerable<int> tags)
         {
            var post = await this.GetByIdAsync(id);
+
+            await this.RemoveTagsAsync(id, post);
 
             post.Title = title;
             post.Description = description;
             post.CategoryId = categoryId;
             post.ModifiedOn = DateTime.UtcNow;
+
+            await this.AddTagsAsync(id, tags);
 
             await this.db.SaveChangesAsync();
         }
@@ -180,6 +184,7 @@ namespace ForumApi.Services
             return post.Views;
         }
 
+
         private string CalculateLatestActivity(DateTime currentTime, DateTime latestPostTime)
         {
             const decimal totalDays = 365.25m;
@@ -212,5 +217,33 @@ namespace ForumApi.Services
 
             return result;
         }
+
+        private async Task RemoveTagsAsync(string id, Post post)
+        {
+            var postTags = await this.db.PostsTags.Where(pt => pt.PostId == id).ToListAsync();
+            foreach (var tag in postTags)
+            {
+                post.Tags.Remove(tag);
+            }
+
+            await this.db.SaveChangesAsync();
+        }
+
+        private async Task AddTagsAsync(string id, IEnumerable<int> tagIds)
+        {
+            var post = await this.GetByIdAsync(id);
+
+            foreach (var tagId in tagIds)
+            {
+                post.Tags.Add(new PostTag
+                {
+                    PostId = id,
+                    TagId = tagId
+                });
+            }
+
+            await this.db.SaveChangesAsync();
+        }
+
     }
 }

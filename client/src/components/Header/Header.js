@@ -25,8 +25,6 @@ const Header = () => {
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
-  console.log(user);
-
   const debouncedSearch = useDebounce(headSearch.search, 500);
 
 
@@ -132,7 +130,7 @@ const Header = () => {
                 <ul>
                   <li><Link to="/categories"><span>Categories</span></Link></li>
                   <li><Link to="page-tabs.html"><span>Trending</span></Link></li>
-                  <li><Link to="page-tabs.html"><span>About</span></Link></li>
+                  <li><Link to="/about"><span>About</span></Link></li>
                   <li>
                     <Link to="page-single-user.html"><span>Pages</span></Link>
                     <ul>

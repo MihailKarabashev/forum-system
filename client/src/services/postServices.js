@@ -36,3 +36,14 @@ export const searchForPosts = (title) => {
     return fetch(`${baseUrl}/posts/search/${title}`)
         .then(res => res.json());
 }
+
+export const update = (data, id) => {
+    return fetch(`${baseUrl}/posts/${id}`, {
+        method: 'PUT',
+        headers: {
+            'content-type': 'application/json',
+            'Authorization': `Bearer ${getToken()}`
+        },
+        body: JSON.stringify(data)
+    }).then();
+}

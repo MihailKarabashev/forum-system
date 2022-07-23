@@ -8,7 +8,7 @@ namespace ForumApi.Services
     {
         Task<Post> CreateAsync(string title, string description, string authorId, int categoryId, IEnumerable<int> tags);
 
-        Task EditAsync(string id, string title, string description, int categoryId);
+        Task EditAsync(string id, string title, string description, int categoryId, IEnumerable<int> tags);
 
         Task DeleteAsync(string id);
 
