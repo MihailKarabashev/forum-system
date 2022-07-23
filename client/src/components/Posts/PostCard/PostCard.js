@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Tags from "../../Tags/Tags";
 
 import { generateSvgIcon } from '../../../utils/getProfilePicture';
+import { generateRandomInteger } from '../../../utils/categoryColorHelper';
 
 const
     PostCard = ({
@@ -24,7 +25,6 @@ const
             </div>
         )
 
-
         return (
             <div className="tt-item">
                 <div className="tt-col-avatar">
@@ -46,7 +46,7 @@ const
                         data.tags ? tagsMenu : <div className="tt-content"> {data.description}</div>
                     }
                 </div>
-                <div className="tt-col-category"><span className="tt-color01 tt-badge">{data.categoryName}</span></div>
+                <div className="tt-col-category"><span className={`tt-color${generateRandomInteger(1, 20)} tt-badge`}>{data.categoryName}</span></div>
                 {data.views && menu}
                 <div className="tt-col-value hide-mobile">{data.activity || data.postViews}</div>
             </div>
